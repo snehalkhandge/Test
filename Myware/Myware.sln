@@ -15,6 +15,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{E56C5789-5A04-4919-8F50-EA4BC3B6E300}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{0F6C22BD-24C3-4F45-94CC-4E5209CD3CF4}"
+	ProjectSection(SolutionItems) = preProject
+		Reference Repository.txt = Reference Repository.txt
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myware.Repository", "Infrastructure\Data\Myware.Repository\Myware.Repository.csproj", "{24D79CBE-FCEB-4C3B-A446-066E653E89EE}"
 EndProject
