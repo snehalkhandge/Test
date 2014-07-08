@@ -87,7 +87,7 @@
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Data\Myware.Repository\Myware.Repository.csproj">
+    <ProjectReference Include="..\Myware.Repository\Myware.Repository.csproj">
       <Project>{24d79cbe-fceb-4c3b-a446-066e653e89ee}</Project>
       <Name>Myware.Repository</Name>
     </ProjectReference>

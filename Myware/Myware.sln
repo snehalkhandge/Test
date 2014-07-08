@@ -18,9 +18,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{0F6C22BD-2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myware.Repository", "Infrastructure\Data\Myware.Repository\Myware.Repository.csproj", "{24D79CBE-FCEB-4C3B-A446-066E653E89EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myware.Repository.EF", "Myware.Repository.EF\Myware.Repository.EF.csproj", "{86F784C9-F0B9-4177-B61E-3B897488C78A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myware.Repository.EF", "Infrastructure\Data\Myware.Repository.EF\Myware.Repository.EF.csproj", "{86F784C9-F0B9-4177-B61E-3B897488C78A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myware.Service", "Myware.Service\Myware.Service.csproj", "{0017B7B0-C9D8-4449-8CDE-7635462ABAFE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myware.Service", "Infrastructure\Data\Myware.Service\Myware.Service.csproj", "{0017B7B0-C9D8-4449-8CDE-7635462ABAFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
