@@ -153,6 +153,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\PreSalesLead\BusinessInformationsController.cs" />
+    <Compile Include="API\PreSalesLead\ContactEnquiriesController.cs" />
+    <Compile Include="API\PreSalesLead\PersonalInformationsController.cs" />
+    <Compile Include="API\PreSalesUnit\BrokersController.cs" />
+    <Compile Include="API\PreSalesUnit\CampaignsController.cs" />
+    <Compile Include="API\PreSalesUnit\CompaniesController.cs" />
+    <Compile Include="API\PreSalesUnit\ContactStatusController.cs" />
+    <Compile Include="API\PreSalesUnit\DevelopersController.cs" />
+    <Compile Include="API\PreSalesUnit\FacingTypesController.cs" />
+    <Compile Include="API\PreSalesUnit\LocalitiesController.cs" />
+    <Compile Include="API\PreSalesUnit\LocationsController.cs" />
+    <Compile Include="API\PreSalesUnit\LookingForTypesController.cs" />
+    <Compile Include="API\PreSalesUnit\TransactionTypesController.cs" />
+    <Compile Include="API\PreSalesUnit\UnitTypesController.cs" />
+    <Compile Include="API\TaskManager\AssignedTasksController.cs" />
+    <Compile Include="API\UserManagement\PermissionsController.cs" />
+    <Compile Include="API\UserManagement\RolesController.cs" />
+    <Compile Include="API\UserManagement\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -604,6 +622,32 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\jaydata.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Components\Security\Myware.Components.Security\Myware.Components.Security.csproj">
+      <Project>{b66dc1c4-9950-4a3c-99d2-a3a9809a793a}</Project>
+      <Name>Myware.Components.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\Myware.Data.Entity\Myware.Data.Entity.csproj">
+      <Project>{2b6e4654-ee17-4146-a212-1b309d372f71}</Project>
+      <Name>Myware.Data.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\Common\Myware.Common\Myware.Common.csproj">
+      <Project>{48a2483a-264d-41e3-8748-5228409d7547}</Project>
+      <Name>Myware.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\Data\Myware.Repository.EF\Myware.Repository.EF.csproj">
+      <Project>{86f784c9-f0b9-4177-b61e-3b897488c78a}</Project>
+      <Name>Myware.Repository.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\Data\Myware.Repository\Myware.Repository.csproj">
+      <Project>{24d79cbe-fceb-4c3b-a446-066e653e89ee}</Project>
+      <Name>Myware.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\Data\Myware.Service\Myware.Service.csproj">
+      <Project>{0017b7b0-c9d8-4449-8cde-7635462abafe}</Project>
+      <Name>Myware.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

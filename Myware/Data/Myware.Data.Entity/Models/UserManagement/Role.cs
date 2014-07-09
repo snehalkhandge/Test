@@ -22,5 +22,7 @@ namespace Myware.Data.Entity.Models.UserManagement
 
         [DataMember]
         public string Description { get; set; }
+
+        public virtual ICollection<RolePermissions> RolePermissions { get; set; }
     }
 }
