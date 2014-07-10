@@ -13,7 +13,7 @@ namespace Myware.Data.Entity.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201407090539209_UserManagment"; }
+            get { return "201407100638083_UserManagment"; }
         }
         
         string IMigrationMetadata.Source

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -16,19 +17,25 @@ namespace Myware.Data.Entity.Models.UserManagement
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [DataMember]
+        [StringLength(200)] 
         public string FirstName { get; set; }
 
         [DataMember]
+        [StringLength(200)] 
         public string LastName { get; set; }
 
         [DataMember]
+        [StringLength(500)] 
         public string Email { get; set; }
 
         [DataMember]
+        [Index(IsUnique = true)]
+        [StringLength(200)] 
         public string UserName { get; set; }
 
 
         [DataMember]
+        [StringLength(500)] 
         public string Password { get; set; }
 
         [DataMember]

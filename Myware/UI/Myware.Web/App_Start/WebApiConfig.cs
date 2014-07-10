@@ -41,7 +41,7 @@ namespace Myware.Web
             builder.EntitySet<BusinessInformation>("BusinessInformations");
             builder.EntitySet<PersonalInformation>("PersonalInformations"); 
             builder.EntitySet<ContactEnquiry>("ContactEnquiries");
-
+            builder.EntitySet<CustomerEnquiryTypeCollection>("CustomerEnquiryTypeCollection");
 
             #endregion
 

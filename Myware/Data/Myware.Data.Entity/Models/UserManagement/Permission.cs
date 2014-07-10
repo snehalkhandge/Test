@@ -15,12 +15,15 @@ namespace Myware.Data.Entity.Models.UserManagement
         [DataMember]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        
         [DataMember]
+        [StringLength(80)]
+        [Index(IsUnique = true)]
         public string Name { get; set; }
 
         [DataMember]
+        [StringLength(80)]
         public string Tag { get; set; }
-
         public virtual ICollection<RolePermissions> RolePermissions { get; set; }
 
     }

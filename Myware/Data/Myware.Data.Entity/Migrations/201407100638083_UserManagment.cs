@@ -22,7 +22,7 @@ namespace Myware.Data.Entity.Migrations
                         ParentTaskId = c.Int(),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -40,17 +40,18 @@ namespace Myware.Data.Entity.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        Email = c.String(),
-                        UserName = c.String(),
-                        Password = c.String(),
+                        FirstName = c.String(maxLength: 200),
+                        LastName = c.String(maxLength: 200),
+                        Email = c.String(maxLength: 500),
+                        UserName = c.String(maxLength: 200),
+                        Password = c.String(maxLength: 500),
                         Created = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                         RoleId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
+                .Index(t => t.UserName, unique: true)
                 .Index(t => t.RoleId);
             
             CreateTable(
@@ -58,13 +59,31 @@ namespace Myware.Data.Entity.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(maxLength: 200),
                         Description = c.String(),
-                        RolePermissions_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.RolePermissions", t => t.RolePermissions_Id)
-                .Index(t => t.RolePermissions_Id);
+                .Index(t => t.Name, unique: true);
+            
+            CreateTable(
+                "dbo.RolePermissions",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        RoleId = c.Int(nullable: false),
+                        PermissionId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Permissions",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(maxLength: 200),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true);
             
             CreateTable(
                 "dbo.TasksRelatedFiles",
@@ -92,7 +111,7 @@ namespace Myware.Data.Entity.Migrations
                         LocalityId = c.Int(nullable: false),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -110,7 +129,7 @@ namespace Myware.Data.Entity.Migrations
                         Type = c.String(),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                         Broker_Id = c.Int(),
                         BusinessInformation_Id = c.Int(),
@@ -138,8 +157,8 @@ namespace Myware.Data.Entity.Migrations
                         LocationId = c.Int(nullable: false),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                        IsActive = c.Boolean(nullable: false)
+                        LastUpdated = c.DateTime(nullable: false),
+                        IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Locations", t => t.LocationId)
@@ -162,7 +181,7 @@ namespace Myware.Data.Entity.Migrations
                         PersonalInformationId = c.Int(nullable: false),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -190,7 +209,7 @@ namespace Myware.Data.Entity.Migrations
                         LocalityId = c.Int(nullable: false),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -210,7 +229,7 @@ namespace Myware.Data.Entity.Migrations
                         ParentCampaignId = c.Int(),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                         PersonalInformation_Id = c.Int(),
                     })
@@ -246,7 +265,7 @@ namespace Myware.Data.Entity.Migrations
                         Name = c.String(maxLength: 20),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -266,7 +285,7 @@ namespace Myware.Data.Entity.Migrations
                         Created = c.DateTime(),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -288,7 +307,7 @@ namespace Myware.Data.Entity.Migrations
                         LocalityId = c.Int(nullable: false),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -306,7 +325,7 @@ namespace Myware.Data.Entity.Migrations
                         Description = c.String(maxLength: 200),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                         Company_Id = c.Int(),
                     })
@@ -326,7 +345,7 @@ namespace Myware.Data.Entity.Migrations
                         Country = c.String(maxLength: 50),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -357,7 +376,7 @@ namespace Myware.Data.Entity.Migrations
                         PersonalInformationId = c.Int(nullable: false),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -382,7 +401,7 @@ namespace Myware.Data.Entity.Migrations
                         Name = c.String(maxLength: 30),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -397,7 +416,7 @@ namespace Myware.Data.Entity.Migrations
                         Name = c.String(maxLength: 20),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -412,7 +431,7 @@ namespace Myware.Data.Entity.Migrations
                         Name = c.String(maxLength: 20),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -427,8 +446,8 @@ namespace Myware.Data.Entity.Migrations
                         Name = c.String(maxLength: 20),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                        IsActive = c.Boolean(nullable: false)
+                        LastUpdated = c.DateTime(nullable: false),
+                        IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Users", t => t.UpdatedByUserId)
@@ -442,7 +461,7 @@ namespace Myware.Data.Entity.Migrations
                         Name = c.String(nullable: false, maxLength: 30),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        LastUpdated = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                         ContactEnquiry_Id = c.Int(),
                     })
@@ -453,45 +472,35 @@ namespace Myware.Data.Entity.Migrations
                 .Index(t => t.ContactEnquiry_Id);
             
             CreateTable(
-                "dbo.Permissions",
+                "dbo.PermissionRolePermissions",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Tag = c.String(),
+                        Permission_Id = c.Int(nullable: false),
+                        RolePermissions_Id = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => new { t.Permission_Id, t.RolePermissions_Id })
+                .ForeignKey("dbo.Permissions", t => t.Permission_Id, cascadeDelete: true)
+                .ForeignKey("dbo.RolePermissions", t => t.RolePermissions_Id, cascadeDelete: true)
+                .Index(t => t.Permission_Id)
+                .Index(t => t.RolePermissions_Id);
             
             CreateTable(
-                "dbo.RolePermissions",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        RoleId = c.Int(nullable: false),
-                        PermissionId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.RolePermissionsPermissions",
+                "dbo.RolePermissionsRoles",
                 c => new
                     {
                         RolePermissions_Id = c.Int(nullable: false),
-                        Permission_Id = c.Int(nullable: false),
+                        Role_Id = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.RolePermissions_Id, t.Permission_Id })
+                .PrimaryKey(t => new { t.RolePermissions_Id, t.Role_Id })
                 .ForeignKey("dbo.RolePermissions", t => t.RolePermissions_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Permissions", t => t.Permission_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Roles", t => t.Role_Id, cascadeDelete: true)
                 .Index(t => t.RolePermissions_Id)
-                .Index(t => t.Permission_Id);
+                .Index(t => t.Role_Id);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Roles", "RolePermissions_Id", "dbo.RolePermissions");
-            DropForeignKey("dbo.RolePermissionsPermissions", "Permission_Id", "dbo.Permissions");
-            DropForeignKey("dbo.RolePermissionsPermissions", "RolePermissions_Id", "dbo.RolePermissions");
             DropForeignKey("dbo.ContactEnquiries", "UpdatedByUserId", "dbo.Users");
             DropForeignKey("dbo.UnitTypes", "ContactEnquiry_Id", "dbo.ContactEnquiries");
             DropForeignKey("dbo.UnitTypes", "UpdatedByUserId", "dbo.Users");
@@ -538,8 +547,14 @@ namespace Myware.Data.Entity.Migrations
             DropForeignKey("dbo.AssignedTasks", "AssignedToId", "dbo.Users");
             DropForeignKey("dbo.AssignedTasks", "AssignedFromId", "dbo.Users");
             DropForeignKey("dbo.Users", "RoleId", "dbo.Roles");
-            DropIndex("dbo.RolePermissionsPermissions", new[] { "Permission_Id" });
-            DropIndex("dbo.RolePermissionsPermissions", new[] { "RolePermissions_Id" });
+            DropForeignKey("dbo.RolePermissionsRoles", "Role_Id", "dbo.Roles");
+            DropForeignKey("dbo.RolePermissionsRoles", "RolePermissions_Id", "dbo.RolePermissions");
+            DropForeignKey("dbo.PermissionRolePermissions", "RolePermissions_Id", "dbo.RolePermissions");
+            DropForeignKey("dbo.PermissionRolePermissions", "Permission_Id", "dbo.Permissions");
+            DropIndex("dbo.RolePermissionsRoles", new[] { "Role_Id" });
+            DropIndex("dbo.RolePermissionsRoles", new[] { "RolePermissions_Id" });
+            DropIndex("dbo.PermissionRolePermissions", new[] { "RolePermissions_Id" });
+            DropIndex("dbo.PermissionRolePermissions", new[] { "Permission_Id" });
             DropIndex("dbo.UnitTypes", new[] { "ContactEnquiry_Id" });
             DropIndex("dbo.UnitTypes", new[] { "UpdatedByUserId" });
             DropIndex("dbo.TransactionTypes", new[] { "UpdatedByUserId" });
@@ -581,15 +596,16 @@ namespace Myware.Data.Entity.Migrations
             DropIndex("dbo.Brokers", new[] { "UpdatedByUserId" });
             DropIndex("dbo.Brokers", new[] { "LocalityId" });
             DropIndex("dbo.TasksRelatedFiles", new[] { "AssignedTask_Id" });
-            DropIndex("dbo.Roles", new[] { "RolePermissions_Id" });
+            DropIndex("dbo.Permissions", new[] { "Name" });
+            DropIndex("dbo.Roles", new[] { "Name" });
             DropIndex("dbo.Users", new[] { "RoleId" });
+            DropIndex("dbo.Users", new[] { "UserName" });
             DropIndex("dbo.AssignedTasks", new[] { "UpdatedByUserId" });
             DropIndex("dbo.AssignedTasks", new[] { "ParentTaskId" });
             DropIndex("dbo.AssignedTasks", new[] { "AssignedToId" });
             DropIndex("dbo.AssignedTasks", new[] { "AssignedFromId" });
-            DropTable("dbo.RolePermissionsPermissions");
-            DropTable("dbo.RolePermissions");
-            DropTable("dbo.Permissions");
+            DropTable("dbo.RolePermissionsRoles");
+            DropTable("dbo.PermissionRolePermissions");
             DropTable("dbo.UnitTypes");
             DropTable("dbo.TransactionTypes");
             DropTable("dbo.LookingForTypes");
@@ -609,6 +625,8 @@ namespace Myware.Data.Entity.Migrations
             DropTable("dbo.ContactNumbers");
             DropTable("dbo.Brokers");
             DropTable("dbo.TasksRelatedFiles");
+            DropTable("dbo.Permissions");
+            DropTable("dbo.RolePermissions");
             DropTable("dbo.Roles");
             DropTable("dbo.Users");
             DropTable("dbo.AssignedTasks");

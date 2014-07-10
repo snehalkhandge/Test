@@ -18,6 +18,8 @@ namespace Myware.Data.Entity.Models.UserManagement
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [DataMember]
+        [StringLength(200)]
+        [Index(IsUnique = true)]
         public string Name { get; set; }
 
         [DataMember]
