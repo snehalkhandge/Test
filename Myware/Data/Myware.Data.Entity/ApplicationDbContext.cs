@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Myware.Data.Entity.Models.PostSales;
 using Myware.Data.Entity.Models.PresalesUnit;
 using Myware.Data.Entity.Models.UserManagement;
@@ -12,7 +13,7 @@ using Myware.Data.Entity.Models.PreSales;
 namespace Myware.Data.Entity
 {
 
-    public partial class ApplicationDbContext : DataContext
+    public partial class ApplicationDbContext : IdentityDbContext<User, Role, int, AppUserLogin, AppUserRole, AppUserClaim>
     {
         static ApplicationDbContext()
         {
@@ -26,8 +27,8 @@ namespace Myware.Data.Entity
 
         #region user management
 
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermissions> RolePermissions { get; set; }
         #endregion
 
 
@@ -61,8 +62,7 @@ namespace Myware.Data.Entity
 
         #endregion
 
-        public DbSet<Permission> Permissions { get; set; }
-        public DbSet<RolePermissions> RolePermissions { get; set; }
+        
         public DbSet<PersonalInformationBookingMeta> PersonalInformationBookingMetas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -72,5 +72,8 @@ namespace Myware.Data.Entity
             base.OnModelCreating(modelBuilder);
         }
     }
+
+
+
    
 }

@@ -22,6 +22,8 @@ namespace Myware.Web
                 .Include("~/app/blocks/router/*.js")
                 .Include("~/app/core/*.js")
                 .Include("~/app/core/components/*.js")
+                .Include("~/app/account/*.js")
+                .Include("~/app/account/components/*.js")
                 .Include("~/app/layout/*.js")
                 .Include("~/app/layout/components/*.js")
                 .Include("~/app/widgets/*.js")
@@ -42,7 +44,7 @@ namespace Myware.Web
                         .Include("~/Content/bootstrap-custom.css")
                         .Include("~/Content/font-awesome.css")
                         .Include("~/Content/toastr.css")
-                        
+                        .Include("~/Content/Site.css")
                     );
 
 

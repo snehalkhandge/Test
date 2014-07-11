@@ -5,7 +5,7 @@
         .module('app.usermanagement')
         .controller('Users', Users);
 
-    Users.$inject = ['common', 'dataservice'];
+    Users.$inject = ['common'];
 
     function Users(common, dataservice) {
         var log = common.logger.info;
@@ -24,24 +24,9 @@
         activate();
 
         function activate() {
-            var promises = [getAvengerCount(), getAvengersCast()];
-            return dataservice.ready(promises).then(function () {
-                log('Activated Dashboard View');
-            });
+             log('Activated Dashboard View');
+            
         }
 
-        function getAvengerCount() {
-            return dataservice.getAvengerCount().then(function (data) {
-                vm.avengerCount = data;
-                return vm.avengerCount;
-            });
-        }
-
-        function getAvengersCast() {
-            return dataservice.getAvengersCast().then(function (data) {
-                vm.avengers = data;
-                return vm.avengers;
-            });
-        }
     }
 })();

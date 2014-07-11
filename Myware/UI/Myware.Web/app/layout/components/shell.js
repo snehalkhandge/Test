@@ -5,9 +5,9 @@
         .module('app.layout')
         .controller('Shell', Shell);
 
-    Shell.$inject = ['common', 'config', 'dataservice'];
+    Shell.$inject = ['common', 'config'];
 
-    function Shell(common, config, dataservice) {
+    function Shell(common, config) {
         /*jshint validthis: true */
         var vm = this;
         var logSuccess = common.logger.success;
@@ -21,9 +21,8 @@
 
         function activate() {
             logSuccess(config.appTitle + ' loaded!', null);
-            dataservice.ready().then(function () {
-                hideSplash();
-            });
+            hideSplash();
+            
         }
 
         function hideSplash() {

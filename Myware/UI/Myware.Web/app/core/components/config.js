@@ -12,6 +12,7 @@
     var config = {
         appErrorPrefix: '[NG-Modular Error] ', //Configure the exceptionHandler decorator
         appTitle: 'Angular Modular Demo',
+        apiUrl: 'http://localhost:10138',
         //        events: events,
         version: '1.0.0'
     };

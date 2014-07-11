@@ -5,13 +5,13 @@
         .module('app.layout')
         .controller('Topbar', Topbar);
 
-    Topbar.$inject = ['$route', 'routehelper'];
+    Topbar.$inject = ['$route', 'routehelper', 'authService'];
 
-    function Topbar($route, routehelper) {
+    function Topbar($route, routehelper, authService) {
         /*jshint validthis: true */
         var vm = this;
         var routes = routehelper.getRoutes();
-
+        vm.authentication = authService.authentication;
         
 
         activate();

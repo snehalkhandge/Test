@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,14 +10,13 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Myware.Data.Entity.Models.UserManagement
 {
-    public class User
+    public class User : IdentityUser<int, AppUserLogin, AppUserRole, AppUserClaim>,
+    IUser<int>
     {
-        [Key]
-        [DataMember]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        
         [DataMember]
         [StringLength(200)] 
         public string FirstName { get; set; }
@@ -24,34 +25,17 @@ namespace Myware.Data.Entity.Models.UserManagement
         [StringLength(200)] 
         public string LastName { get; set; }
 
-        [DataMember]
-        [StringLength(500)] 
-        public string Email { get; set; }
-
-        [DataMember]
-        [Index(IsUnique = true)]
-        [StringLength(200)] 
-        public string UserName { get; set; }
-
-
-        [DataMember]
-        [StringLength(500)] 
-        public string Password { get; set; }
-
-        [DataMember]
-        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime Created { get; set; }
-
-
+        
 
         [DataMember]
         public bool IsActive { get; set; }
 
-
-        public int RoleId { get; set; }
-
-        [ForeignKey("RoleId")]
-        public virtual Role Role { get; set; }
-
     }
+
+    public class AppUserLogin : IdentityUserLogin<int> { }
+
+    public class AppUserRole : IdentityUserRole<int> { }
+
+    public class AppUserClaim : IdentityUserClaim<int> { }
+
 }

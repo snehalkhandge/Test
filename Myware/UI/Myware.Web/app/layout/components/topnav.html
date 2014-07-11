@@ -10,9 +10,16 @@
     <div class="navbar-collapse collapse" data-ng-controller="Topbar as vm">
         
         <ul class="nav navbar-nav">
-            <li><a href="#/avengers">Avengers</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">All Routes <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="nlightblue fade-selection-animation"
+                        data-ng-repeat="r in vm.navRoutes">
+                        <a href="#{{r.originalPath}}"
+                           data-ng-bind-html="r.settings.content"></a>
+                    </li>
+                </ul>
+            </li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Management <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -22,10 +29,11 @@
                 </ul>
             </li>
         </ul>
+        
         <ul class="nav navbar-nav navbar-right" style="margin-right:15px;">
-            <li class="active"><a href="./">Default</a></li>
-            <li><a href="../navbar-static-top/">Static top</a></li>
-            <li><a href="../navbar-fixed-top/">Fixed top</a></li>
+            <li data-ng-hide="vm.authentication.isAuth"> <a href="#/account/login">Login</a></li>
+            <li data-ng-hide="!vm.authentication.isAuth"> <a href="#/account/logout">Hi, {{vm.authentication.name}} (Logout)</a></li>
+            
         </ul>
     </div><!--/.nav-collapse -->
 </div><!--/.container-fluid -->

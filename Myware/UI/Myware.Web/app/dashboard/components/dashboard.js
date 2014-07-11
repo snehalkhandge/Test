@@ -5,9 +5,9 @@
         .module('app.dashboard')
         .controller('Dashboard', Dashboard);
 
-    Dashboard.$inject = ['common', 'dataservice'];
+    Dashboard.$inject = ['common'];
 
-    function Dashboard(common, dataservice) {
+    function Dashboard(common, roledataservice) {
         var log = common.logger.info;
 
         /*jshint validthis: true */
@@ -24,24 +24,9 @@
         activate();
 
         function activate() {
-            var promises = [getAvengerCount(), getAvengersCast()];
-            return dataservice.ready(promises).then(function () {
-                log('Activated Dashboard View');
-            });
+             log('Activated Dashboard View');
+            
         }
 
-        function getAvengerCount() {
-            return dataservice.getAvengerCount().then(function (data) {
-                vm.avengerCount = data;
-                return vm.avengerCount;
-            });
-        }
-
-        function getAvengersCast() {
-            return dataservice.getAvengersCast().then(function (data) {
-                vm.avengers = data;
-                return vm.avengers;
-            });
-        }
     }
 })();

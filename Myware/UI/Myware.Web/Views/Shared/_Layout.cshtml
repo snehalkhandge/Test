@@ -13,11 +13,13 @@
     </style>
 
     @Styles.Render("~/Content/bootstrap")
-
+    
+    <link href="~/Content/kendo/2014.1.318/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Content/kendo/2014.1.318/kendo.common-bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
 
-    <div class="container body-content">
+    <div class="container-fluid body-content">
         <div data-ng-include="'/app/layout/components/shell.html'"></div>
         <div id="splash-page" data-ng-show="false">
             <div class="page-splash">
@@ -39,13 +41,8 @@
     @Scripts.Render("~/bundles/js")
     
     <!-- Jay Data-->
-    <script src="~/Scripts/jaydata/datajs-1.1.3.js"></script>
-    <script src="~/Scripts/jaydata/jaydata.js"></script>
-    <script src="~/Scripts/jaydata/extra/angular.js"></script>
-    <script src="~/Scripts/jaydata/extra/oDataProvider.js"></script>
-    <script src="~/Scripts/jaydata/extra/SqLiteProvider.js"></script>
-    
-
+    <script src="~/Scripts/kendo/2014.1.318/kendo.web.min.js"></script>
+    <script src="~/Scripts/ken/extra/angular-kendo.js"></script>
     @Scripts.Render("~/bundles/app")
 
     @RenderSection("scripts", required: false)

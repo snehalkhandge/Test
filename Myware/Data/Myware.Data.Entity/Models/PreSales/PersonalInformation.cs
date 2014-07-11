@@ -55,15 +55,17 @@ namespace Myware.Data.Entity.Models.PreSales
         [ForeignKey("LocalityId")]
         [DataMember]
         public Locality Locality { get; set; }
+
+        [DataMember]
         public virtual ICollection<CustomerEnquiryTypeCollection> CustomerEnquiryTypeCollection { get; set; }
 
-        
+        [DataMember]
         public virtual ICollection<PersonalInformationBookingMeta> PersonalInformationBookingMeta { get; set; }
 
         
 
         [DataMember]
-        public ICollection<Campaign> Campaigns { get; set; }
+        public virtual ICollection<Campaign> Campaigns { get; set; }
 
         
         [DataMember]

@@ -1,6 +1,10 @@
 using System.Collections.Generic;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Myware.Data.Entity.CustomStores;
 using Myware.Data.Entity.Models.PresalesUnit;
 using Myware.Data.Entity.Models.UserManagement;
+using System.Security;
 
 namespace Myware.Data.Entity.Migrations
 {
@@ -18,32 +22,43 @@ namespace Myware.Data.Entity.Migrations
 
         protected override void Seed(Myware.Data.Entity.ApplicationDbContext context)
         {
+
+            IdentityResult identityResult;
+  //          UserManager<User,int> userManager = new UserManager<User,int>(new UserStore<User>(context));
+
+            AppUserManager userManager = new AppUserManager(new AppUserStore(context));
+
+            RoleManager<Role,int> roleManager = new RoleManager<Role, int>(new RoleStore<Role,int,AppUserRole>(context));
+
             
             var adminRole = new Role { Name = "Admin" };
             var tLRole = new Role { Name = "TeamLeader" };
             var tCRole = new Role { Name = "TeleCaller" };
             var sMRole = new Role { Name = "SalesManager" };
 
-            context.Roles.Add(adminRole);
-            context.Roles.Add(tLRole);
-            context.Roles.Add(tCRole);
-            context.Roles.Add(sMRole);
+            roleManager.Create(adminRole);
+            roleManager.Create(tLRole);
+            roleManager.Create(tCRole);
+            roleManager.Create(sMRole);
+            
 
             context.SaveChanges();
+
+
             #region Users and Roles
 
 
 
-            var hash = "Admin_123"; //Crypto.HashPassword("Admin_123");
+            var hash = "Admin_123";
 
             var adminUser = new User
             {
                 UserName = "Administrator",
                 Email = "abhinav@abhinav.com",
-                Password = hash,
                 FirstName = " Admin ",
                 LastName = "is my Last Name",
-                RoleId = 1
+                IsActive = true,
+                EmailConfirmed = true
             };
 
 
@@ -53,10 +68,11 @@ namespace Myware.Data.Entity.Migrations
 
                 UserName = "Teamleader",
                 Email = "abhinav1@abhinav.com",
-                Password = hash,
                 FirstName = "Team Leader ",
                 LastName = "is my Last Name",
-                RoleId = 2
+                IsActive = true,
+                EmailConfirmed = true
+                
             };
 
 
@@ -66,10 +82,11 @@ namespace Myware.Data.Entity.Migrations
 
                 UserName = "TeleCaller",
                 Email = "abhinav2@abhinav.com",
-                Password = hash,
                 FirstName = "Tele Caller",
                 LastName = "is my Last Name",
-                RoleId = 3
+                IsActive = true,
+                EmailConfirmed = true
+                
             };
 
 
@@ -80,22 +97,28 @@ namespace Myware.Data.Entity.Migrations
 
                 UserName = "SalesManager",
                 Email = "abhinav3@abhinav.com",
-                Password = hash,
                 FirstName = "Sales Manager",
                 LastName = "is my Last Name",
-                RoleId = 4
+                IsActive = true,
+                EmailConfirmed = true
+                
             };
 
+            userManager.Create(adminUser, hash);
+            userManager.Create(tLUser, hash);
+            userManager.Create(tCUser, hash);
+            userManager.Create(sMUser, hash);
 
-            context.Users.Add(adminUser);
-            context.Users.Add(tLUser);
-            context.Users.Add(tCUser);
-            context.Users.Add(sMUser);
+            context.SaveChanges();
 
+            userManager.AddToRole(adminUser.Id, adminRole.Name);
+            userManager.AddToRole(tLUser.Id, tLRole.Name);
+            userManager.AddToRole(tCUser.Id, tCRole.Name);
+            userManager.AddToRole(sMUser.Id, sMRole.Name);
 
             context.SaveChanges();
             #endregion
-
+            
 
             #region Pre Sales Unit
 
@@ -361,7 +384,7 @@ namespace Myware.Data.Entity.Migrations
 
             context.SaveChanges();
             #endregion
-
+            
 
         }
     }

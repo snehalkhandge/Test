@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using Myware.Data.Entity.Models.PreSales;
 using Myware.Data.Entity.Models.UserManagement;
 
 
@@ -15,13 +17,6 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         public string Name { get; set; }
 
         
-        [DataMember]
-        public int CreatedByUserId { get; set; }
-        
-
-        [ForeignKey("CreatedByUserId")]
-        [DataMember]
-        public User CreatedBy { get; set; }
 
         [DataMember]
         public bool? IsParentCampaign { get; set; }
@@ -30,5 +25,9 @@ namespace Myware.Data.Entity.Models.PresalesUnit
 
         [ForeignKey(name: "ParentCampaignId")]
         public virtual Campaign ParentCampaign { get; set; }
+
+
+        public virtual ICollection<PersonalInformation> PersonalInformations { get; set; }
+
     }
 }
