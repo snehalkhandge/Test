@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web.Http;
+using CacheCow.Server;
+using Myware.Web.Caching;
+using Newtonsoft.Json.Serialization;
 
 namespace Myware.Web
 {
@@ -19,6 +23,14 @@ namespace Myware.Web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+
+
+            
+
+            //CacheCow cache store
+            //Configure HTTP Caching using Entity Tags (ETags)
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new CachingHandler(GlobalConfiguration.Configuration));
         }
     }
 }

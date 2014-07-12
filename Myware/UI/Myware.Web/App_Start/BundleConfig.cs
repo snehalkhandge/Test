@@ -40,9 +40,9 @@ namespace Myware.Web
 
 
             bundles.Add(new StyleBundle("~/Content/bootstrap")
-                        .Include("~/Content/bootstrap.css")
-                        .Include("~/Content/bootstrap-custom.css")
-                        .Include("~/Content/font-awesome.css")
+                        .Include("~/Content/bootstrap/*.css")
+                        .Include("~/Content/bootstrap-theme/*.css")
+                        .Include("~/Content/styles.css")
                         .Include("~/Content/toastr.css")
                         .Include("~/Content/Site.css")
                     );

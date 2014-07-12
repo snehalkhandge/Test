@@ -93,11 +93,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomStores\AppRoleManager.cs" />
     <Compile Include="CustomStores\AppUserManager.cs" />
+    <Compile Include="CustomStores\AppRoleStore.cs" />
     <Compile Include="CustomStores\AppUserStore.cs" />
-    <Compile Include="Migrations\201407110155002_UserManagment.cs" />
-    <Compile Include="Migrations\201407110155002_UserManagment.Designer.cs">
-      <DependentUpon>201407110155002_UserManagment.cs</DependentUpon>
+    <Compile Include="Migrations\201407112254492_UserManagment.cs" />
+    <Compile Include="Migrations\201407112254492_UserManagment.Designer.cs">
+      <DependentUpon>201407112254492_UserManagment.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseEntity\BaseEntity.cs" />
@@ -151,8 +153,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201407110155002_UserManagment.resx">
-      <DependentUpon>201407110155002_UserManagment.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201407112254492_UserManagment.resx">
+      <DependentUpon>201407112254492_UserManagment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

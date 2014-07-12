@@ -5,28 +5,47 @@
         .module('app.usermanagement')
         .controller('Roles', Roles);
 
-    Roles.$inject = ['common'];
+    Roles.$inject = ['common', 'roleFactory'];
 
-    function Roles(common, dataservice) {
+    function Roles(common, roleFactory) {
         var log = common.logger.info;
-
+        
         /*jshint validthis: true */
         var vm = this;
 
-        vm.news = {
-            title: 'Marvel Avengers',
-            description: 'Marvel Avengers 2 is now in production!'
-        };
-        vm.avengerCount = 0;
-        vm.avengers = [];
         vm.title = 'Roles';
+        vm.rolesCount = 0;
+        vm.role = {};
+        vm.role.Id = "";
+        vm.role.Name = "";
+        vm.role.Permissions = [];
+        vm.removePermissionFromRole = function(rolePermissionId)
+        {
+            
+        };
+       vm.getRole = function (cb) {
+
+           var promise = roleFactory.query().$promise;
+           promise.then(function (res) {
+               vm.roles = res;
+               if (cb) cb();
+           });
+           promise.catch(function (res) {
+               common.logger.error(res);
+
+           });
+            
+        };
 
         activate();
 
         function activate() {
-                log('Activated Roles View');
+            vm.getRole();
+           log('Activated Roles View');
         
         }
 
     }
 })();
+
+

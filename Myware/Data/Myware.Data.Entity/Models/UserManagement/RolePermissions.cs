@@ -20,12 +20,20 @@ namespace Myware.Data.Entity.Models.UserManagement
 
         [DataMember]
         public int RoleId { get; set; }
+
+        [DataMember]
+        [ForeignKey("RoleId")]
+        public virtual Role Role { get; set; }
+        
+
         [DataMember]
         public int PermissionId { get; set; }
 
 
-        public virtual  ICollection<Role> Roles { get; set; }
+        [DataMember]
+        [ForeignKey("PermissionId")]
+        public virtual Permission Permission { get; set; }
+    
 
-        public virtual ICollection<Permission> Permissions { get; set; } 
     }
 }

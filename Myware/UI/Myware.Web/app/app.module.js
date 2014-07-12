@@ -16,6 +16,9 @@
          * We could place these under every feature area,
          * but this is easier to maintain.
          */
+        'ngResource',
+        'ngGrid',
+        'xeditable',
         'LocalStorageModule',
         'app.core',
         'app.widgets',
@@ -44,6 +47,9 @@
     }]);
 
 
+    angular.module(appId).run(function (editableOptions) {
+        editableOptions.theme = 'bs3';
+    });
 })();
 
 

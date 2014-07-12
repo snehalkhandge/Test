@@ -47,11 +47,40 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="CacheCow.Client">
+      <HintPath>..\..\packages\CacheCow.Client.0.5.1\lib\net40\CacheCow.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CacheCow.Client.MemcachedCacheStore">
+      <HintPath>..\..\packages\CacheCow.Client.MemcachedCacheStore.0.5.1\lib\net40\CacheCow.Client.MemcachedCacheStore.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CacheCow.Client.SqlCacheStore">
+      <HintPath>..\..\packages\CacheCow.Client.SqlCacheStore.0.5.1\lib\net40\CacheCow.Client.SqlCacheStore.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CacheCow.Common">
+      <HintPath>..\..\packages\CacheCow.Common.0.5.2\lib\net40\CacheCow.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="CacheCow.Server">
+      <HintPath>..\..\packages\CacheCow.Server.0.5.2\lib\net40\CacheCow.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="CacheCow.Server.EntityTagStore.MongoDb">
+      <HintPath>..\..\packages\CacheCow.Server.EntityTagStore.MongoDb.0.5.1\lib\net40\CacheCow.Server.EntityTagStore.MongoDb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\..\packages\Dapper.1.12.1\lib\net40\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\..\packages\EnyimMemcached.2.12\lib\net35\Enyim.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.0.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -78,6 +107,14 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\..\packages\mongocsharpdriver.1.6.1\lib\net35\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\..\packages\mongocsharpdriver.1.6.1\lib\net35\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -160,6 +197,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\UserManagement\ManageRolesController.cs" />
+    <Compile Include="API\UserManagement\ManageUsersController.cs" />
     <Compile Include="AppUserClaimsIdentityFactory.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -193,6 +232,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Caching\CachingStores.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -200,6 +240,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LogInModel.cs" />
+    <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -244,7 +285,7 @@
     <Content Include="app\usermanagement\permissions\permissions.html" />
     <Content Include="app\usermanagement\permissions\permissions.js" />
     <Content Include="app\usermanagement\roles\config.route.js" />
-    <Content Include="app\usermanagement\roles\roledataservice.js" />
+    <Content Include="app\usermanagement\roles\roleFactory.js" />
     <Content Include="app\usermanagement\roles\roles.html" />
     <Content Include="app\usermanagement\roles\roles.js" />
     <Content Include="app\usermanagement\usermanagement.module.js" />
@@ -260,256 +301,17 @@
     <Content Include="app\widgets\widget\appWidgetMinimize.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\TestClient.css" />
-    <Content Include="Content\bootstrap-custom.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\customtheme.css" />
-    <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\ie10mobile.css" />
+    <Content Include="Content\bootstrap-theme\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme\xeditable.css" />
+    <Content Include="Content\bootstrap\bootstrap.css" />
+    <Content Include="Content\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\AngularJS-small.png" />
     <Content Include="Content\images\breezelogo.png" />
     <Content Include="Content\images\busy.gif" />
     <Content Include="Content\images\icon.png" />
-    <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\Black\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\Black\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\Black\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\Black\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\Black\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\Black\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\Black\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\Black\sprite_2x.png" />
-    <Content Include="Content\kendo\2014.1.318\BlueOpal\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\BlueOpal\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\BlueOpal\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\BlueOpal\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\BlueOpal\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\BlueOpal\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\BlueOpal\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\BlueOpal\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\BlueOpal\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\BlueOpal\sprite_2x.png" />
-    <Content Include="Content\kendo\2014.1.318\Bootstrap\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\Bootstrap\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\Bootstrap\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\Bootstrap\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\Bootstrap\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\Bootstrap\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\Bootstrap\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\Bootstrap\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\Bootstrap\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\Bootstrap\sprite_2x.png" />
-    <Content Include="Content\kendo\2014.1.318\Default\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\Default\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\Default\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\Default\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\Default\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\Default\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\Default\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\Default\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\Default\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\Default\sprite_2x.png" />
-    <Content Include="Content\kendo\2014.1.318\Flat\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\Flat\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\Flat\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\Flat\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\Flat\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\Flat\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\Flat\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\Flat\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\Flat\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\Flat\sprite_2x.png" />
-    <Content Include="Content\kendo\2014.1.318\HighContrast\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\HighContrast\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\HighContrast\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\HighContrast\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\HighContrast\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\HighContrast\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\HighContrast\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\HighContrast\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\HighContrast\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\HighContrast\sprite_2x.png" />
-    <Content Include="Content\kendo\2014.1.318\kendo.black.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.black.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.blueopal.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.blueopal.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.bootstrap.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.bootstrap.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.common-bootstrap.core.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.common-bootstrap.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.common.core.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.common.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.default.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.default.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.flat.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.flat.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.highcontrast.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.highcontrast.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.metro.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.metro.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.metroblack.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.metroblack.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.moonlight.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.moonlight.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.rtl.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.silver.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.silver.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.uniform.min.css" />
-    <Content Include="Content\kendo\2014.1.318\kendo.uniform.mobile.min.css" />
-    <Content Include="Content\kendo\2014.1.318\MetroBlack\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\MetroBlack\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\MetroBlack\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\MetroBlack\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\MetroBlack\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\MetroBlack\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\MetroBlack\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\MetroBlack\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\MetroBlack\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\MetroBlack\sprite_2x.png" />
-    <Content Include="Content\kendo\2014.1.318\Metro\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\Metro\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\Metro\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\Metro\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\Metro\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\Metro\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\Metro\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\Metro\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\Metro\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\Metro\sprite_2x.png" />
-    <Content Include="Content\kendo\2014.1.318\Moonlight\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\Moonlight\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\Moonlight\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\Moonlight\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\Moonlight\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\Moonlight\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\Moonlight\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\Moonlight\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\Moonlight\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\Moonlight\sprite_2x.png" />
-    <Content Include="Content\kendo\2014.1.318\Silver\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\Silver\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\Silver\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\Silver\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\Silver\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\Silver\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\Silver\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\Silver\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\Silver\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\Silver\sprite_2x.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\brushed-metal.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots1.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots10.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots11.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots12.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots13.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots2.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots3.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots4.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots5.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots6.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots7.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots8.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\dots9.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\glass-lighter.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\glass.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\highlight.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\hsv-gradient.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\hue.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\leather1.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\leather2.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\noise.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\stripe1.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\stripe2.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\stripe3.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\stripe4.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\stripe5.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\stripe6.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\transparency.png" />
-    <Content Include="Content\kendo\2014.1.318\textures\transtexture.png" />
-    <Content Include="Content\kendo\2014.1.318\Uniform\editor.png" />
-    <Content Include="Content\kendo\2014.1.318\Uniform\imagebrowser.png" />
-    <Content Include="Content\kendo\2014.1.318\Uniform\indeterminate.gif" />
-    <Content Include="Content\kendo\2014.1.318\Uniform\loading-image.gif" />
-    <Content Include="Content\kendo\2014.1.318\Uniform\loading.gif" />
-    <Content Include="Content\kendo\2014.1.318\Uniform\loading_2x.gif" />
-    <Content Include="Content\kendo\2014.1.318\Uniform\slider-h.gif" />
-    <Content Include="Content\kendo\2014.1.318\Uniform\slider-v.gif" />
-    <Content Include="Content\kendo\2014.1.318\Uniform\sprite.png" />
-    <Content Include="Content\kendo\2014.1.318\Uniform\sprite_2x.png" />
-    <Content Include="Content\ng-grid.css" />
-    <Content Include="Content\ng-grid.min.css" />
-    <Content Include="Content\plugins\dataTables\dataTables.bootstrap.css" />
-    <Content Include="Content\plugins\morris\morris-0.4.3.min.css" />
-    <Content Include="Content\plugins\social-buttons\social-buttons.css" />
-    <Content Include="Content\plugins\timeline\timeline.css" />
-    <Content Include="Content\sb-admin.css" />
     <Content Include="Content\styles.css" />
-    <Content Include="Content\themes\base\images\animated-overlay.gif" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\jquery-ui.css" />
-    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
-    <Content Include="Content\themes\base\jquery.ui.all.css" />
-    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
-    <Content Include="Content\themes\base\jquery.ui.base.css" />
-    <Content Include="Content\themes\base\jquery.ui.button.css" />
-    <Content Include="Content\themes\base\jquery.ui.core.css" />
-    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
-    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
-    <Content Include="Content\themes\base\jquery.ui.menu.css" />
-    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
-    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
-    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
-    <Content Include="Content\themes\base\jquery.ui.slider.css" />
-    <Content Include="Content\themes\base\jquery.ui.spinner.css" />
-    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
-    <Content Include="Content\themes\base\jquery.ui.theme.css" />
-    <Content Include="Content\themes\base\jquery.ui.tooltip.css" />
-    <Content Include="Content\themes\base\minified\images\animated-overlay.gif" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
@@ -520,11 +322,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -565,6 +362,9 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular\extra\angular-local-storage.js" />
+    <Content Include="Scripts\angular\extra\xeditable.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\ken\extra\angular-kendo.js" />
@@ -1288,6 +1088,7 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.window.min.js" />
     <Content Include="Scripts\knockout-3.1.0.debug.js" />
     <Content Include="Scripts\knockout-3.1.0.js" />
+    <Content Include="Scripts\ng-grid.min.js" />
     <Content Include="Scripts\WebApiTestClient.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -1313,8 +1114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Content\kendo\2014.1.318\images\kendoui.woff" />
-    <Content Include="Content\kendo\2014.1.318\images\kendoui.ttf" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
@@ -1337,6 +1136,44 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TestClientReferences.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TestClientDialogs.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\font-awesome\less\core.less" />
+    <Content Include="Content\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\font-awesome\less\icons.less" />
+    <Content Include="Content\font-awesome\less\larger.less" />
+    <Content Include="Content\font-awesome\less\list.less" />
+    <Content Include="Content\font-awesome\less\mixins.less" />
+    <Content Include="Content\font-awesome\less\path.less" />
+    <Content Include="Content\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\font-awesome\less\spinning.less" />
+    <Content Include="Content\font-awesome\less\stacked.less" />
+    <Content Include="Content\font-awesome\less\variables.less" />
+    <Content Include="Content\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\font-awesome\scss\_core.scss" />
+    <Content Include="Content\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\font-awesome\scss\_list.scss" />
+    <Content Include="Content\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\font-awesome\scss\_path.scss" />
+    <Content Include="Content\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\font-awesome\scss\_spinning.scss" />
+    <Content Include="Content\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\bootstrap\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme\bootstrap-theme.css.map" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.window.min.js.map" />
