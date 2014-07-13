@@ -131,6 +131,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201407112254492_UserManagment.resx">
+      <DependentUpon>201407112254492_UserManagment.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Common\Myware.Common\Myware.Common.csproj">
       <Project>{48a2483a-264d-41e3-8748-5228409d7547}</Project>
       <Name>Myware.Common</Name>
@@ -143,19 +152,6 @@
       <Project>{24d79cbe-fceb-4c3b-a446-066e653e89ee}</Project>
       <Name>Myware.Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Infrastructure\Data\Myware.Service\Myware.Service.csproj">
-      <Project>{0017b7b0-c9d8-4449-8cde-7635462abafe}</Project>
-      <Name>Myware.Service</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201407112254492_UserManagment.resx">
-      <DependentUpon>201407112254492_UserManagment.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

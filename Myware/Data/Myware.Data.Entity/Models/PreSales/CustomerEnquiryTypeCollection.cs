@@ -10,7 +10,7 @@ using Myware.Data.Entity.Models.PresalesUnit;
 namespace Myware.Data.Entity.Models.PreSales
 {
     [DataContract(IsReference = true)]
-    public class CustomerEnquiryTypeCollection
+    public class CustomerEnquiryTypeCollection : Myware.Repository.EF.Entity
     {
         [Key]
         public int Id { get; set; }

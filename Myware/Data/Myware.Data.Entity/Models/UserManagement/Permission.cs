@@ -9,7 +9,7 @@ using System.Web;
 namespace Myware.Data.Entity.Models.UserManagement
 {
     [DataContract(IsReference = true)]
-    public class Permission
+    public class Permission : Myware.Repository.EF.Entity
     {
         [Key]
         [DataMember]

@@ -1,4 +1,6 @@
 ﻿using Myware.Data.Entity.Models.UserManagement;
+using Myware.Repository.Repositories;
+using Myware.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace Myware.Reality.Services.UserManagement.Permissions
 
     public class PermissionService : Service<Permission>, IPermissionService
     {
-        public PermissionService(IRepositoryAsync<Product> repository)
+        public PermissionService(IRepositoryAsync<Permission> repository)
             : base(repository)
         {
 
