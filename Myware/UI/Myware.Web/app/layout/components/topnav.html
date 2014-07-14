@@ -1,0 +1,39 @@
+﻿<div class="navbar navbar-fixed-top navbar-default" role="navigation">
+    <div class="navbar-header">
+        <a href="/" class="navbar-brand"><span class="brand-title">{{vm.title}}</span></a>
+        <a class="btn navbar-btn navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+    </div>
+    <div class="navbar-collapse collapse" data-ng-controller="Topbar as vm">
+        
+        <ul class="nav navbar-nav">
+            <li  dropdown>
+                <a class="dropdown-toggle" ng-disabled="disabled">All Routes <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="nlightblue fade-selection-animation"
+                        data-ng-repeat="r in vm.navRoutes">
+                        <a href="#{{r.originalPath}}"
+                           data-ng-bind-html="r.settings.content"></a>
+                    </li>
+                </ul>
+            </li>
+            <li  dropdown>
+                <a class="dropdown-toggle"  ng-disabled="disabled">User Management <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/usermanagement/users">Users</a></li>
+                    <li><a href="#/usermanagement/roles">Roles</a></li>
+                    <li><a href="#/usermanagement/permissions">Permissions</a></li>
+                </ul>
+            </li>
+        </ul>
+        
+        <ul class="nav navbar-nav navbar-right" style="margin-right:15px;">
+            <li data-ng-hide="vm.authentication.isAuth"> <a href="#/account/login">Login</a></li>
+            <li data-ng-hide="!vm.authentication.isAuth"> <a href="#/account/logout">Hi, {{vm.authentication.name}} (Logout)</a></li>
+            
+        </ul>
+    </div><!--/.nav-collapse -->
+</div><!--/.container-fluid -->

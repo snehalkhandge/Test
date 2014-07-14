@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ng-bind="title">Hot Towel Angular</title>
+    <style>
+        /* This helps the ng-show/ng-hide animations start at the right place. */
+        /* Since Angular has this but needs to load, this gives us the class early. */
+        .ng-hide {
+            display: none !important;
+        }
+    </style>
+
+    @Styles.Render("~/Content/bootstrap")
+    
+    
+</head>
+<body>
+
+    <div class="container-fluid body-content">
+        <div data-ng-include="'/app/layout/components/shell.html'"></div>
+        <div id="splash-page" data-ng-show="false">
+            <div class="page-splash">
+                <div class="page-splash-message">
+                    Hot Towel Angular
+                </div>
+                <div class="progress progress-striped active page-progress-bar">
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </div>
+        @RenderBody()
+
+    </div>
+    <span data-cc-scroll-to-top></span>
+    
+    
+    
+    @Scripts.Render("~/bundles/js")
+    
+    <!-- Jay Data-->
+    
+    @Scripts.Render("~/bundles/app")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
