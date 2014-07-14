@@ -140,10 +140,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\Common\Myware.Common\Myware.Common.csproj">
-      <Project>{48a2483a-264d-41e3-8748-5228409d7547}</Project>
-      <Name>Myware.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\Data\Myware.Repository.EF\Myware.Repository.EF.csproj">
       <Project>{86f784c9-f0b9-4177-b61e-3b897488c78a}</Project>
       <Name>Myware.Repository.EF</Name>

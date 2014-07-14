@@ -10,7 +10,7 @@ using Myware.Data.Entity.Models.UserManagement;
 namespace Myware.Data.Entity.Models.UserManagement
 {
     [DataContract(IsReference = true)]
-    public class RolePermissions : BaseEntity
+    public class RolePermissions : Myware.Repository.EF.Entity
     {
 
         [Key]

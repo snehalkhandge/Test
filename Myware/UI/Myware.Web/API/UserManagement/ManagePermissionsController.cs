@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Myware.Data.Entity;
+using Myware.Data.Entity.Models.UserManagement;
+using Myware.Web.Models;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Myware.Data.Entity;
-using Myware.Data.Entity.Models.UserManagement;
-using Myware.Web.Models;
 
 namespace Myware.Web.API.UserManagement
 {
@@ -30,9 +27,8 @@ namespace Myware.Web.API.UserManagement
                 TotalPages = query.Count(),
                 Permissions = query.Skip(pageSize * page)
                                     .Take(pageSize).ToList()
-                
             });
-            
+
             return permissions;
         }
 

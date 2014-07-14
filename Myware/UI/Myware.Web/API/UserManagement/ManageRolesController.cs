@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using Myware.Data.Entity;
+using Myware.Data.Entity.CustomStores;
+using Myware.Data.Entity.Models.UserManagement;
+using Myware.Web.Models;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Myware.Data.Entity;
-using Myware.Data.Entity.CustomStores;
-using Myware.Data.Entity.Models.UserManagement;
-using Myware.Web.Models;
 
 namespace Myware.Web.API.UserManagement
 {
@@ -40,7 +36,7 @@ namespace Myware.Web.API.UserManagement
                                  {
                                      Id = t.Id,
                                      Name = t.Name,
-                                     RolePermissions = t.RolePermissions.Select(b=> new RolePermissionViewModel
+                                     RolePermissions = t.RolePermissions.Select(b => new RolePermissionViewModel
                                      {
                                          Id = b.Id,
                                          RoleId = b.RoleId,
@@ -48,9 +44,6 @@ namespace Myware.Web.API.UserManagement
                                          Permission = b.Permission
                                      }).ToList()
                                  });
-
-
-
         }
 
         // GET: api/ManageRoles/5
@@ -82,7 +75,6 @@ namespace Myware.Web.API.UserManagement
         [ResponseType(typeof(void))]
         public IHttpActionResult PutRole(int id, RoleViewModel roleVM)
         {
-
             var role = new Role();
 
             role.Id = roleVM.Id;
@@ -91,11 +83,8 @@ namespace Myware.Web.API.UserManagement
             {
                 role.RolePermissions.Add(new RolePermissions
                 {
-                    
                 });
             }
-
-
 
             if (!ModelState.IsValid)
             {
@@ -142,7 +131,7 @@ namespace Myware.Web.API.UserManagement
 
             return CreatedAtRoute("DefaultApi", new { id = role.Id }, role);
         }
-        
+
         // DELETE: api/ManageUsers/5
         [ResponseType(typeof(RolePermissions))]
         public IHttpActionResult DeleteRolePermission(int id)

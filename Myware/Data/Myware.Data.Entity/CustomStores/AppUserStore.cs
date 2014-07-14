@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Myware.Data.Entity.Models.UserManagement;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Myware.Data.Entity.Models.UserManagement;
 
 namespace Myware.Data.Entity.CustomStores
 {
@@ -14,7 +14,9 @@ namespace Myware.Data.Entity.CustomStores
 
     }
 
-    public class AppUserStore :  UserStore<User,Role,int,AppUserLogin,AppUserRole,AppUserClaim>,IAppUserStore
+    public class AppUserStore :
+        UserStore<User, Role, int, AppUserLogin, AppUserRole, AppUserClaim>,
+        IAppUserStore
     {
         public AppUserStore()
             : base(new ApplicationDbContext())

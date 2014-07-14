@@ -9,11 +9,7 @@ using Myware.Data.Entity.Models.UserManagement;
 
 namespace Myware.Data.Entity.CustomStores
 {
-    public interface IAppRoleManager
-    {
-        
-    }
-    public class AppRoleManager : RoleManager<Role, int>, IAppRoleManager
+    public class AppRoleManager : RoleManager<Role, int>
     {
         public AppRoleManager(IAppRoleStore store)
             : base(store)
