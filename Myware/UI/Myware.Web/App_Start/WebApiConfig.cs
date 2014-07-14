@@ -30,7 +30,7 @@ namespace Myware.Web
 
             //CacheCow cache store
             //Configure HTTP Caching using Entity Tags (ETags)
-           // GlobalConfiguration.Configuration.MessageHandlers.Add(new CachingHandler(GlobalConfiguration.Configuration));
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new CachingHandler(GlobalConfiguration.Configuration));
         }
     }
 }

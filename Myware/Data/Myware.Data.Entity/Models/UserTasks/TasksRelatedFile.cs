@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Myware.Data.Entity.Models.UserTasks
 {
     [DataContract(IsReference = true)]
-    public class TasksRelatedFile
+    public class TasksRelatedFile : Myware.Repository.EF.Entity
     {
 
         [Key]

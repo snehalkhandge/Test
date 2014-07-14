@@ -120,6 +120,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common">
+      <HintPath>..\..\packages\Ninject.Web.Common.3.2.2.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi">
+      <HintPath>..\..\packages\Ninject.Web.WebApi.3.2.0.0\lib\net45-full\Ninject.Web.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -191,6 +200,9 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -203,6 +215,7 @@
     <Compile Include="AppUserClaimsIdentityFactory.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
@@ -1249,17 +1262,13 @@
     <Content Include="Scripts\angular.min.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Components\Security\Myware.Components.Security\Myware.Components.Security.csproj">
-      <Project>{b66dc1c4-9950-4a3c-99d2-a3a9809a793a}</Project>
-      <Name>Myware.Components.Security</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Data\Myware.Data.Entity\Myware.Data.Entity.csproj">
       <Project>{2b6e4654-ee17-4146-a212-1b309d372f71}</Project>
       <Name>Myware.Data.Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Infrastructure\Common\Myware.Common\Myware.Common.csproj">
-      <Project>{48a2483a-264d-41e3-8748-5228409d7547}</Project>
-      <Name>Myware.Common</Name>
+    <ProjectReference Include="..\..\Data\Myware.Reality.Services\Myware.Reality.Services.csproj">
+      <Project>{8fb85aca-00ca-46e8-ba58-aabe1526769a}</Project>
+      <Name>Myware.Reality.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\Data\Myware.Repository.EF\Myware.Repository.EF.csproj">
       <Project>{86f784c9-f0b9-4177-b61e-3b897488c78a}</Project>

@@ -6,7 +6,7 @@ using Myware.Data.Entity.Models.UserManagement;
 
 namespace Myware.Data.Entity.Models
 {
-    public class BaseEntity : Repository.EF.Entity
+    public class BaseEntity : Myware.Repository.EF.Entity
     {
         [Key]
         [DataMember]
