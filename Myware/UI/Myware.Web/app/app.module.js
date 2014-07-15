@@ -16,11 +16,10 @@
          * We could place these under every feature area,
          * but this is easier to maintain.
          */
-        'ngResource',
+        'angular-data.DSCacheFactory',
+        'xeditable',
         'ngMessages',
         'ui.bootstrap',
-        'ngGrid',
-        'xeditable',
         'LocalStorageModule',
         'app.core',
         'app.widgets',

@@ -72,7 +72,8 @@ namespace Myware.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IDataContextAsync>().To<ApplicationDbContext>().InRequestScope();            
+            
+            kernel.Bind<IDataContextAsync>().To<MywareDbContext>().InRequestScope();    
             kernel.Bind<IUnitOfWorkAsync>().To<UnitOfWork>().InRequestScope();            
             
             //Repository

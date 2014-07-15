@@ -1,75 +1,51 @@
-﻿<section class="mainbar" data-ng-controller="Permissions as vm">
+﻿<section class="mainbar" data-ng-controller="Permissions">
     <section class="matter">
         <div class="container-fluid">
             <div class="row">
                 <div class="widget wblue">
-                    <div data-cc-widget-header title="{{vm.title}}"></div>
-                    <div class="widget-content user">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content permission">
                         Permissions
-                        <pre>{{vm.permissions | json}}</pre>
-                        
-                        <table class="crud-grid table table-striped table-bordered table-condensed table-hover">
-                            <tr>
-                                <th style="width: 100px;">
-                                    <div class="btn-toolbar"><i class="btn glyphicon glyphicon-plus" ng-click="vm.toggleAddMode()"></i></div>
-                                </th>
-                                <th style="width: 50px;">Id</th>
-                                <th>Name</th>
-                                <th>Tag</th>
-                            </tr>
-                            <tr ng-show="vm.addMode">
-                                <td>
-                                    <div class="btn-toolbar">
-                                        <div class="btn-group">
-                                            <i class="btn glyphicon glyphicon-save" ng-click="vm.addPermissions()"></i>
-                                            <i class="btn glyphicon glyphicon-remove" ng-click="vm.toggleAddMode()"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <input ng-model="vm.permission.Name" name="permissionName"
-                                           ng-minlength="5"
-                                           ng-maxlength="20"
-                                           required />
-                                      <div ng-messages="permissionName.$error" ng-messages-include="my-custom-messages">
-                                        
-                                            <div ng-message="required">You did not enter a field</div>
-                                            <div ng-message="minlength">Your field is too short</div>
-                                            <div ng-message="maxlength">Your field is too long</div>
-                                        </div>
+                        <pre>{{results | json}} </pre>
 
-</td>
+                        <table class="table table-bordered table-hover table-condensed">
+                            <tr style="font-weight: bold">
+                                <td style="width:35%">Name</td>>
+                                <td style="width:25%">Edit</td>
+                            </tr>
+                            <tr ng-repeat="permission in results">
                                 <td>
-                                    <input ng-model="vm.permission.Tag" />
+                                    <span editable-text="permission.Name" e-name="Name" e-form="rowform" onbeforesave="checkPermissionName($data)" e-required>
+                                        {{ permission.Name || 'empty' }}
+                                    </span>
+                                </td>
+
+                                <td style="white-space: nowrap">
+                                    <!-- form -->
+                                    <form editable-form name="rowform" onaftersave="savePermission($data, permission.Id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == permission">
+                                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                                            save
+                                        </button>
+                                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                                            cancel
+                                        </button>
+                                    </form>
+                                    <div class="buttons" ng-show="!rowform.$visible">
+                                        <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                                        <button class="btn btn-danger" ng-show="!permission.Id" ng-click="deletePermission(permission)">del</button>
+                                    </div>
                                 </td>
                             </tr>
-                            <tr ng-repeat="permission in vm.permissions | orderBy:'Id':true">
-                                <td>
-                                    <div class="btn-toolbar" ng-show="permission.editMode == null || permission.editMode == false">
-                                        <div class="btn-group">
-                                            <i class="btn glyphicon glyphicon-edit" ng-click="vm.toggleEditMode(permission)"></i>
-                                            <i class="btn glyphicon glyphicon-trash" ng-click="vm.deletePermissions(permission)"></i>
-                                        </div>
-                                    </div>
-                                    <div class="btn-toolbar" ng-show="permission.editMode == true">
-                                        <div class="btn-group">
-                                            <i class="btn glyphicon glyphicon-save" ng-click="vm.updatePermissions(permission)"></i>
-                                            <i class="btn glyphicon glyphicon-remove" ng-click="vm.toggleEditMode(permission)"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{{permission.Id}}</td>
-                                <td>
-                                    <span ng-show="permission.editMode == null || permission.editMode == false">{{permission.Name}}</span>
-                                    <input ng-model="permission.Name" ng-show="permission.editMode == true" />
-                                </td>
-                                <td>
-                                    <span ng-show="permission.editMode == null || permission.editMode == false">{{permission.Tag}}</span>
-                                    <input ng-model="permission.Tag" ng-show="permission.editMode == true" />
+                            <tr>
+                                <td colspan="2">
+                                    <button class="btn btn-default" ng-click="addPermission()">Add row</button>
                                 </td>
                             </tr>
                         </table>
+                        
+                        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="page" ng-change="pageChanged()" ng-hide="hidePagination"></pagination>
+                        
+                    </div>
 
 
                     </div>
@@ -78,12 +54,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        
     </section>
 </section>
 
 
-<script type="text/ng-template" id="my-custom-messages">
-    <div ng-message="required">This field is required</div>
-    <div ng-message="minlength">This field is too short</div>
-</script>

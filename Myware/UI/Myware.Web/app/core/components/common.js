@@ -20,7 +20,8 @@
             debouncedThrottle: debouncedThrottle,
             isNumber: isNumber,
             logger: logger, // for accessibility
-            textContains: textContains
+            textContains: textContains,
+            apiUrl: "http://localhost:10138"
         };
 
         return service;

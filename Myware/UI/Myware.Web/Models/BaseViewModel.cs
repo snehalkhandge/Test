@@ -7,7 +7,7 @@ namespace Myware.Web.Models
 {
     public abstract class BaseViewModel
     {
-        public int TotalPages { get; set; }
+        public int TotalItems { get; set; }
         public int CountPerPage { get; set; }
         public int CurrentPage { get; set; }
 

@@ -14,40 +14,36 @@ namespace Myware.Web.API.UserManagement
     [Authorize]
     public class ManagePermissionsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private MywareDbContext db = new MywareDbContext();
 
         // GET: api/ManagePermissions
-        public List<PermissionViewModel> GetPermissions(int page = 0, int pageSize = 10)
+
+        [Route("permissions/{page}/size/{pageSize}/search/{searchQuery}")]
+        public List<PermissionViewModel> GetPermissions(int page = 1, int pageSize = 10, string searchQuery="")
         {
             var permissions = new List<PermissionViewModel>();
 
             var query = db.Permissions.OrderByDescending(x => x.Id); ;
             permissions.Add(new PermissionViewModel
             {
-                TotalPages = query.Count(),
-                Permissions = query.Skip(pageSize * page)
+                TotalItems = query.Count(),
+                Results = query.Skip(pageSize * (page-1))
                                     .Take(pageSize).ToList()
             });
 
             return permissions;
         }
 
-        // GET: api/ManagePermissions/5
-        [ResponseType(typeof(Permission))]
-        public IHttpActionResult GetPermission(int id)
+        [Route("permissionsIsUnique/{searchQuery}")]
+        public bool GetPermissions(string searchQuery = "")
         {
-            Permission permission = db.Permissions.Find(id);
-            if (permission == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(permission);
+            return db.Permissions.Any(x => x.Name.Contains(searchQuery)); 
         }
 
-        // PUT: api/ManagePermissions/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPermission(int id, Permission permission)
+
+        [Route("savePermission/{id}")]
+        [ResponseType(typeof(CreatePermissionViewModel))]
+        public IHttpActionResult PostPermission(int id, CreatePermissionViewModel permission)
         {
             if (!ModelState.IsValid)
             {
@@ -58,9 +54,21 @@ namespace Myware.Web.API.UserManagement
             {
                 return BadRequest();
             }
+            var perm = new Permission();
 
-            db.Entry(permission).State = EntityState.Modified;
+            perm.Name = permission.Name;
+            
 
+            if (permission.Id == 0)
+            {
+                db.Entry(perm).State = EntityState.Added;
+            }
+            else
+            {
+                perm.Id = permission.Id;
+                db.Entry(perm).State = EntityState.Modified;    
+            }
+            
             try
             {
                 db.SaveChanges();
@@ -76,37 +84,6 @@ namespace Myware.Web.API.UserManagement
                     throw;
                 }
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/ManagePermissions
-        [ResponseType(typeof(Permission))]
-        public IHttpActionResult PostPermission(Permission permission)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Permissions.Add(permission);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = permission.Id }, permission);
-        }
-
-        // DELETE: api/ManagePermissions/5
-        [ResponseType(typeof(Permission))]
-        public IHttpActionResult DeletePermission(int id)
-        {
-            Permission permission = db.Permissions.Find(id);
-            if (permission == null)
-            {
-                return NotFound();
-            }
-
-            db.Permissions.Remove(permission);
-            db.SaveChanges();
 
             return Ok(permission);
         }

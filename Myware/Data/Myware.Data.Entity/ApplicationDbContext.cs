@@ -17,7 +17,7 @@ using Myware.Repository.Infrastructure;
 namespace Myware.Data.Entity
 {
 
-    public partial class ApplicationDbContext : IdentityDbContext<User, Role, int, AppUserLogin, AppUserRole, AppUserClaim>, IDataContextAsync
+    public partial class ApplicationDbContext : IdentityDbContext<User, Role, int, AppUserLogin, AppUserRole, AppUserClaim>
     {
 
         #region Private Fields
@@ -36,6 +36,14 @@ namespace Myware.Data.Entity
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Configuration.LazyLoadingEnabled = false;
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            base.OnModelCreating(modelBuilder);
+        }
+
 
         #region user management
 
@@ -74,61 +82,10 @@ namespace Myware.Data.Entity
 
         #endregion
 
-        
+
         public DbSet<PersonalInformationBookingMeta> PersonalInformationBookingMetas { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            Configuration.LazyLoadingEnabled = false;
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            base.OnModelCreating(modelBuilder);
-        }
-
-        public Guid InstanceId { get { return _instanceId; } }
-
-        public override int SaveChanges()
-        {
-            SyncObjectsStatePreCommit();
-            var changes = base.SaveChanges();
-            SyncObjectsStatePostCommit();
-            return changes;
-        }
-
-        public override async Task<int> SaveChangesAsync()
-        {
-            SyncObjectsStatePreCommit();
-            var changesAsync = await base.SaveChangesAsync();
-            SyncObjectsStatePostCommit();
-            return changesAsync;
-        }
-
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
-        {
-            SyncObjectsStatePreCommit();
-            var changesAsync = await base.SaveChangesAsync(cancellationToken);
-            SyncObjectsStatePostCommit();
-            return changesAsync;
-        }
-
-        public void SyncObjectState(object entity) { Entry(entity).State = StateHelper.ConvertState(((IObjectState)entity).ObjectState); }
-        public new DbSet<T> Set<T>() where T : class { return base.Set<T>(); }
-
-        private void SyncObjectsStatePreCommit()
-        {
-            foreach (var dbEntityEntry in ChangeTracker.Entries())
-            {
-                dbEntityEntry.State = StateHelper.ConvertState(((IObjectState)dbEntityEntry.Entity).ObjectState);
-            }
-        }
-
-        public void SyncObjectsStatePostCommit()
-        {
-            foreach (var dbEntityEntry in ChangeTracker.Entries())
-            {
-                ((IObjectState)dbEntityEntry.Entity).ObjectState = StateHelper.ConvertState(dbEntityEntry.State);
-            }
-        }
-
+        
         
     }
 
