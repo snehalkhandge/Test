@@ -10,17 +10,6 @@ namespace Myware.Web.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-    using Myware.Repository.DataContext;
-    using Myware.Data.Entity;
-    using Myware.Repository.UnitOfWork;
-    using Myware.Repository.EF;
-    using Myware.Data.Entity.CustomStores;
-    using Myware.Data.Entity.Models.UserManagement;
-    using Myware.Repository.Repositories;
-    using Myware.Data.Entity.Models.PresalesUnit;
-    using Myware.Data.Entity.Models.PreSales;
-    using Myware.Data.Entity.Models.UserTasks;
-    using Myware.Reality.Services.UserManagement;
 
     public static class NinjectWebCommon 
     {
@@ -72,57 +61,6 @@ namespace Myware.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            
-            kernel.Bind<IDataContextAsync>().To<MywareDbContext>().InRequestScope();    
-            kernel.Bind<IUnitOfWorkAsync>().To<UnitOfWork>().InRequestScope();            
-            
-            //Repository
-            kernel.Bind<IRepositoryAsync<Permission>>().To<Repository<Permission>>();
-            kernel.Bind<IRepositoryAsync<RolePermissions>>().To<Repository<RolePermissions>>();
-            #region Pre Sales unit
-            kernel.Bind<IRepositoryAsync<Broker>>().To<Repository<Broker>>();
-            kernel.Bind<IRepositoryAsync<Campaign>>().To<Repository<Campaign>>();
-            kernel.Bind<IRepositoryAsync<Company>>().To<Repository<Company>>();
-            kernel.Bind<IRepositoryAsync<ContactNumber>>().To<Repository<ContactNumber>>();
-            kernel.Bind<IRepositoryAsync<ContactStatus>>().To<Repository<ContactStatus>>();
-            kernel.Bind<IRepositoryAsync<CustomerEnquiryType>>().To<Repository<CustomerEnquiryType>>();
-            kernel.Bind<IRepositoryAsync<Developer>>().To<Repository<Developer>>();
-            kernel.Bind<IRepositoryAsync<FacingType>>().To<Repository<FacingType>>();            
-            kernel.Bind<IRepositoryAsync<Locality>>().To<Repository<Locality>>();
-            kernel.Bind<IRepositoryAsync<Location>>().To<Repository<Location>>();
-            kernel.Bind<IRepositoryAsync<LookingForType>>().To<Repository<LookingForType>>();
-            kernel.Bind<IRepositoryAsync<TransactionType>>().To<Repository<TransactionType>>();
-            kernel.Bind<IRepositoryAsync<UnitType>>().To<Repository<UnitType>>();
-            #endregion
-            #region Pre Sales
-            kernel.Bind<IRepositoryAsync<BusinessInformation>>().To<Repository<BusinessInformation>>();
-            kernel.Bind<IRepositoryAsync<PersonalInformation>>().To<Repository<PersonalInformation>>();
-            kernel.Bind<IRepositoryAsync<ContactEnquiry>>().To<Repository<ContactEnquiry>>();
-            kernel.Bind<IRepositoryAsync<CustomerEnquiryTypeCollection>>().To<Repository<CustomerEnquiryTypeCollection>>();
-            #endregion
-            #region User Tasks
-            kernel.Bind<IRepositoryAsync<AssignedTask>>().To<Repository<AssignedTask>>();
-            kernel.Bind<IRepositoryAsync<TasksRelatedFile>>().To<Repository<TasksRelatedFile>>();
-            
-            #endregion
-            //Services
-            #region Pre Sales Unit Service
-            kernel.Bind<IBrokerService>().To<BrokerService>();
-            kernel.Bind<ICampaignService>().To<CampaignService>();
-            kernel.Bind<ICompanyService>().To<CompanyService>();
-            kernel.Bind<IContactStatusService>().To<ContactStatusService>();
-            kernel.Bind<ICustomerEnquiryTypeService>().To<CustomerEnquiryTypeService>();
-            kernel.Bind<IDeveloperService>().To<DeveloperService>();
-            kernel.Bind<IFacingTypeService>().To<FacingTypeService>();
-            kernel.Bind<ILocalityService>().To<LocalityService>();
-            kernel.Bind<ILookingForTypeService>().To<LookingForTypeService>();
-            kernel.Bind<ITransactionTypeService>().To<TransactionTypeService>();
-            kernel.Bind<IUnitTypeService>().To<UnitTypeService>();
-            #endregion
-
-            //Pre-Sales service
-            
-            
         }        
     }
 }

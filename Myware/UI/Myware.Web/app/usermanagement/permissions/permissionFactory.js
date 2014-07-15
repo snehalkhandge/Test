@@ -7,9 +7,9 @@
         .factory(serviceId, dataservice);
 
 
-    dataservice.$inject = ['$http', 'DSCacheFactory', 'common', 'authService'];
+    dataservice.$inject = ['$http','$timeout', 'DSCacheFactory', 'common', 'authService'];
 
-    function dataservice($http, DSCacheFactory, common, authService) {
+    function dataservice($http, $timeout, DSCacheFactory, common, authService) {
 
         var $q = common.$q;
 
@@ -32,27 +32,29 @@
                 start = new Date().getTime(),
                 cacheId = "Permissions" + page + pageSize + searchQuery;
 
+            
 
-            if (dataCache.get(cacheId)) {
-                deferred.resolve(dataCache.get(cacheId));
-            } else {
-                $http.get(common.apiUrl + '/permissions/' + page + '/size/' + pageSize + '/search/' + searchQuery)
-                    .success(function (data) {
-                        data = data || {};
-                        if (data.Messages == null) {
-                            dataCache.put(cacheId, data);
-                        }
+                if (dataCache.get(cacheId)) {
+                    deferred.resolve(dataCache.get(cacheId));
+                } else {
+                    $http.get(common.apiUrl + '/permissions/' + page + '/size/' + pageSize + '/search/' + searchQuery)
+                        .success(function (data) {
+                            data = data || {};
+                            if (data.Messages == null) {
+                                dataCache.put(cacheId, data);
+                            }
 
-                        deferred.resolve(data);
-                    })
-                    .error(function (data, status, headers, config) {
-                        common.logger.error(data);
-                        deferred.reject({});
-                    });
-                   
-            }
+                            deferred.resolve(data);
+                        })
+                        .error(function (data, status, headers, config) {                            
+                            deferred.reject(new Error(angular.toJson(data)));
+                        });
 
-           return deferred.promise;
+                }
+
+
+                return deferred.promise;
+
            
        };
 

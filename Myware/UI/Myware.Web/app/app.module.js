@@ -18,6 +18,7 @@
          */
         'angular-data.DSCacheFactory',
         'xeditable',
+        'ngplus',
         'ngMessages',
         'ui.bootstrap',
         'LocalStorageModule',

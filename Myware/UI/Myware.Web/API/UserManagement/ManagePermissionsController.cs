@@ -14,7 +14,7 @@ namespace Myware.Web.API.UserManagement
     [Authorize]
     public class ManagePermissionsController : ApiController
     {
-        private MywareDbContext db = new MywareDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/ManagePermissions
 

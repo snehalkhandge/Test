@@ -5,18 +5,17 @@
         .module('app.usermanagement')
         .controller('Permissions', Permissions);
 
-    Permissions.$inject = ['$scope', 'common', 'permissionFactory'];
+    Permissions.$inject = ['$scope', '$timeout', '$interval', 'common', 'permissionFactory'];
 
-    function Permissions($scope, common, permissionFactory) {
+    function Permissions($scope, $timeout, $interval, common, permissionFactory) {
         var log = common.logger.info;
 
         /*jshint validthis: true */
-        var $q = common.$q;
-        var queryResult = {};
+        var $q = common.$q;        
         $scope.title = 'Permissions';
         $scope.results = {};
         $scope.totalItems = 0;
-        $scope.itemsPerPage = 1;
+        $scope.itemsPerPage = 7;
         $scope.page = 1;
         $scope.searchQuery = "all";
         $scope.setPage = function (pageNo) {
@@ -27,35 +26,26 @@
         };
         $scope.hidePagination = false;
 
-
-
-
         activate();
 
         function activate() {
+            
+            permissionFactory.getPermissions($scope.page, $scope.itemsPerPage, $scope.searchQuery)
+                .then(function (result) {
 
-            $q.all([getPermissions()])
-                .then(function () {
-                    
-                    if (queryResult.length === 1) {
-                        $scope.results = queryResult[0].Results;
-                        $scope.totalItems = queryResult[0].TotalItems;
+                    $scope.results = result[0].Results;
+                    $scope.totalItems = result[0].TotalItems;
 
-                        if ($scope.totalItems <= $scope.itemsPerPage) {
-                            $scope.hidePagination = true;
-                        }
-
-                        log('Activated Permissions View');
-
-                    } else {
-                        common.logger.error('Sorry, something went wrong');
+                    if ($scope.totalItems <= $scope.itemsPerPage) {
+                        $scope.hidePagination = true;
                     }
 
+                }, function (reason) {
+                        common.logger.error(reason);
 
-            });
+                });            
         }
 
-        
 
         $scope.addPermission = function () {
 
@@ -68,7 +58,6 @@
             
         };
 
-        
         $scope.checkPermissionName = function (permissionName) {
             /*/if (data !== 'awesome') {
                 return "Username 2 should be `awesome`";
@@ -81,8 +70,7 @@
             var deferred = $q.defer();
             deferred.resolve(
 
-                permissionFactory.uniquePermission(permissionName).then(function (result) {
-                    log(result);
+                permissionFactory.uniquePermission(permissionName).then(function (result) {                    
                     if (result == 'true') {
                         return "All permission name has to be unique";
                     }
@@ -92,7 +80,6 @@
             
             return deferred.promise;
         };
-
 
         $scope.deletePermission = function (permission) {
             /*common.logger.error("Permission Id : " + permission.Id);
@@ -108,25 +95,15 @@
 
         $scope.savePermission = function (permission,Id) {
 
-            angular.extend(permission, { Id: Id });
-            
+            angular.extend(permission, { Id: Id });            
 
             permissionFactory.savePermission(permission)
-                .then(function () {
-                    $scope.page = 1;
+                .then(function () {                    
+                    $scope.page = 1;                    
+                    common.logger.success("Successfully updated the item");
                     activate();
-            });
-        };
-
-        function getPermissions() {
-
-            permissionFactory.getPermissions($scope.page, $scope.itemsPerPage, $scope.searchQuery).then(function (result) {
-                if (result !== 'undefined') {
-                    queryResult = result;
-                }
-                
-            });
-            
+                });
+                        
         };
 
     }
