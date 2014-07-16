@@ -42,6 +42,8 @@ namespace Myware.Web
                 .Include("~/app/presalesunit/contactstatustypes/*.js")
                 .Include("~/app/presalesunit/facingtypes/*.js")
                 .Include("~/app/presalesunit/unittypes/*.js")
+                .Include("~/app/presalesunit/locations/*.js")
+                .Include("~/app/presalesunit/locality/*.js")
                 
                 );
 
