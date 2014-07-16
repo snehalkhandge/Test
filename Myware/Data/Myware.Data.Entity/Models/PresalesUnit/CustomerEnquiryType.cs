@@ -14,6 +14,5 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         [DataMember]  
         public string Name { get; set; }
 
-        
     }
 }

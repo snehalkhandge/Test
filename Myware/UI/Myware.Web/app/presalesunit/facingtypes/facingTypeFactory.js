@@ -1,9 +1,9 @@
 ﻿(function() {
     'use strict';
 
-    var serviceId = 'roleFactory';
+    var serviceId = 'facingTypeFactory';
 
-    angular.module('app.usermanagement')
+    angular.module('app.presalesunit')
         .factory(serviceId, dataservice);
 
 
@@ -15,7 +15,7 @@
 
         
 
-        var roleCache = DSCacheFactory('roleCache', {
+        var facingTypeCache = DSCacheFactory('facingTypeCache', {
             maxAge: 3600000,
             capacity: 100,
             deleteOnExpire: 'aggressive',
@@ -25,19 +25,50 @@
             }
         });
 
-       var dataCache = DSCacheFactory.get('roleCache');
+        var dataCache = DSCacheFactory.get('facingTypeCache');
 
-       var getRoles = function (page, pageSize, searchQuery) {
+        var getAllFacingTypes = function () {
+           var deferred = $q.defer(),
+               start = new Date().getTime(),
+               cacheId = "facingType-All";
+
+
+
+           if (dataCache.get(cacheId)) {
+               deferred.resolve(dataCache.get(cacheId));
+           } else {
+               $http.get(common.apiUrl + '/facingTypes/all')
+                   .success(function (data) {
+                       data = data || {};
+                       if (data.Messages == null) {
+                           dataCache.put(cacheId, data);
+                       }
+
+                       deferred.resolve(data);
+                   })
+                   .error(function (data, status, headers, config) {
+                       deferred.reject(new Error(angular.toJson(data)));
+                   });
+
+           }
+
+
+           return deferred.promise;
+
+
+       };
+
+        var getFacingTypes = function (page, pageSize, searchQuery) {
             var deferred = $q.defer(),
                 start = new Date().getTime(),
-                cacheId = "Roles" + page + pageSize + searchQuery;
+                cacheId = "facingTypes" + page + pageSize + searchQuery;
 
             
 
                 if (dataCache.get(cacheId)) {
                     deferred.resolve(dataCache.get(cacheId));
                 } else {
-                    $http.get(common.apiUrl + '/roles/' + page + '/size/' + pageSize + '/search/' + searchQuery)
+                    $http.get(common.apiUrl + '/facingTypes/' + page + '/size/' + pageSize + '/search/' + searchQuery)
                         .success(function (data) {
                             data = data || {};
                             if (data.Messages == null) {
@@ -58,15 +89,15 @@
            
        };
 
-       var saveRole = function (role) {
+        var saveFacingType = function (facingType) {
 
            var deferred = $q.defer();
-           if (role.Id == '') {
-               role.Id = 0;
+           if (facingType.Id == '') {
+               facingType.Id = 0;
            }
 
            
-           $http.post(common.apiUrl + '/saveRole/' + role.Id, role)
+            $http.post(common.apiUrl + '/saveFacingType/' + facingType.Id, facingType)
                     .success(function (data) {
 
                         if (dataCache.info()) {
@@ -83,10 +114,10 @@
 
        };
 
-       var uniqueRole = function (name) {
+        var uniqueFacingType = function (name) {
 
            var deferred = $q.defer();
-           $http.get(common.apiUrl + '/roleIsUnique/' +name)
+            $http.get(common.apiUrl + '/facingTypeIsUnique/' + name)
                     .success(function (data) {
                         deferred.resolve(data);
                     })
@@ -100,11 +131,11 @@
  
 
 
-
         return {
-            getRoles: getRoles,
-            saveRole: saveRole,
-            uniqueRole: uniqueRole
+            getFacingTypes: getFacingTypes,
+            saveFacingType: saveFacingType,
+            uniqueFacingType: uniqueFacingType,
+            getAllFacingTypes: getAllFacingTypes
             
         };
 

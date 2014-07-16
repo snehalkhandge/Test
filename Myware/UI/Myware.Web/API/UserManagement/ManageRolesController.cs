@@ -1,11 +1,15 @@
-﻿using Myware.Data.Entity;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Myware.Data.Entity;
 using Myware.Data.Entity.CustomStores;
 using Myware.Data.Entity.Models.UserManagement;
 using Myware.Web.Models;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -15,23 +19,21 @@ namespace Myware.Web.API.UserManagement
     public class ManageRolesController : ApiController
     {
         public ManageRolesController()
-            : this(new AppRoleManager(new AppRoleStore(new ApplicationDbContext())))
         {
+            db = new ApplicationDbContext();
+            _roleManager = new RoleManager<Role, int>(new RoleStore<Role, int, AppUserRole>(db));
         }
 
-        public ManageRolesController(AppRoleManager roleManager)
-        {
-            _roleManager = roleManager;
-        }
+        private ApplicationDbContext db { get; set; }
+        private RoleManager<Role, int> _roleManager { get; set; }
 
-        private AppRoleManager _roleManager { get; set; }
-
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
 
         // GET: api/ManageRoles
-        public IQueryable<RoleViewModel> GetRoles()
-        {
-            return _roleManager.Roles.Include(b => b.RolePermissions.Select(p => p.Permission))
+        [Route("roles/{page}/size/{pageSize}/search/{searchQuery}")]
+        public ListRoleViewModel GetRoles(int page = 1, int pageSize = 10, string searchQuery = "")
+        {    
+             var query = _roleManager.Roles.Include(b => b.RolePermissions.Select(p => p.Permission))
                                .Select(t => new RoleViewModel
                                  {
                                      Id = t.Id,
@@ -44,67 +46,97 @@ namespace Myware.Web.API.UserManagement
                                          Permission = b.Permission
                                      }).ToList()
                                  });
+
+            query = query.OrderByDescending(x => x.Id); 
+
+            return new ListRoleViewModel { 
+                
+                         TotalItems = query.Count(),
+                         Results = query.Skip(pageSize * (page - 1))
+                                            .Take(pageSize).ToList() 
+             
+                     };
+
+            
         }
 
-        // GET: api/ManageRoles/5
-        [ResponseType(typeof(RoleViewModel))]
-        public IHttpActionResult GetRole(int id)
-        {
-            RoleViewModel role = _roleManager.Roles.Where(t => t.Id == id).Include(b => b.RolePermissions.Select(p => p.Permission))
-                                       .Select(t => new RoleViewModel
-                                       {
-                                           Id = t.Id,
-                                           Name = t.Name,
-                                           RolePermissions = t.RolePermissions.Select(b => new RolePermissionViewModel
-                                           {
-                                               Id = b.Id,
-                                               RoleId = b.RoleId,
-                                               PermissionId = b.PermissionId,
-                                               Permission = b.Permission
-                                           }).ToList()
-                                       }).SingleOrDefault();
-            if (role == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(role);
+        [Route("roleIsUnique/{searchQuery}")]
+        public bool GetRoles(string searchQuery = "")
+        {
+            return _roleManager.Roles.Any(x => x.Name.Contains(searchQuery));
         }
 
-        // PUT: api/ManageRoles/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutRole(int id, RoleViewModel roleVM)
+
+
+        [Route("saveRole/{id}")]
+        [ResponseType(typeof(CreateRoleViewModel))]
+        public IHttpActionResult PostRole(int id, CreateRoleViewModel roleVM)
         {
-            var role = new Role();
-
-            role.Id = roleVM.Id;
-            role.Name = roleVM.Name;
-            foreach (var perm in roleVM.RolePermissions)
-            {
-                role.RolePermissions.Add(new RolePermissions
-                {
-                });
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != role.Id)
+            if (id != roleVM.Id)
             {
                 return BadRequest();
             }
-
-            db.Entry(role).State = EntityState.Modified;
-
             try
             {
+                var role = new Role();
+                
+                if (roleVM.Id == 0)
+                {
+                    //New Role
+                    role.Name = roleVM.Name;
+
+                    _roleManager.Create(role);
+                    db.SaveChanges();
+
+                }
+                else
+                {
+                    //Update Role
+                    role = _roleManager.FindById(roleVM.Id);
+
+                    if(role == null)
+                    {
+                        return BadRequest("Invalid role id");
+                    }
+                    
+                    if(role.Name != roleVM.Name)
+                    {
+                        role.Name = roleVM.Name;
+                        _roleManager.Update(role);
+                        db.SaveChanges();
+                    }
+
+                    var itemsToDelete = db.RolePermissions.Where(x => x.RoleId == role.Id);
+                    db.RolePermissions.RemoveRange(itemsToDelete);
+                    db.SaveChanges();
+
+                }
+
+
+                var rolePermissions = new List<RolePermissions>();
+
+                foreach (var item in roleVM.Permissions)
+                {
+                    rolePermissions.Add(new RolePermissions
+                                            {
+                                                RoleId = role.Id,
+                                                PermissionId = item
+                                            });
+                }
+
+                db.RolePermissions.AddRange(rolePermissions);
+
                 db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoleExists(id))
+                if (_roleManager.FindById(roleVM.Id) == null)
                 {
                     return NotFound();
                 }
@@ -114,38 +146,7 @@ namespace Myware.Web.API.UserManagement
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/ManageRoles
-        [ResponseType(typeof(Role))]
-        public IHttpActionResult PostRole(Role role)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Roles.Add(role);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = role.Id }, role);
-        }
-
-        // DELETE: api/ManageUsers/5
-        [ResponseType(typeof(RolePermissions))]
-        public IHttpActionResult DeleteRolePermission(int id)
-        {
-            var permission = db.RolePermissions.Find(id);
-            if (permission == null)
-            {
-                return NotFound();
-            }
-
-            db.RolePermissions.Remove(permission);
-            db.SaveChanges();
-
-            return Ok(permission);
+            return Ok(roleVM);
         }
 
         protected override void Dispose(bool disposing)

@@ -36,7 +36,13 @@ namespace Myware.Web
                 .Include("~/app/usermanagement/*.js")
                 .Include("~/app/usermanagement/users/*.js")
                 .Include("~/app/usermanagement/roles/*.js")
-                .Include("~/app/usermanagement/permissions/*.js"));
+                .Include("~/app/usermanagement/permissions/*.js")
+                .Include("~/app/presalesunit/*.js")
+                .Include("~/app/presalesunit/customertypes/*.js")
+                .Include("~/app/presalesunit/contactstatustypes/*.js")
+                .Include("~/app/presalesunit/facingtypes/*.js")
+                
+                );
 
 
             bundles.Add(new StyleBundle("~/Content/bootstrap")

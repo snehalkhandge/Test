@@ -27,6 +27,37 @@
 
        var dataCache = DSCacheFactory.get('permissionCache');
 
+       var getAllPermissions = function () {
+           var deferred = $q.defer(),
+               start = new Date().getTime(),
+               cacheId = "Permissions-All";
+
+
+
+           if (dataCache.get(cacheId)) {
+               deferred.resolve(dataCache.get(cacheId));
+           } else {
+               $http.get(common.apiUrl + '/permissions/all')
+                   .success(function (data) {
+                       data = data || {};
+                       if (data.Messages == null) {
+                           dataCache.put(cacheId, data);
+                       }
+
+                       deferred.resolve(data);
+                   })
+                   .error(function (data, status, headers, config) {
+                       deferred.reject(new Error(angular.toJson(data)));
+                   });
+
+           }
+
+
+           return deferred.promise;
+
+
+       };
+
        var getPermissions = function(page,pageSize,searchQuery) {
             var deferred = $q.defer(),
                 start = new Date().getTime(),
@@ -103,7 +134,8 @@
         return {
             getPermissions: getPermissions,
             savePermission: savePermission,
-            uniquePermission: uniquePermission
+            uniquePermission: uniquePermission,
+            getAllPermissions: getAllPermissions
             
         };
 

@@ -16,7 +16,9 @@ namespace Myware.Web.Models
         [DataMember]
         public string Name { get; set; }
 
-        
+        [DataMember]
+        public List<int> SelectedPermissions { get; set; }
+
         [DataMember]
         public List<RolePermissionViewModel> RolePermissions { get; set; }
 
@@ -37,5 +39,21 @@ namespace Myware.Web.Models
         [DataMember]
         public Permission Permission { get; set; }
     }
+
+
+    public class ListRoleViewModel : BaseViewModel
+    {
+        public List<RoleViewModel> Results { get; set; }
+    }
+
+    public class CreateRoleViewModel
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public List<int> Permissions { get; set; }
+    }
+
 
 }

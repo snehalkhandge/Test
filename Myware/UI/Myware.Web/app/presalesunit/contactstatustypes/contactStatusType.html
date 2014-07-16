@@ -1,34 +1,27 @@
-﻿<section class="mainbar" data-ng-controller="Roles">
+﻿<section class="mainbar" data-ng-controller="ContactStatusTypes">
     <section class="matter">
         <div class="container-fluid">
             <div class="row">
                 <div class="widget wblue">
                     <div data-cc-widget-header title="{{title}}"></div>
-                    <div class="widget-content roles">
-                       <h2> Manage Roles  </h2> 
-                        <hr/>
+                    <div class="widget-content customerTypes">
+                        <h2> Contact Status Types  </h2>      
                         <table class="table table-bordered table-hover table-condensed">
                             <tr style="font-weight: bold">
-                                <td style="width:15%">Name</td>
-                                <td style="width:60%">Permissions</td>
+                                <td style="width:35%">Name</td>
                                 <td style="width:25%">Edit</td>
                             </tr>
                             <tr ng-repeat="item in results">
                                 <td>
-                                    <span editable-text="item.Name" e-name="Name" e-form="rowform" onbeforesave="checkRoleName($data)" e-required>
+                                    <span editable-text="item.Name" e-name="Name" e-form="rowform" onbeforesave="checkContactStatusTypeName($data)" e-required>
                                         {{ item.Name || 'empty' }}
-                                    </span>                                    
-                                </td>
-                                <td>
-
-                                    <span editable-select="item.SelectedPermissions" e-name="Permissions" e-form="rowform" e-multiple e-ng-options="s.Id as s.Name for s in permissions">
-                                        {{ showPermissions(item) }}
                                     </span>
                                 </td>
 
                                 <td style="white-space: nowrap">
                                     <!-- form -->
-                                    <form editable-form name="rowform" onaftersave="saveRole($data, item.Id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == item">
+                                    <form editable-form name="rowform" onaftersave="saveContactStatusType($data, item.Id)" ng-show="rowform.$visible"
+                                           class="form-buttons form-inline" shown="inserted == item">
                                         <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                                             save
                                         </button>
@@ -38,29 +31,29 @@
                                     </form>
                                     <div class="buttons" ng-show="!rowform.$visible">
                                         <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
-                                        <button class="btn btn-danger" ng-show="!item.Id" ng-click="deleteRole(item)">del</button>
+                                        <button class="btn btn-danger" ng-show="!item.Id" ng-click="deleteContactStatusType(item)">del</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <button class="btn btn-default" ng-click="addRole()">Add row</button>
+                                    <button class="btn btn-default" ng-click="addContactStatusType()">Add row</button>
                                 </td>
                             </tr>
                         </table>
-                        
+
                         <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="page" ng-change="pageChanged()" ng-hide="hidePagination"></pagination>
-                        
+
                     </div>
 
 
-                    </div>
-                    <div class="widget-foot">
-                        <div class="clearfix"></div>
-                    </div>
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
                 </div>
             </div>
-        
+        </div>
+
     </section>
 </section>
 

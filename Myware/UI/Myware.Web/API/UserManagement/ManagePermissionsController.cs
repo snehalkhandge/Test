@@ -34,6 +34,27 @@ namespace Myware.Web.API.UserManagement
             return permissions;
         }
 
+        [Route("permissions/all")]
+        public ListPartialPermissionViewModel GetAllPermissions()
+        {
+            
+            
+            var query = db.Permissions.OrderByDescending(x => x.Id);
+
+            return  new ListPartialPermissionViewModel {
+
+                TotalItems = 0,
+                Results = query.Select(t => new PartialPermissionViewModel
+                {
+                    Id = t.Id,
+                    Name = t.Name
+                }).ToList()
+            
+            };
+
+        }
+
+
         [Route("permissionsIsUnique/{searchQuery}")]
         public bool GetPermissions(string searchQuery = "")
         {

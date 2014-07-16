@@ -25,6 +25,23 @@ namespace Myware.Web.Models
         public string Name { get; set; }
         
     }
-    
+
+
+    public class ListPartialPermissionViewModel : BaseViewModel
+    {
+        public List<PartialPermissionViewModel> Results { get; set; }
+    }
+
+
+    public class PartialPermissionViewModel 
+    {
+        [DataMember]        
+        public int Id { get; set; }
+
+        [DataMember]        
+        public string Name { get; set; }
+    }
+
+
 
 }

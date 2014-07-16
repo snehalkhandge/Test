@@ -251,6 +251,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\PreSalesUnit\ManageFacingTypesController.cs" />
+    <Compile Include="API\PreSalesUnit\ManageContactStatusTypesController.cs" />
+    <Compile Include="API\PreSalesUnit\ManageCustomerTypesController.cs" />
     <Compile Include="API\UserManagement\ManagePermissionsController.cs" />
     <Compile Include="API\UserManagement\ManageRolesController.cs" />
     <Compile Include="API\UserManagement\ManageUsersController.cs" />
@@ -296,6 +299,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\PreSalesUnit\CreateTypeViewModel.cs" />
+    <Compile Include="Models\PreSalesUnit\CutomerTypeViewModel.cs" />
     <Compile Include="Models\UserManagement\PermissionViewModel.cs" />
     <Compile Include="Models\UserManagement\LogInModel.cs" />
     <Compile Include="Models\UserManagement\RoleViewModel.cs" />
@@ -338,6 +343,18 @@
     <Content Include="app\presalesunit\brokers\config.route.js" />
     <Content Include="app\presalesunit\brokers\users.html" />
     <Content Include="app\presalesunit\brokers\users.js" />
+    <Content Include="app\presalesunit\facingtypes\config.route.js" />
+    <Content Include="app\presalesunit\facingtypes\facingType.html" />
+    <Content Include="app\presalesunit\facingtypes\facingType.js" />
+    <Content Include="app\presalesunit\facingtypes\facingTypeFactory.js" />
+    <Content Include="app\presalesunit\contactstatustypes\config.route.js" />
+    <Content Include="app\presalesunit\contactstatustypes\contactStatusType.html" />
+    <Content Include="app\presalesunit\contactstatustypes\contactStatusType.js" />
+    <Content Include="app\presalesunit\contactstatustypes\contactStatusTypeFactory.js" />
+    <Content Include="app\presalesunit\customertypes\config.route.js" />
+    <Content Include="app\presalesunit\customertypes\customerTypeFactory.js" />
+    <Content Include="app\presalesunit\customertypes\customerType.html" />
+    <Content Include="app\presalesunit\customertypes\customerType.js" />
     <Content Include="app\presalesunit\presalesunit.module.js" />
     <Content Include="app\usermanagement\permissions\config.route.js" />
     <Content Include="app\usermanagement\permissions\permissions.html" />

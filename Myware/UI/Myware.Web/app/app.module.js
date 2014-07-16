@@ -33,6 +33,7 @@
         'app.account',
         'app.dashboard',
         'app.usermanagement',
+        'app.presalesunit',
         'app.layout'
     ]);
 

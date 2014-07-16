@@ -1,9 +1,9 @@
 ﻿(function() {
     'use strict';
 
-    var serviceId = 'roleFactory';
+    var serviceId = 'contactStatusTypeFactory';
 
-    angular.module('app.usermanagement')
+    angular.module('app.presalesunit')
         .factory(serviceId, dataservice);
 
 
@@ -15,7 +15,7 @@
 
         
 
-        var roleCache = DSCacheFactory('roleCache', {
+        var contactStatusTypeCache = DSCacheFactory('contactStatusTypeCache', {
             maxAge: 3600000,
             capacity: 100,
             deleteOnExpire: 'aggressive',
@@ -25,19 +25,50 @@
             }
         });
 
-       var dataCache = DSCacheFactory.get('roleCache');
+        var dataCache = DSCacheFactory.get('contactStatusTypeCache');
 
-       var getRoles = function (page, pageSize, searchQuery) {
+        var getAllContactStatusTypes = function () {
+           var deferred = $q.defer(),
+               start = new Date().getTime(),
+               cacheId = "contactStatusType-All";
+
+
+
+           if (dataCache.get(cacheId)) {
+               deferred.resolve(dataCache.get(cacheId));
+           } else {
+               $http.get(common.apiUrl + '/contactStatusTypes/all')
+                   .success(function (data) {
+                       data = data || {};
+                       if (data.Messages == null) {
+                           dataCache.put(cacheId, data);
+                       }
+
+                       deferred.resolve(data);
+                   })
+                   .error(function (data, status, headers, config) {
+                       deferred.reject(new Error(angular.toJson(data)));
+                   });
+
+           }
+
+
+           return deferred.promise;
+
+
+       };
+
+        var getContactStatusTypes = function (page, pageSize, searchQuery) {
             var deferred = $q.defer(),
                 start = new Date().getTime(),
-                cacheId = "Roles" + page + pageSize + searchQuery;
+                cacheId = "contactStatusTypes" + page + pageSize + searchQuery;
 
             
 
                 if (dataCache.get(cacheId)) {
                     deferred.resolve(dataCache.get(cacheId));
                 } else {
-                    $http.get(common.apiUrl + '/roles/' + page + '/size/' + pageSize + '/search/' + searchQuery)
+                    $http.get(common.apiUrl + '/contactStatusTypes/' + page + '/size/' + pageSize + '/search/' + searchQuery)
                         .success(function (data) {
                             data = data || {};
                             if (data.Messages == null) {
@@ -58,15 +89,15 @@
            
        };
 
-       var saveRole = function (role) {
+        var saveContactStatusType = function (contactStatusType) {
 
            var deferred = $q.defer();
-           if (role.Id == '') {
-               role.Id = 0;
+           if (contactStatusType.Id == '') {
+               contactStatusType.Id = 0;
            }
 
            
-           $http.post(common.apiUrl + '/saveRole/' + role.Id, role)
+            $http.post(common.apiUrl + '/saveContactStatusType/' + contactStatusType.Id, contactStatusType)
                     .success(function (data) {
 
                         if (dataCache.info()) {
@@ -83,10 +114,10 @@
 
        };
 
-       var uniqueRole = function (name) {
+        var uniqueContactStatusType = function (name) {
 
            var deferred = $q.defer();
-           $http.get(common.apiUrl + '/roleIsUnique/' +name)
+           $http.get(common.apiUrl + '/contactStatusTypeIsUnique/' + name)
                     .success(function (data) {
                         deferred.resolve(data);
                     })
@@ -100,11 +131,11 @@
  
 
 
-
         return {
-            getRoles: getRoles,
-            saveRole: saveRole,
-            uniqueRole: uniqueRole
+            getContactStatusTypes: getContactStatusTypes,
+            saveContactStatusType: saveContactStatusType,
+            uniqueContactStatusType: uniqueContactStatusType,
+            getAllContactStatusTypes: getAllContactStatusTypes
             
         };
 
