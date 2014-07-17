@@ -422,24 +422,6 @@ namespace Myware.Data.Entity.DataContextMigrations
 
             context.SaveChanges();
 
-            var developer = new Developer
-            {
-                Name = "Developer Bhai",
-                Description = "Description developer",
-                UpdatedByUserId = 1
-            };
-
-            context.Developers.Add(developer);
-
-            var developer1 = new Developer
-            {
-                Name = "Developer Bhai 1",
-                UpdatedByUserId = 1
-
-            };
-
-            context.Developers.Add(developer1);
-            context.SaveChanges();
             var company = new Company
             {
                 Name = "Develoeprs company",
@@ -448,14 +430,33 @@ namespace Myware.Data.Entity.DataContextMigrations
                 Pin = "erdfdfsdsffd",
                 LocalityId = 1,
                 FaxNumber = "55665685665",
-                ReceiptFormat = "I dont know",
-                Developers = context.Developers.ToList(),
+                ReceiptFormat = "I dont know",                
                 ContactNumbers = context.ContactNumbers.ToList()
             };
 
             context.Companies.Add(company);
+            context.SaveChanges();
 
 
+            var developer = new Developer
+            {
+                Name = "Developer Bhai",
+                Description = "Description developer",
+                UpdatedByUserId = 1,
+                Companies = context.Companies.ToList()
+            };
+
+            context.Developers.Add(developer);
+
+            var developer1 = new Developer
+            {
+                Name = "Developer Bhai 1",
+                UpdatedByUserId = 1,
+                Companies = context.Companies.ToList()
+
+            };
+
+            context.Developers.Add(developer1);
             context.SaveChanges();
             #endregion
            

@@ -97,6 +97,10 @@
     <Compile Include="DataContextMigrations\201407151257559_Initial.Designer.cs">
       <DependentUpon>201407151257559_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContextMigrations\201407170930400_FixCompany.cs" />
+    <Compile Include="DataContextMigrations\201407170930400_FixCompany.Designer.cs">
+      <DependentUpon>201407170930400_FixCompany.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\BaseEntity\BaseEntity.cs" />
     <Compile Include="ApplicationDbContext.cs" />
@@ -144,6 +148,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DataContextMigrations\201407151257559_Initial.resx">
       <DependentUpon>201407151257559_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContextMigrations\201407170930400_FixCompany.resx">
+      <DependentUpon>201407170930400_FixCompany.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

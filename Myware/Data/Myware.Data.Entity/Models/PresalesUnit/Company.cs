@@ -40,8 +40,7 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         [DataMember]
         public Locality Locality { get; set; }
 
-        [DataMember]
-        public virtual ICollection<Developer> Developers { get; set; }
+        
 
         
     }

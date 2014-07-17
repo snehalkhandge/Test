@@ -44,6 +44,7 @@ namespace Myware.Web
                 .Include("~/app/presalesunit/unittypes/*.js")
                 .Include("~/app/presalesunit/locations/*.js")
                 .Include("~/app/presalesunit/locality/*.js")
+                .Include("~/app/presalesunit/sources/*.js")
                 
                 );
 

@@ -17,7 +17,8 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         [DataMember]  
         public string Description { get; set; }
 
-        
+        [DataMember]
+        public virtual ICollection<Company> Companies { get; set; }
 
     }
 }

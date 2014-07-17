@@ -1,0 +1,106 @@
+﻿<section class="mainbar" data-ng-controller="Source">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content Locality">
+                        <table class="table table-bordered table-hover table-condensed">
+                            <tr style="font-weight: bold">
+                                <td style="width:35%">Name</td>
+                                <td style="width:20%">Parent Category</td>                                
+                                <td style="width:25%">Edit</td>
+                            </tr>
+                            <tr ng-repeat="item in results">
+
+                                <td colspan="3">
+                                    <table class="table table-hover table-condensed">
+                                        <tr>
+                                            <td style="width:35%">
+                                                <!-- editable username (text with validation) -->
+                                                <span editable-text="item.Name" e-name="Name" e-form="rowform" onbeforesave="checkSourceName($data, item.Id)" e-required>
+                                                    {{ item.Name || 'empty' }}
+                                                </span>
+                                            </td>
+                                            <td style="width:35%">
+                                                <!-- editable status (select-local) -->
+                                                <span editable-select="item.ParentCampaignId" e-name="ParentCampaignId" e-form="rowform" e-ng-options="s.Id as s.Name for s in parentCampaigns ">
+                                                    {{ showParent(item.ParentCampaignId) }}
+                                                </span>
+                                            </td>
+                                            <td style="width:30%; white-space: nowrap">
+                                                <!-- form -->
+                                                <form editable-form name="rowform" onbeforesave="saveSource($data, item.Id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == item">
+                                                    <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                                                        save
+                                                    </button>
+                                                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                                                        cancel
+                                                    </button>                                                    
+                                                </form>
+                                                <div class="buttons" ng-show="!rowform.$visible">
+                                                    <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                                                    <button class="btn btn-danger" ng-click="deleteSource(item)">del</button>
+                                                    <button type="button" class="btn btn-success" ng-model="item.isCollapsed"
+                                                            btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0"
+                                                            ng-show="item.Children.length">
+                                                        Show Sub Campaigns
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-hide="item.isCollapsed" ng-if="item.Children.length" ng-repeat="child in item.Children">
+                                            <td style="width:35%">
+                                                <!-- editable username (text with validation) -->
+                                                <span editable-text="child.Name" e-name="Name" e-form="rowChildform" onbeforesave="checkSourceName($data, child.Id)" e-required>
+                                                    {{ child.Name || 'empty' }}
+                                                </span>
+                                            </td>
+                                            <td style="width:35%">
+                                                <!-- editable status (select-local) -->
+                                                <span editable-select="child.ParentCampaignId" e-name="ParentCampaignId" e-form="rowChildform" e-ng-options="s.Id as s.Name for s in parentCampaigns ">
+                                                    {{ showParent(child.ParentCampaignId) }}
+                                                </span>
+                                            </td>
+                                            <td style="width:30%; white-space: nowrap">
+                                                <!-- form -->
+                                                <form editable-form name="rowChildform" onbeforesave="saveSource($data, child.Id)" ng-show="rowChildform.$visible" class="form-buttons form-inline" shown="inserted == child">
+                                                    <button type="submit" ng-disabled="rowChildform.$waiting" class="btn btn-primary">
+                                                        save
+                                                    </button>
+                                                    <button type="button" ng-disabled="rowChildform.$waiting" ng-click="rowChildform.$cancel()" class="btn btn-default">
+                                                        cancel
+                                                    </button>
+                                                </form>
+                                                <div class="buttons" ng-show="!rowChildform.$visible">
+                                                    <button class="btn btn-primary" ng-click="rowChildform.$show()">edit</button>
+                                                    <button class="btn btn-danger" ng-click="deleteSource(child)">del</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+
+
+
+
+
+                                
+                            </tr>
+                        </table>
+
+                        <button class="btn btn-default" ng-click="addSource()">Add row</button>
+                    </div>
+
+                   </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+
