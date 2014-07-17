@@ -24,10 +24,10 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         public int? ParentCampaignId { get; set; }
 
         [ForeignKey(name: "ParentCampaignId")]
-        public virtual Campaign ParentCampaign { get; set; }
+        public  Campaign ParentCampaign { get; set; }
 
 
-        public virtual ICollection<PersonalInformation> PersonalInformations { get; set; }
+        public  ICollection<PersonalInformation> PersonalInformations { get; set; }
 
     }
 }

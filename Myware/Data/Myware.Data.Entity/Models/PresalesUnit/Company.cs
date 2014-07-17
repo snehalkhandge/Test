@@ -24,7 +24,7 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         public string Pin { get; set; }
 
         [DataMember]
-        public ICollection<ContactNumber> ContactNumbers { get; set; }
+        public virtual ICollection<CompanyContactNumber> ContactNumbers { get; set; }
 
         [StringLength(200)]
         [DataMember]  
@@ -40,6 +40,8 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         [DataMember]
         public Locality Locality { get; set; }
 
+        [DataMember]
+        public virtual ICollection<Developer> Developers { get; set; }
         
 
         

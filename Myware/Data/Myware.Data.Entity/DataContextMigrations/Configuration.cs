@@ -430,8 +430,8 @@ namespace Myware.Data.Entity.DataContextMigrations
                 Pin = "erdfdfsdsffd",
                 LocalityId = 1,
                 FaxNumber = "55665685665",
-                ReceiptFormat = "I dont know",                
-                ContactNumbers = context.ContactNumbers.ToList()
+                ReceiptFormat = "I dont know"
+                
             };
 
             context.Companies.Add(company);

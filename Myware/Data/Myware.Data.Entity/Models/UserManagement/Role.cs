@@ -13,6 +13,6 @@ namespace Myware.Data.Entity.Models.UserManagement
     [DataContract(IsReference = true)]
     public class Role : IdentityRole<int, AppUserRole>
     {   
-        public virtual ICollection<RolePermissions> RolePermissions { get; set; }
+        public  ICollection<RolePermissions> RolePermissions { get; set; }
     }
 }

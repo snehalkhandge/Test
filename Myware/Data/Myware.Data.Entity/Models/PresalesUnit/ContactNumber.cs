@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Myware.Data.Entity.Models.PresalesUnit
 {
@@ -14,7 +15,9 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         [DataMember]
         public string Type { get; set; }
 
-
         
+
+        [DataMember]
+        public virtual ICollection<Developer> Developers { get; set; }
     }
 }

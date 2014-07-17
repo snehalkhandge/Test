@@ -21,7 +21,7 @@ namespace Myware.Data.Entity.Models.UserManagement
         [Index(IsUnique = true)]
         public string Name { get; set; }
         
-        public virtual ICollection<RolePermissions> RolePermissions { get; set; }
+        public  ICollection<RolePermissions> RolePermissions { get; set; }
 
     }
 }

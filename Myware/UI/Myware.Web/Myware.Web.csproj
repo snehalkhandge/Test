@@ -254,6 +254,7 @@
     <Compile Include="API\PreSalesUnit\ManageCampaignController.cs" />
     <Compile Include="API\PreSalesUnit\ManageLocationsController.cs" />
     <Compile Include="API\PreSalesUnit\ManageLocalityController.cs" />
+    <Compile Include="API\PreSalesUnit\ManageCompaniesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageUnitTypesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageFacingTypesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageContactStatusTypesController.cs" />
@@ -303,6 +304,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\PreSalesUnit\CompanyViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CreateLocationViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CreateTypeViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CutomerTypeViewModel.cs" />
@@ -350,6 +352,8 @@
     <Content Include="app\presalesunit\brokers\config.route.js" />
     <Content Include="app\presalesunit\brokers\users.html" />
     <Content Include="app\presalesunit\brokers\users.js" />
+    <Content Include="app\presalesunit\company\editCompany.html" />
+    <Content Include="app\presalesunit\company\editCompany.js" />
     <Content Include="app\presalesunit\locality\config.route.js" />
     <Content Include="app\presalesunit\locality\localityFactory.js" />
     <Content Include="app\presalesunit\locality\locality.html" />
@@ -362,6 +366,10 @@
     <Content Include="app\presalesunit\sources\sources.html" />
     <Content Include="app\presalesunit\sources\sources.js" />
     <Content Include="app\presalesunit\sources\sourcesFactory.js" />
+    <Content Include="app\presalesunit\company\config.route.js" />
+    <Content Include="app\presalesunit\company\company.html" />
+    <Content Include="app\presalesunit\company\company.js" />
+    <Content Include="app\presalesunit\company\companyFactory.js" />
     <Content Include="app\presalesunit\unittypes\config.route.js" />
     <Content Include="app\presalesunit\unittypes\unitType.html" />
     <Content Include="app\presalesunit\unittypes\unitType.js" />

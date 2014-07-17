@@ -20,15 +20,15 @@ namespace Myware.Data.Entity.Models.PresalesUnit
 
         [ForeignKey("LocationId")]
         [DataMember]
-        public virtual Location Location { get; set; }
+        public  Location Location { get; set; }
         [DataMember]
-        public virtual ICollection<Broker> Brokers { get; set; }
+        public  ICollection<Broker> Brokers { get; set; }
         [DataMember]
-        public virtual ICollection<BusinessInformation> BusinessInformations { get; set; }
+        public  ICollection<BusinessInformation> BusinessInformations { get; set; }
         [DataMember]
-        public virtual ICollection<Company> Companies { get; set; }
+        public  ICollection<Company> Companies { get; set; }
         [DataMember]
-        public virtual ICollection<PersonalInformation> PersonalInformations { get; set; }
+        public  ICollection<PersonalInformation> PersonalInformations { get; set; }
         
     }
 }

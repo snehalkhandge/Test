@@ -4,36 +4,32 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Web;
-using Myware.Data.Entity.Models.UserManagement;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Myware.Data.Entity.Models.UserManagement
+namespace Myware.Data.Entity.Models.PresalesUnit
 {
     [DataContract(IsReference = true)]
-    public class RolePermissions : Myware.Repository.EF.Entity
+    public class CompanyContactNumber : Myware.Repository.EF.Entity
     {
-
         [Key]
         [DataMember]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [DataMember]
-        public int RoleId { get; set; }
+        public int CompanyId { get; set; }
 
         [DataMember]
-        [ForeignKey("RoleId")]
-        public  Role Role { get; set; }
-        
+        [ForeignKey("CompanyId")]
+        public Company Company { get; set; }
 
         [DataMember]
-        public int PermissionId { get; set; }
+        public string PhoneNumber { get; set; }
 
 
         [DataMember]
-        [ForeignKey("PermissionId")]
-        public  Permission Permission { get; set; }
-    
+        public string Type { get; set; }
 
     }
 }

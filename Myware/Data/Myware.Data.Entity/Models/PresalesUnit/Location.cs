@@ -20,7 +20,7 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         public string Country { get; set; }
 
         [DataMember]  
-        public virtual ICollection<Locality> Localities { get; set; }
+        public  ICollection<Locality> Localities { get; set; }
 
         
     }

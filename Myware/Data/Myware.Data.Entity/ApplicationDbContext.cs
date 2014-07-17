@@ -35,6 +35,7 @@ namespace Myware.Data.Entity
             _instanceId = Guid.NewGuid();
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
+            Configuration.ValidateOnSaveEnabled = false;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -56,6 +57,7 @@ namespace Myware.Data.Entity
         public DbSet<Broker> Brokers { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<CompanyContactNumber> CompanyContactNumbers { get; set; }
         public DbSet<ContactNumber> ContactNumbers { get; set; }
         public DbSet<ContactStatus> ContactStatus { get; set; }
         public DbSet<CustomerEnquiryType> CustomerEnquiryTypes { get; set; }
