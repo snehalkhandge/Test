@@ -1,0 +1,75 @@
+﻿<section class="mainbar" data-ng-controller="Broker">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> Companies </h2>
+                        <pre>
+                                {{results | json}}
+                            </pre>
+                        <table class="table table-bordered table-hover table-condensed">
+                            <tr style="font-weight: bold">
+                                <td style="width:11%">Image</td>
+                                <td style="width:11%">Name</td>
+                                <td style="width:11%">Company Name</td>
+                                <td style="width:11%">Contact Numbers</td>
+                                <td style="width:11%">Address</td>
+                                <td style="width:11%">Email</td>
+                                <td style="width:11%">Pan card</td>                                
+                                <td style="width:11%">Reference Name</td>
+                                <td style="width:11%">Action</td>
+                            </tr>
+                            <tr ng-repeat="item in results">
+                                <td>
+                                    <img ng-src="{{item.ImageUrl}}" alt="{{item.Name}}" />
+                                </td>
+                                <td>
+                                    {{item.Name}}
+                                </td>
+                                <td>
+                                    {{item.CompanyName}}
+                                </td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li ng-repeat="c in item.ContactNumbers">{{ c.PhoneNumber }}      </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    {{item.Address}} , {{item.Locality.Name}} , {{item.Locality.City}}  , {{item.Locality.State}}
+                                </td>
+                                <td>
+                                    {{item.Email}}
+                                </td>
+                                <td>
+                                    {{item.PanCard}}
+                                </td>
+                                <td>
+                                    {{item.ReferenceName}}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-justified">
+                                        <a class="btn btn-primary" role="button" href="#/presalesunit/broker/edit/{{item.Id}}">Edit</a>
+                                        <a class="btn btn-primary" role="button" href="#/presalesunit/broker/{{item.Id}}">Detail</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="page" ng-change="pageChanged()" ng-hide="hidePagination"></pagination>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

@@ -1,7 +1,7 @@
 ﻿(function() {
     'use strict';
 
-    var serviceId = 'companyFactory';
+    var serviceId = 'brokerFactory';
 
     angular.module('app.presalesunit')
         .factory(serviceId, dataservice);
@@ -15,7 +15,7 @@
 
         
 
-        var companyCache = DSCacheFactory('companyCache', {
+        var brokerCache = DSCacheFactory('brokerCache', {
             maxAge: 3600000,
             capacity: 100,
             deleteOnExpire: 'aggressive',
@@ -25,19 +25,19 @@
             }
         });
 
-        var dataCache = DSCacheFactory.get('companyCache');
+        var dataCache = DSCacheFactory.get('brokerCache');
 
-        var getAllCompany = function () {
+        var getAllBroker = function () {
            var deferred = $q.defer(),
                start = new Date().getTime(),
-               cacheId = "company-All";
+               cacheId = "broker-All";
 
 
 
            if (dataCache.get(cacheId)) {
                deferred.resolve(dataCache.get(cacheId));
            } else {
-               $http.get(common.apiUrl + '/companies/all')
+               $http.get(common.apiUrl + '/brokers/all')
                    .success(function (data) {
                        data = data || {};
                        if (data.Messages == null) {
@@ -58,17 +58,17 @@
 
        };
 
-        var getCompany = function (page, pageSize, searchQuery) {
+        var getBroker = function (page, pageSize, searchQuery) {
             var deferred = $q.defer(),
                 start = new Date().getTime(),
-                cacheId = "companies" + page + pageSize + searchQuery;
+                cacheId = "brokers" + page + pageSize + searchQuery;
 
             
 
                 if (dataCache.get(cacheId)) {
                     deferred.resolve(dataCache.get(cacheId));
                 } else {
-                    $http.get(common.apiUrl + '/companies/' + page + '/size/' + pageSize + '/search/' + searchQuery)
+                    $http.get(common.apiUrl + '/brokers/' + page + '/size/' + pageSize + '/search/' + searchQuery)
                         .success(function (data) {
                             data = data || {};
                             if (data.Messages == null) {
@@ -89,11 +89,11 @@
            
        };
 
-        var getCompanyById = function (id) {
+        var getBrokerById = function (id) {
             var deferred = $q.defer(),
                 start = new Date().getTime();
                 
-            $http.get(common.apiUrl + '/companyById/' +id)
+            $http.get(common.apiUrl + '/brokerById/' +id)
                     .success(function (data) {
                         data = data || {};                        
                         deferred.resolve(data);
@@ -108,15 +108,15 @@
 
 
 
-        var saveCompany = function (company) {
+        var saveBroker = function (broker) {
 
            var deferred = $q.defer();
-           if (company.Id == '') {
-               company.Id = 0;
+           if (broker.Id == '') {
+               broker.Id = 0;
            }
 
            
-            $http.post(common.apiUrl + '/saveCompany/' + company.Id, company)
+            $http.post(common.apiUrl + '/saveBroker/' + broker.Id, broker)
                     .success(function (data) {
 
                         if (dataCache.info()) {
@@ -133,10 +133,10 @@
 
        };
 
-        var uniqueCompany = function (name) {
+        var uniqueBroker = function (name) {
 
            var deferred = $q.defer();
-            $http.get(common.apiUrl + '/companyIsUnique/' + name)
+            $http.get(common.apiUrl + '/brokerIsUnique/' + name)
                     .success(function (data) {
                         deferred.resolve(data);
                     })
@@ -151,11 +151,11 @@
 
 
         return {
-            getCompany: getCompany,
-            saveCompany: saveCompany,
-            uniqueCompany: uniqueCompany,
-            getAllCompany: getAllCompany,
-            getCompanyById: getCompanyById
+            getBroker: getBroker,
+            saveBroker: saveBroker,
+            uniqueBroker: uniqueBroker,
+            getAllBroker: getAllBroker,
+            getBrokerById: getBrokerById
             
         };
 

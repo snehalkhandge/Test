@@ -11,35 +11,35 @@
         return [
             
             {
-                url: '/presalesunit/company',
+                url: '/presalesunit/brokers',
                 config: {
-                    templateUrl: '/app/presalesunit/company/company.html',
-                    title: 'Manage Company',
+                    templateUrl: '/app/presalesunit/brokers/brokers.html',
+                    title: 'Manage Brokers',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Company'
+                        content: '<i class="fa fa-dashboard"></i> Brokers'
                     }
                 }
             },
             {
-                url: '/presalesunit/company/edit/:companyId',
+                url: '/presalesunit/broker/edit/:brokerId',
                 config: {
-                    templateUrl: '/app/presalesunit/company/editCompany.html',
-                    title: 'Edit Company',
+                    templateUrl: '/app/presalesunit/brokers/editBroker.html',
+                    title: 'Edit Broker',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Edit Company'
+                        content: '<i class="fa fa-dashboard"></i> Edit Broker'
                     }
                 }
             },
             {
-                url: '/presalesunit/company/:companyId',
+                url: '/presalesunit/broker/:brokerId',
                 config: {
-                    templateUrl: '/app/presalesunit/company/detailCompany.html',
+                    templateUrl: '/app/presalesunit/brokers/detailBroker.html',
                     title: 'Detail Company',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Detail Company'
+                        content: '<i class="fa fa-dashboard"></i> Detail Broker'
                     }
                 }
             }

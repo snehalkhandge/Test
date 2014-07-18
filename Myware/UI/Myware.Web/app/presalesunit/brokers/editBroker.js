@@ -3,56 +3,58 @@
 
     angular
         .module('app.presalesunit')
-        .controller('EditCompany', EditCompany);
+        .controller('EditBroker', EditBroker);
 
-    EditCompany.$inject = ['$scope', '$timeout', '$routeParams', 'common','authService', 'companyFactory', 'localityFactory'];
+    EditBroker.$inject = ['$scope', '$timeout', '$routeParams', 'common','authService', 'brokerFactory', 'localityFactory'];
 
-    function EditCompany($scope, $timeout, $routeParams, common,authService, companyFactory, localityFactory) {
+    function EditBroker($scope, $timeout, $routeParams, common,authService, brokerFactory, localityFactory) {
         var log = common.logger.info;
 
         /*jshint validthis: true */
         var $q = common.$q;                 
        
-        var companyId = ($routeParams.companyId) ? parseInt($routeParams.companyId) : 0;
+        var brokerId = ($routeParams.brokerId) ? parseInt($routeParams.brokerId) : 0;
         var defaultForm = {
-            Id: companyId,
+            Id: brokerId,
             Name: '',
+            CompanyName: '',
             Address: '',
-            Pin: '',
-            FaxNumber: '',
-            ReceiptFormat: '',
+            Locality: '',
+            Email: '',
+            PanCard: '',
+            ReferenceName: '',
+            ImageUrl: '',
             LocalityId: '',
             ContactNumbers: []
         };
 
-
-        $scope.company = defaultForm;
+        $scope.broker = defaultForm;
 
         $scope.alerts = [];
         $scope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
         };
 
-        $scope.title = (companyId > 0) ? 'Edit Company' : 'Add Company';
-        $scope.buttonText = (companyId > 0) ? 'Update Company' : 'Add New Company';              
+        $scope.title = (brokerId > 0) ? 'Edit Broker' : 'Add Broker';
+        $scope.buttonText = (brokerId > 0) ? 'Update Broker' : 'Add New Broker';              
         $scope.Localities = {};
         $scope.SelectedLocalities = {};
 
 
         $scope.isClean = function () {
-            return angular.equals(original, $scope.customer);
+            return angular.equals(original, $scope.broker);
         }
 
         
-        $scope.saveCompany = function (company) {
+        $scope.saveBroker = function (broker) {
             
-            angular.extend(company, { UserId: authService.authentication.userId });
-            delete company.Location;
-            delete company.Locality;
+            angular.extend(broker, { UserId: authService.authentication.userId });
+            delete broker.Location;
+            delete broker.Locality;
             
-            companyFactory.saveCompany(company)
+            brokerFactory.saveBroker(broker)
                 .then(function () {
-                    $scope.buttonText = "Update Company"
+                    $scope.buttonText = "Update Broker"
                     common.logger.success("Successfully saved the item");
                     $scope.alerts.push({ type: 'success', msg: "Successfully saved the item" });
                 });
@@ -60,36 +62,36 @@
 
         $scope.resetForm = function () {
             $scope.myForm.$setPristine();
-            $scope.company = defaultForm;
+            $scope.broker = defaultForm;
         }
 
         var newDate = new Date();
         $scope.addContactNumber = function () {
 
             $scope.inserted = {
-                $id: $scope.company.ContactNumbers.length + 1,
+                $id: $scope.broker.ContactNumbers.length + 1,
                 PhoneNumber: '',
                 Type: ''
                 
             };
-            $scope.company.ContactNumbers.push($scope.inserted);
+            $scope.broker.ContactNumbers.push($scope.inserted);
         };
 
         $scope.removeContactNumber = function($index)
         {
-            $scope.company.ContactNumbers.splice($index,1);
+            $scope.broker.ContactNumbers.splice($index,1);
         }
 
         activate();
 
         function activate() {
 
-            if (companyId != 0)
+            if (brokerId != 0)
             {
 
-                companyFactory.getCompanyById(companyId)
+                brokerFactory.getBrokerById(brokerId)
                     .then(function (result) {                        
-                        $scope.company = result;
+                        $scope.broker = result;
 
                         if(result.ContactNumbers.length == 0)
                         {

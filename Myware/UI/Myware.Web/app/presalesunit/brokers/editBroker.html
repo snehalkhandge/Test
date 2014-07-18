@@ -1,4 +1,4 @@
-﻿<section class="mainbar" data-ng-controller="EditCompany">
+﻿<section class="mainbar" data-ng-controller="EditBroker">
     <section class="matter">
         <div class="container-fluid">
             <div class="row">
@@ -6,17 +6,17 @@
                     <div data-cc-widget-header title="{{title}}"></div>
                     <div class="widget-content customerTypes">
                         <h2> {{title}} </h2>
-                        
+
                         <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 
                         <hr />
 
-                        <form role="form" class="col-md-8" name="myForm" ng-submit="saveCompany(company)" novalidate>
+                        <form role="form" class="col-md-8" name="myForm" ng-submit="saveBroker(broker)" novalidate>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for=" name"> Name</label>
-                                    <input type="text" class="form-control" ng-model="company.Name" ng-minlength="2"
-                                           required name="Name" value="{{company.Name}}" placeholder="Enter company name">
+                                    <input type="text" class="form-control" ng-model="broker.Name" ng-minlength="2"
+                                           required name="Name" value="{{broker.Name}}" placeholder="Enter broker name">
 
                                     <div ng-messages="myForm.Name.$error" class="has-feedback">
                                         <div ng-message="required">Name is a required field.</div>
@@ -27,7 +27,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="Localities">Locality</label>
-                                    <select class="form-control" name="LocalityId" ng-model="company.LocalityId" ng-required="true" ng-selected="company.LocalityId">
+                                    <select class="form-control" name="LocalityId" ng-model="broker.LocalityId" ng-required="true" ng-selected="broker.LocalityId">
                                         <option ng-repeat='value in Localities' value='{{value.Id}}'>
                                             {{value.Name}}
                                         </option>
@@ -36,9 +36,14 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
                                     <label for="Address">Address</label>
-                                    <textarea class="form-control " rows="3" ng-model="company.Address" name="Address">{{company.Address}}</textarea>
+                                    <textarea class="form-control " rows="3" ng-model="broker.Address" name="Address">{{broker.Address}}</textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="CompanyName">Comapny Name:</label>
+                                    <input type="text" class="form-control" ng-model="broker.CompanyName" ng-minlength="2"
+                                           required name="CompanyName" value="{{broker.CompanyName}}" placeholder="Enter company name">
                                 </div>
                             </div>
 
@@ -57,7 +62,7 @@
                                                 Action
                                             </th>
                                         </tr>
-                                        <tr ng-repeat="item in company.ContactNumbers">
+                                        <tr ng-repeat="item in broker.ContactNumbers">
                                             <td>
                                                 <input type="text" class="form-control" ng-model="item.PhoneNumber" name="PhoneNumber" placeholder="Enter phone number">
                                             </td>
@@ -84,17 +89,31 @@
                             <div class="row">
 
                                 <div class="form-group col-md-6">
-                                    <label for="FaxNumber">Fax number</label>
-                                    <input type="text" class="form-control" name="FaxNumber" ng-model="company.FaxNumber" value="{{company.FaxNumber}}" placeholder="Fax number">
+                                    <label for="Email">Email:</label>
+                                    <input type="text" class="form-control" name="Email" ng-model="broker.Email" value="{{broker.Email}}" placeholder="Email">
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="ReceiptFormat">Receipt Format</label>
-                                    <input type="text" class="form-control" name="ReceiptFormat" ng-model="company.ReceiptFormat" value="{{company.ReceiptFormat}}" placeholder="Fax number">
+                                    <label for="PanCard">Pan Card:</label>
+                                    <input type="text" class="form-control" name="PanCard" ng-model="broker.PanCard" value="{{broker.PanCard}}" placeholder="Pan Card">
                                 </div>
 
                             </div>
 
+
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="ReferenceName">Reference Name:</label>
+                                    <input type="text" class="form-control" name="ReferenceName" ng-model="broker.ReferenceName" value="{{broker.ReferenceName}}" placeholder="ReferenceName">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="PanCard">Pan Card:</label>
+                                    <input type="text" class="form-control" name="PanCard" ng-model="broker.PanCard" value="{{broker.PanCard}}" placeholder="Pan Card">
+                                </div>
+
+                            </div>
 
                             <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid">{{buttonText}}</button>
                         </form>

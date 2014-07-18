@@ -1,4 +1,4 @@
-﻿<section class="mainbar" data-ng-controller="DetailCompany">
+﻿<section class="mainbar" data-ng-controller="DetailBroker">
     <section class="matter">
         <div class="container-fluid">
             <div class="row">
@@ -14,27 +14,26 @@
                                 <tbody>
                                     <tr>
                                         <td>Name:</td>
-                                        <td>{{company.Name}}</td>
+                                        <td>{{broker.Name}}</td>
                                     </tr>
                                     <tr>
                                         <td>Address:</td>
                                         <td>
-                                            {{company.Address}}
+                                            {{broker.Address}}
                                             <br />
-                                            {{company.Locality.City}}
+                                            {{broker.Locality.City}}
                                             <br />
-                                            {{company.Locality.State}}
+                                            {{broker.Locality.State}}
                                             <br />
-                                            {{company.Locality.Country}}
-                                            <br />
-                                            {{company.Pin}}
+                                            {{broker.Locality.Country}}
+                                            
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Contact Numbers:</td>
                                         <td>
                                             <ul>
-                                                <li ng-repeat="item in company.ContactNumbers">
+                                                <li ng-repeat="item in broker.ContactNumbers">
                                                     {{item.PhoneNumber}} - {{item.Type}}
                                                 </li>
                                             </ul>
@@ -42,13 +41,25 @@
                                     </tr>
 
                                     <tr>
-                                        <td>Fax Number:</td>
-                                        <td>{{company.FaxNumber}}</td>
+                                        <td>Company Name:</td>
+                                        <td>{{broker.CompanyName}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Receipt Format:</td>
-                                        <td>{{company.ReceiptFormat}}</td>
+                                        <td>Email:</td>
+                                        <td>{{broker.Email}}</td>
                                     </tr>                                  
+                                    <tr>
+                                        <td>PanCard:</td>
+                                        <td>{{broker.PanCard}}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td>Reference Name:</td>
+                                        <td>{{broker.ReferenceName}}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td>Image:</td>
+                                        <td>{{broker.ImageUrl}}</td>
+                                    </tr> 
                                 </tbody>
                             </table>
                      </div>

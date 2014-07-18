@@ -252,6 +252,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\PreSalesUnit\ManageCampaignController.cs" />
+    <Compile Include="API\PreSalesUnit\ManageBrokersController.cs" />
     <Compile Include="API\PreSalesUnit\ManageLocationsController.cs" />
     <Compile Include="API\PreSalesUnit\ManageLocalityController.cs" />
     <Compile Include="API\PreSalesUnit\ManageCompaniesController.cs" />
@@ -310,6 +311,7 @@
     <Compile Include="Models\PreSalesUnit\CreateTypeViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CutomerTypeViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CampaignViewModel.cs" />
+    <Compile Include="Models\PreSalesUnit\ListBrokerViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\ListDeveloperViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\LocalityViewModel.cs" />
     <Compile Include="Models\UserManagement\PermissionViewModel.cs" />
@@ -351,14 +353,14 @@
     <Content Include="app\layout\components\topnav.html" />
     <Content Include="app\layout\components\widgetheader.html" />
     <Content Include="app\layout\layout.module.js" />
-    <Content Include="app\presalesunit\brokers\broker.html" />
+    <Content Include="app\presalesunit\brokers\brokers.html" />
     <Content Include="app\presalesunit\brokers\broker.js" />
-    <Content Include="app\presalesunit\brokers\companyFactory.js" />
+    <Content Include="app\presalesunit\brokers\brokerFactory.js" />
     <Content Include="app\presalesunit\brokers\config.route.js" />
-    <Content Include="app\presalesunit\brokers\detailCompany.html" />
-    <Content Include="app\presalesunit\brokers\detailCompany.js" />
-    <Content Include="app\presalesunit\brokers\editCompany.html" />
-    <Content Include="app\presalesunit\brokers\editCompany.js" />
+    <Content Include="app\presalesunit\brokers\detailBroker.html" />
+    <Content Include="app\presalesunit\brokers\detailBroker.js" />
+    <Content Include="app\presalesunit\brokers\editBroker.html" />
+    <Content Include="app\presalesunit\brokers\editBroker.js" />
     <Content Include="app\presalesunit\company\detailCompany.html" />
     <Content Include="app\presalesunit\company\detailCompany.js" />
     <Content Include="app\presalesunit\company\editCompany.html" />
@@ -477,6 +479,12 @@
     <Content Include="font-awesome\scss\_variables.scss" />
     <Content Include="Content\toastr.less" />
     <Content Include="Content\toastr.scss" />
+    <Content Include="Scripts\angular-file-upload-html5-shim.js" />
+    <Content Include="Scripts\angular-file-upload-html5-shim.min.js" />
+    <Content Include="Scripts\angular-file-upload-shim.js" />
+    <Content Include="Scripts\angular-file-upload-shim.min.js" />
+    <Content Include="Scripts\angular-file-upload.js" />
+    <Content Include="Scripts\angular-file-upload.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls-0.11.0.js" />
     <Content Include="Scripts\angular\extra\angular-cache.js" />
     <Content Include="Scripts\angular\extra\angular-cached-resource.js" />
@@ -488,6 +496,8 @@
     <Content Include="Scripts\angular\extra\angular-touch.js" />
     <Content Include="Scripts\angular\extra\ng-table.js" />
     <Content Include="Scripts\angular\extra\xeditable.js" />
+    <Content Include="Scripts\FileAPI.flash.swf" />
+    <Content Include="Scripts\FileAPI.min.js" />
     <Content Include="Scripts\ken\extra\angular-kendo.js" />
     <Content Include="Scripts\angular\angular.js" />
     <Content Include="Scripts\angular\extra\angular-animate.js" />
