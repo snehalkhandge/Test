@@ -35,11 +35,11 @@
             {
                 url: '/presalesunit/company/:companyId',
                 config: {
-                    templateUrl: '/app/presalesunit/company/editCompany.html',
-                    title: 'Edit Company',
+                    templateUrl: '/app/presalesunit/company/detailCompany.html',
+                    title: 'Detail Company',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Edit Company'
+                        content: '<i class="fa fa-dashboard"></i> Detail Company'
                     }
                 }
             }

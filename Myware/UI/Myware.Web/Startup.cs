@@ -14,6 +14,7 @@ using Myware.Data.Entity.CustomStores;
 using Myware.Data.Entity.Models.UserManagement;
 using Owin;
 using System.Security.Claims;
+using Newtonsoft.Json.Serialization;
 
 [assembly: OwinStartup(typeof(Myware.Web.Startup))]
 namespace Myware.Web
@@ -37,8 +38,6 @@ namespace Myware.Web
 
             app.UseOAuthBearerTokens(OAuthOptions);
         }
-
-
 
         static Startup()
         {

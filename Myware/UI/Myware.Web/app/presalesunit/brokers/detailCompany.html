@@ -1,0 +1,67 @@
+﻿<section class="mainbar" data-ng-controller="DetailCompany">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> {{title}} </h2>
+
+                        <hr />
+
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td>Name:</td>
+                                        <td>{{company.Name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address:</td>
+                                        <td>
+                                            {{company.Address}}
+                                            <br />
+                                            {{company.Locality.City}}
+                                            <br />
+                                            {{company.Locality.State}}
+                                            <br />
+                                            {{company.Locality.Country}}
+                                            <br />
+                                            {{company.Pin}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contact Numbers:</td>
+                                        <td>
+                                            <ul>
+                                                <li ng-repeat="item in company.ContactNumbers">
+                                                    {{item.PhoneNumber}} - {{item.Type}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Fax Number:</td>
+                                        <td>{{company.FaxNumber}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Receipt Format:</td>
+                                        <td>{{company.ReceiptFormat}}</td>
+                                    </tr>                                  
+                                </tbody>
+                            </table>
+                     </div>
+
+                     </div>
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

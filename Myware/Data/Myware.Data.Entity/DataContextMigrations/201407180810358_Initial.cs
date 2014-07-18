@@ -176,6 +176,20 @@ namespace Myware.Data.Entity.DataContextMigrations
                 .Index(t => t.ContactNumber_Id);
             
             CreateTable(
+                "dbo.DeveloperCompanies",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        DeveloperId = c.Int(nullable: false),
+                        CompanyId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Companies", t => t.CompanyId)
+                .ForeignKey("dbo.Developers", t => t.DeveloperId)
+                .Index(t => t.DeveloperId)
+                .Index(t => t.CompanyId);
+            
+            CreateTable(
                 "dbo.Companies",
                 c => new
                     {
@@ -521,19 +535,6 @@ namespace Myware.Data.Entity.DataContextMigrations
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
-                "dbo.CompanyDevelopers",
-                c => new
-                    {
-                        Company_Id = c.Int(nullable: false),
-                        Developer_Id = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.Company_Id, t.Developer_Id })
-                .ForeignKey("dbo.Companies", t => t.Company_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Developers", t => t.Developer_Id, cascadeDelete: true)
-                .Index(t => t.Company_Id)
-                .Index(t => t.Developer_Id);
-            
-            CreateTable(
                 "dbo.CampaignPersonalInformations",
                 c => new
                     {
@@ -570,6 +571,7 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropForeignKey("dbo.ContactNumbers", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Developers", "ContactNumber_Id", "dbo.ContactNumbers");
             DropForeignKey("dbo.Developers", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.DeveloperCompanies", "DeveloperId", "dbo.Developers");
             DropForeignKey("dbo.Companies", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Localities", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Locations", "UpdatedByUserId", "dbo.AspNetUsers");
@@ -592,8 +594,7 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropForeignKey("dbo.BusinessInformations", "BusinessLocalityId", "dbo.Localities");
             DropForeignKey("dbo.ContactNumbers", "BusinessInformation_Id", "dbo.BusinessInformations");
             DropForeignKey("dbo.Brokers", "LocalityId", "dbo.Localities");
-            DropForeignKey("dbo.CompanyDevelopers", "Developer_Id", "dbo.Developers");
-            DropForeignKey("dbo.CompanyDevelopers", "Company_Id", "dbo.Companies");
+            DropForeignKey("dbo.DeveloperCompanies", "CompanyId", "dbo.Companies");
             DropForeignKey("dbo.CompanyContactNumbers", "CompanyId", "dbo.Companies");
             DropForeignKey("dbo.AssignedTasks", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.TasksRelatedFiles", "AssignedTask_Id", "dbo.AssignedTasks");
@@ -605,8 +606,6 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropIndex("dbo.CampaignPersonalInformations", new[] { "PersonalInformation_Id" });
             DropIndex("dbo.CampaignPersonalInformations", new[] { "Campaign_Id" });
-            DropIndex("dbo.CompanyDevelopers", new[] { "Developer_Id" });
-            DropIndex("dbo.CompanyDevelopers", new[] { "Company_Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.RolePermissions", new[] { "PermissionId" });
             DropIndex("dbo.RolePermissions", new[] { "RoleId" });
@@ -641,6 +640,8 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropIndex("dbo.CompanyContactNumbers", new[] { "CompanyId" });
             DropIndex("dbo.Companies", new[] { "UpdatedByUserId" });
             DropIndex("dbo.Companies", new[] { "LocalityId" });
+            DropIndex("dbo.DeveloperCompanies", new[] { "CompanyId" });
+            DropIndex("dbo.DeveloperCompanies", new[] { "DeveloperId" });
             DropIndex("dbo.Developers", new[] { "ContactNumber_Id" });
             DropIndex("dbo.Developers", new[] { "UpdatedByUserId" });
             DropIndex("dbo.ContactNumbers", new[] { "Broker_Id" });
@@ -660,7 +661,6 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropIndex("dbo.AssignedTasks", new[] { "AssignedToId" });
             DropIndex("dbo.AssignedTasks", new[] { "AssignedFromId" });
             DropTable("dbo.CampaignPersonalInformations");
-            DropTable("dbo.CompanyDevelopers");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.RolePermissions");
             DropTable("dbo.Permissions");
@@ -680,6 +680,7 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropTable("dbo.Localities");
             DropTable("dbo.CompanyContactNumbers");
             DropTable("dbo.Companies");
+            DropTable("dbo.DeveloperCompanies");
             DropTable("dbo.Developers");
             DropTable("dbo.ContactNumbers");
             DropTable("dbo.Brokers");

@@ -18,7 +18,7 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         public string Description { get; set; }
 
         [DataMember]
-        public  ICollection<Company> Companies { get; set; }
+        public ICollection<DeveloperCompanies> DeveloperCompanies { get; set; }
 
     }
 }

@@ -6,6 +6,8 @@ using System.Web.Http;
 using CacheCow.Server;
 using Myware.Web.Caching;
 using Newtonsoft.Json.Serialization;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace Myware.Web
 {
@@ -24,13 +26,29 @@ namespace Myware.Web
                 defaults: new { id = RouteParameter.Optional }
             );
 
-
-
             
-
+            var formatters = GlobalConfiguration.Configuration.Formatters;
+            var jsonFormatter = formatters.JsonFormatter;
+            var settings = jsonFormatter.SerializerSettings;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new ContractResolver();
+            
             //CacheCow cache store
             //Configure HTTP Caching using Entity Tags (ETags)
             GlobalConfiguration.Configuration.MessageHandlers.Add(new CachingHandler(GlobalConfiguration.Configuration));
         }
     }
+
+
+    public class ContractResolver : DefaultContractResolver
+    {
+        public override JsonContract ResolveContract(Type type)
+        {
+            var contract = base.ResolveContract(type);
+            contract.IsReference = false;
+            return contract;
+        }
+    }
+
+
 }

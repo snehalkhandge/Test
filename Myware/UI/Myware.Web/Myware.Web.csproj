@@ -255,6 +255,7 @@
     <Compile Include="API\PreSalesUnit\ManageLocationsController.cs" />
     <Compile Include="API\PreSalesUnit\ManageLocalityController.cs" />
     <Compile Include="API\PreSalesUnit\ManageCompaniesController.cs" />
+    <Compile Include="API\PreSalesUnit\ManageDevelopersController.cs" />
     <Compile Include="API\PreSalesUnit\ManageUnitTypesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageFacingTypesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageContactStatusTypesController.cs" />
@@ -309,6 +310,7 @@
     <Compile Include="Models\PreSalesUnit\CreateTypeViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CutomerTypeViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CampaignViewModel.cs" />
+    <Compile Include="Models\PreSalesUnit\ListDeveloperViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\LocalityViewModel.cs" />
     <Compile Include="Models\UserManagement\PermissionViewModel.cs" />
     <Compile Include="Models\UserManagement\LogInModel.cs" />
@@ -349,9 +351,16 @@
     <Content Include="app\layout\components\topnav.html" />
     <Content Include="app\layout\components\widgetheader.html" />
     <Content Include="app\layout\layout.module.js" />
+    <Content Include="app\presalesunit\brokers\broker.html" />
+    <Content Include="app\presalesunit\brokers\broker.js" />
+    <Content Include="app\presalesunit\brokers\companyFactory.js" />
     <Content Include="app\presalesunit\brokers\config.route.js" />
-    <Content Include="app\presalesunit\brokers\users.html" />
-    <Content Include="app\presalesunit\brokers\users.js" />
+    <Content Include="app\presalesunit\brokers\detailCompany.html" />
+    <Content Include="app\presalesunit\brokers\detailCompany.js" />
+    <Content Include="app\presalesunit\brokers\editCompany.html" />
+    <Content Include="app\presalesunit\brokers\editCompany.js" />
+    <Content Include="app\presalesunit\company\detailCompany.html" />
+    <Content Include="app\presalesunit\company\detailCompany.js" />
     <Content Include="app\presalesunit\company\editCompany.html" />
     <Content Include="app\presalesunit\company\editCompany.js" />
     <Content Include="app\presalesunit\locality\config.route.js" />
@@ -362,6 +371,10 @@
     <Content Include="app\presalesunit\locations\locations.html" />
     <Content Include="app\presalesunit\locations\locations.js" />
     <Content Include="app\presalesunit\locations\locationsFactory.js" />
+    <Content Include="app\presalesunit\developers\config.route.js" />
+    <Content Include="app\presalesunit\developers\developersFactory.js" />
+    <Content Include="app\presalesunit\developers\developers.html" />
+    <Content Include="app\presalesunit\developers\developers.js" />
     <Content Include="app\presalesunit\sources\config.route.js" />
     <Content Include="app\presalesunit\sources\sources.html" />
     <Content Include="app\presalesunit\sources\sources.js" />

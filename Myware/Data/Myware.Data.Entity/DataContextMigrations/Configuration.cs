@@ -398,19 +398,17 @@ namespace Myware.Data.Entity.DataContextMigrations
                 Address = "I dont know",
                 PanCard = "456789",
                 ReferenceName = "Kabir",
-                ContactNumbers = new List<ContactNumber>
+                ContactNumbers = new List<BrokerContactNumber>
                 {
-                    new ContactNumber
+                    new BrokerContactNumber
                     {
                         Type = "Primary",
-                        PhoneNumber = "5511111111",
-                        UpdatedByUserId = 1
+                        PhoneNumber = "5511111111"                        
                     },
-                    new ContactNumber
+                    new BrokerContactNumber
                     {
                         Type = "Secondary",
-                        PhoneNumber = "22222222222",
-                        UpdatedByUserId = 1
+                        PhoneNumber = "22222222222"                        
                     }
                 },
                 UpdatedByUserId = 1
@@ -442,8 +440,8 @@ namespace Myware.Data.Entity.DataContextMigrations
             {
                 Name = "Developer Bhai",
                 Description = "Description developer",
-                UpdatedByUserId = 1,
-                Companies = context.Companies.ToList()
+                UpdatedByUserId = 1
+                
             };
 
             context.Developers.Add(developer);
@@ -451,8 +449,8 @@ namespace Myware.Data.Entity.DataContextMigrations
             var developer1 = new Developer
             {
                 Name = "Developer Bhai 1",
-                UpdatedByUserId = 1,
-                Companies = context.Companies.ToList()
+                UpdatedByUserId = 1
+                
 
             };
 

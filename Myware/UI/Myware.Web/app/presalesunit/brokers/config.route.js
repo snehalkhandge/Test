@@ -2,46 +2,48 @@
     'use strict';
 
     angular
-        .module('app.usermanagement')
+        .module('app.presalesunit')
         .run(['routehelper', function (routehelper) {
             routehelper.configureRoutes(getRoutes());
         }]);
 
     function getRoutes() {
         return [
+            
             {
-                url: '/usermanagement/users',
+                url: '/presalesunit/company',
                 config: {
-                    templateUrl: '/app/usermanagement/components/users.html',
-                    title: 'Manage Users',
+                    templateUrl: '/app/presalesunit/company/company.html',
+                    title: 'Manage Company',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Users'
+                        content: '<i class="fa fa-dashboard"></i> Company'
                     }
                 }
             },
             {
-                url: '/usermanagement/roles',
+                url: '/presalesunit/company/edit/:companyId',
                 config: {
-                    templateUrl: '/app/usermanagement/components/roles.html',
-                    title: 'Manage Roles',
+                    templateUrl: '/app/presalesunit/company/editCompany.html',
+                    title: 'Edit Company',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Roles'
+                        content: '<i class="fa fa-dashboard"></i> Edit Company'
                     }
                 }
             },
             {
-                url: '/usermanagement/permissions',
+                url: '/presalesunit/company/:companyId',
                 config: {
-                    templateUrl: '/app/usermanagement/components/permissions.html',
-                    title: 'Manage Roles',
+                    templateUrl: '/app/presalesunit/company/detailCompany.html',
+                    title: 'Detail Company',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Permissions'
+                        content: '<i class="fa fa-dashboard"></i> Detail Company'
                     }
                 }
             }
+
         ];
     }
 })();

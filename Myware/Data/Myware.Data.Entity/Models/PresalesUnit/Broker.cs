@@ -38,7 +38,7 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         public string ReferenceName { get; set; }
 
         [DataMember]
-        public ICollection<ContactNumber> ContactNumbers { get; set; }
+        public ICollection<BrokerContactNumber> ContactNumbers { get; set; }
 
 
         [DataMember]
@@ -48,7 +48,9 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         [DataMember]
         public Locality Locality { get; set; }
 
-
+        [DataType(DataType.ImageUrl)]
+        [DataMember]
+        public string ImageUrl { get; set; }
         
     }
 }
