@@ -306,6 +306,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\PartialGetId.cs" />
     <Compile Include="Models\PreSalesUnit\CompanyViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CreateLocationViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CreateTypeViewModel.cs" />
@@ -487,22 +488,22 @@
     <Content Include="Scripts\angular-file-upload.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls-0.11.0.js" />
     <Content Include="Scripts\angular\extra\angular-cache.js" />
-    <Content Include="Scripts\angular\extra\angular-cached-resource.js" />
     <Content Include="Scripts\angular\extra\angular-cookies.js" />
+    <Content Include="Scripts\angular\extra\angular-file-upload.js" />
     <Content Include="Scripts\angular\extra\angular-loader.js" />
     <Content Include="Scripts\angular\extra\angular-local-storage.js" />
     <Content Include="Scripts\angular\extra\angular-messages.js" />
     <Content Include="Scripts\angular\extra\angular-scenario.js" />
     <Content Include="Scripts\angular\extra\angular-touch.js" />
-    <Content Include="Scripts\angular\extra\ng-table.js" />
+    <Content Include="Scripts\angular\extra\angular.dcb-img-fallback.js" />
     <Content Include="Scripts\angular\extra\xeditable.js" />
     <Content Include="Scripts\FileAPI.flash.swf" />
     <Content Include="Scripts\FileAPI.min.js" />
+    <Content Include="Scripts\jquery\extra\angular-file-upload-shim.js" />
     <Content Include="Scripts\ken\extra\angular-kendo.js" />
     <Content Include="Scripts\angular\angular.js" />
     <Content Include="Scripts\angular\extra\angular-animate.js" />
     <Content Include="Scripts\angular\extra\angular-csp.css" />
-    <Content Include="Scripts\angular\extra\angular-resource.js" />
     <Content Include="Scripts\angular\extra\angular-route.js" />
     <Content Include="Scripts\angular\extra\angular-sanitize.js" />
     <Content Include="Scripts\angular\extra\ngplus-overlay.js" />
@@ -815,6 +816,7 @@
   <ItemGroup>
     <Folder Include="app\presales\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Brokers\Temp\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

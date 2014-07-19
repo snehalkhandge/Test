@@ -10,8 +10,10 @@
                         <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 
                         <hr />
+                        
 
                         <form role="form" class="col-md-8" name="myForm" ng-submit="saveBroker(broker)" novalidate>
+                            
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for=" name"> Name</label>
@@ -40,11 +42,27 @@
                                     <label for="Address">Address</label>
                                     <textarea class="form-control " rows="3" ng-model="broker.Address" name="Address">{{broker.Address}}</textarea>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="CompanyName">Comapny Name:</label>
-                                    <input type="text" class="form-control" ng-model="broker.CompanyName" ng-minlength="2"
-                                           required name="CompanyName" value="{{broker.CompanyName}}" placeholder="Enter company name">
+
+                                <div class="form-group col-md-6" ng-show="broker.Id">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label for=" name"> Broker Image</label> 
+                                                <img style="width:120px;" ng-src="{{broker.ImageUrl}}" fallback-src
+                                                     alt="{{broker.Name}}" holder-fix />
+                                            </td>
+                                            <td>
+                                                <div class="progress">
+                                                    <div class="progress-bar  progress-bar-success" role="progressbar" ng-style="{ 'width': progress + '%' }"></div>
+                                                </div>
+                                                <input type="file" ng-file-select="onFileSelect($files)">
+
+                                            </td>
+                                        </tr>                                       
+                                    </table>
+
                                 </div>
+
                             </div>
 
                             <div class="row">
@@ -94,8 +112,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="PanCard">Pan Card:</label>
-                                    <input type="text" class="form-control" name="PanCard" ng-model="broker.PanCard" value="{{broker.PanCard}}" placeholder="Pan Card">
+                                    <label for="CompanyName">Comapny Name:</label>
+                                    <input type="text" class="form-control" ng-model="broker.CompanyName" ng-minlength="2"
+                                           required name="CompanyName" value="{{broker.CompanyName}}" placeholder="Enter company name">
                                 </div>
 
                             </div>

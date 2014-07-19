@@ -9,10 +9,18 @@ using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Script.Serialization;
 
 namespace Myware.Web.API.UserManagement
 {
@@ -271,6 +279,125 @@ namespace Myware.Web.API.UserManagement
 			
 			return Ok(typeVM);
 		}
+
+		private static readonly string ServerUploadFolder = "C:\\Temp"; //Path.GetTempPath();
+
+		[Route("saveBrokerImage")]
+		[HttpPost]
+		public async Task<HttpResponseMessage> PostBrokerImage()
+		{
+			return Request.CreateResponse(HttpStatusCode.NotAcceptable, "This request is not properly formatted");
+
+			if(!Request.Content.IsMimeMultipartContent())
+				this.Request.CreateResponse(HttpStatusCode.UnsupportedMediaType);
+
+			var uploadFolder = "~/Images/Brokers";
+			var imageUrl = "";
+			var root = HttpContext.Current.Server.MapPath(uploadFolder);
+			Directory.CreateDirectory(root);
+
+
+			var provider = new MultipartFormDataStreamProvider(root+"/Temp");
+			var result = await Request.Content.ReadAsMultipartAsync(provider);
+			if (result.FormData["brokerObject"] == null)
+			{
+				throw new HttpResponseException(HttpStatusCode.BadRequest);
+			}
+
+			
+			//TODO: Do something with the json model which is currently a string
+
+
+			#region File upload
+			//get the files
+			foreach (var fileData in result.FileData)
+			{
+				if (string.IsNullOrEmpty(fileData.Headers.ContentDisposition.FileName))
+				{
+					return Request.CreateResponse(HttpStatusCode.NotAcceptable, "This request is not properly formatted");
+				}
+				string fileName = fileData.Headers.ContentDisposition.FileName;
+				if (fileName.StartsWith("\"") && fileName.EndsWith("\""))
+				{
+					fileName = fileName.Trim('"');
+				}
+				if (fileName.Contains(@"/") || fileName.Contains(@"\"))
+				{
+					fileName = Path.GetFileName(fileName);
+				}
+
+				if (File.Exists(Path.Combine(root, fileName)))
+				{
+					File.Delete(Path.Combine(root, fileName));
+				}
+
+				File.Move(fileData.LocalFileName, Path.Combine(root, fileName));
+				
+				#region Update Broker			
+				var model = new JavaScriptSerializer().Deserialize<PartialGetId>(result.FormData["brokerObject"]);
+				var existingEntity = db.Brokers.Where(e => e.Id == model.id).SingleOrDefault();
+
+				existingEntity.ImageUrl = "Images/Brokers/" + fileName;
+
+				db.Entry(existingEntity).State = EntityState.Modified;
+				db.SaveChanges();
+
+				imageUrl = existingEntity.ImageUrl;
+				#endregion
+
+			}
+			#endregion
+
+
+
+			return Request.CreateResponse(HttpStatusCode.OK, imageUrl);
+
+
+		  
+		}
+
+		/*
+		public async Task<HttpResponseMessage> PostBrokerImage(int id, HttpPostedFileBase file)
+		{
+			if (!Request.Content.IsMimeMultipartContent())
+			{
+				throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+			}
+
+			
+
+			var filename = Path.GetFileName(file.FileName);
+			var path = Path.Combine(Server.MapPath("~/Images/Brokers"), filename);
+			file.SaveAs(path);
+
+			return new ContentResult
+			{
+				ContentType = "text/plain",
+				Content = filename,
+				ContentEncoding = Encoding.UTF8
+			};
+			try
+			{
+				await Request.Content.ReadAsMultipartAsync(provider);
+
+				// Show all the key-value pairs.
+				foreach (var key in provider.FormData.AllKeys)
+				{
+					foreach (var val in provider.FormData.GetValues(key))
+					{
+						Trace.WriteLine(string.Format("{0}: {1}", key, val));
+					}
+				}
+
+				return Request.CreateResponse(HttpStatusCode.OK);
+			}
+			catch (System.Exception e)
+			{
+				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+			}
+		}
+		*/
+
 
 		protected override void Dispose(bool disposing)
 		{

@@ -17,6 +17,7 @@
          * but this is easier to maintain.
          */
         'angular-data.DSCacheFactory',
+        'angularFileUpload',
         'xeditable',
         'ngplus',
         'ngMessages',
@@ -53,6 +54,8 @@
     angular.module(appId).run(function (editableOptions) {
         editableOptions.theme = 'bs3';
     });
+
+
 })();
 
 
