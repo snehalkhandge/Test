@@ -1,0 +1,106 @@
+﻿<section class="mainbar" data-ng-controller="EditTaskmanager">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> {{title}} </h2>
+
+                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+                        
+                        <hr />
+
+
+                        <form role="form" class="col-md-8" name="myForm" ng-submit="saveTaskmanager(taskmanager)" novalidate>
+
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for=" name"> Name</label>
+                                    <input type="text" class="form-control" ng-model="taskmanager.Title" ng-minlength="2"
+                                           required name="Title" value="{{taskmanager.Title}}" placeholder="Enter task title">
+
+                                    <div ng-messages="myForm.Title.$error" class="has-feedback">
+                                        <div ng-message="required">Task title is a required field.</div>
+                                        <div ng-message="minlength">Task title is too short</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="Address">Description</label>
+                                    <textarea class="form-control" rows="3" ng-model="taskmanager.Description" name="Description">{{taskmanager.Description}}</textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="TaskStatus">Task Status</label>
+                                    <select class="form-control" name="TaskStatus" ng-model="taskmanager.TaskStatus" ng-required="true">
+                                        <option ng-repeat='value in taskStatuses' value='{{value.status}}'>
+                                            {{value.status}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6" ng-show="!taskmanager.Id && !parentId">
+                                    <label for="TaskType">Task Type</label>
+                                    <select class="form-control" name="TaskType" ng-model="taskmanager.TaskType">
+                                        <option ng-repeat='value in taskTypes' value='{{value.type}}'>
+                                            {{value.type}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="AssignedUser">Assigned the task to users</label>
+                                        <select class="form-control" name="AssignedToUserId" ng-model="taskmanager.AssignedToId" ng-required="true">
+                                            <option ng-repeat='value in users' value='{{value.Id}}'>
+                                                {{value.FirstName}} {{value.LastName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6" ng-show="taskmanager.Id">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label for=" name"> Task Files</label>
+                                                <img style="width:120px;" ng-src="{{broker.ImageUrl}}" fallback-src
+                                                     alt="{{broker.Name}}" holder-fix />
+                                            </td>
+                                            <td>
+                                                <div class="progress">
+                                                    <div class="progress-bar  progress-bar-success" role="progressbar" ng-style="{ 'width': progress + '%' }"></div>
+                                                </div>
+                                                <input type="file" ng-file-select="onFileSelect($files)">
+
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>                                
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid">{{buttonText}}</button>
+                        </form>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

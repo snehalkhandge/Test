@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using Myware.Data.Entity;
 using Myware.Data.Entity.CustomStores;
 using Myware.Data.Entity.Models.UserManagement;
+using Myware.Web.Models;
 
 namespace Myware.Web.API.UserManagement
 {
@@ -34,6 +35,17 @@ namespace Myware.Web.API.UserManagement
         public IQueryable<User> GetUsers()
         {
             return _userManager.Users;
+        }
+
+        [Route("getAllUsers/all")]
+        public List<PartialUserViewModel> GetAllUsers()
+        {
+            return _userManager.Users
+                               .Select(t => new PartialUserViewModel { 
+                                   Id = t.Id,
+                                   FirstName = t.FirstName,
+                                   LastName = t.LastName
+                                }).ToList();
         }
 
         // GET: api/ManageUsers/5

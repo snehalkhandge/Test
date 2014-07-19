@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Myware.Data.Entity.Models.UserTasks
@@ -15,6 +16,13 @@ namespace Myware.Data.Entity.Models.UserTasks
         [DataMember]
         public string FileUrl { get; set; }
 
+
+        [DataMember]
+        public int AssignedTaskId { get; set; }
+
+        [DataMember]
+        [ForeignKey("AssignedTaskId")]
+        public AssignedTask Task { get; set; }
         
     }
 }

@@ -1,0 +1,82 @@
+﻿<section class="mainbar" data-ng-controller="Tasks">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> Manage Tasks {{taskKind}}</h2>
+                        <pre>
+                                {{results | json}}
+                            </pre>
+
+                        <table class="table table-bordered table-hover table-condensed">
+                            <tr>
+                                <td class="col-md-6">
+                                    <label for="TaskStatus">Task Status</label>
+                                    <select class="form-control" ng-required="true">
+                                        <option ng-repeat='value in taskStatuses' value='{{value.status}}'>
+                                            {{value.status}}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td class="col-md-6">
+                                    <a class="btn btn-primary" role="button" href="#/taskmanager/task/edit/0/0">Add New Task</a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-bordered table-hover table-condensed">
+                            <tr style="font-weight: bold">
+                                <td style="width:12.5%">Title</td>
+                                <td style="width:18%">Description</td>
+                                <td style="width:5%">Task Status</td>
+                                <td style="width:12.5%">Assigned By</td>
+                                <td style="width:12.5%">Assigned To</td>
+                                <td style="width:12.5%">Created</td>
+                                <td style="width:12.5%">Last updated</td>
+                                <td style="width:12.5%">Action</td>
+                            </tr>
+                            <tr ng-repeat="item in results">
+                                <td>
+                                    {{item.Title}}
+                                </td>
+                                <td>
+                                    {{item.Description}}
+                                </td>
+                                <td>
+                                    {{item.TaskStatus}}
+                                </td>
+                                <td>
+                                    {{item.AssignedByUser.FirstName}} {{item.AssignedByUser.LastName}}
+                                </td>
+                                <td>
+                                    {{item.AssignedToUser.FirstName}} {{item.AssignedToUser.LastName}}
+                                </td>
+                                <td>
+                                    {{item.Created | date:'MMM d, y h:mm a'}}
+                                </td>
+                                <td>
+                                    {{item.LastUpdated | date:'MMM d, y h:mm a'}}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-justified">
+                                        <a class="btn btn-primary" role="button" href="#/taskmanager/task/{{item.Id}}">Detail</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="page" ng-change="pageChanged()" ng-hide="hidePagination"></pagination>
+                    </div>
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

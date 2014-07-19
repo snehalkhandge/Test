@@ -24,4 +24,18 @@ namespace Myware.Web.Models
 
         public bool RememberMe { get; set; }
     }
+
+
+    public class PartialUserViewModel
+    {
+        public int  Id { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+
+
+    }
+
 }

@@ -261,6 +261,7 @@
     <Compile Include="API\PreSalesUnit\ManageFacingTypesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageContactStatusTypesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageCustomerTypesController.cs" />
+    <Compile Include="API\TaskManager\ManageTasksController.cs" />
     <Compile Include="API\UserManagement\ManagePermissionsController.cs" />
     <Compile Include="API\UserManagement\ManageRolesController.cs" />
     <Compile Include="API\UserManagement\ManageUsersController.cs" />
@@ -315,6 +316,7 @@
     <Compile Include="Models\PreSalesUnit\ListBrokerViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\ListDeveloperViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\LocalityViewModel.cs" />
+    <Compile Include="Models\TaskManagement\TaskViewModel.cs" />
     <Compile Include="Models\UserManagement\PermissionViewModel.cs" />
     <Compile Include="Models\UserManagement\LogInModel.cs" />
     <Compile Include="Models\UserManagement\RoleViewModel.cs" />
@@ -403,6 +405,15 @@
     <Content Include="app\presalesunit\customertypes\customerType.html" />
     <Content Include="app\presalesunit\customertypes\customerType.js" />
     <Content Include="app\presalesunit\presalesunit.module.js" />
+    <Content Include="app\taskmanager\components\taskmanager.js" />
+    <Content Include="app\taskmanager\components\taskmanagerFactory.js" />
+    <Content Include="app\taskmanager\components\taskmanager.html" />
+    <Content Include="app\taskmanager\components\config.route.js" />
+    <Content Include="app\taskmanager\components\detailTaskmanager.html" />
+    <Content Include="app\taskmanager\components\detailTaskmanager.js" />
+    <Content Include="app\taskmanager\components\editTaskmanager.html" />
+    <Content Include="app\taskmanager\components\editTaskmanager.js" />
+    <Content Include="app\taskmanager\taskmanager.module.js" />
     <Content Include="app\usermanagement\permissions\config.route.js" />
     <Content Include="app\usermanagement\permissions\permissions.html" />
     <Content Include="app\usermanagement\permissions\permissions.js" />
@@ -413,7 +424,7 @@
     <Content Include="app\usermanagement\roles\roles.js" />
     <Content Include="app\usermanagement\usermanagement.module.js" />
     <Content Include="app\usermanagement\users\config.route.js" />
-    <Content Include="app\usermanagement\users\userdataservice.js" />
+    <Content Include="app\usermanagement\users\userFactory.js" />
     <Content Include="app\usermanagement\users\users.html" />
     <Content Include="app\usermanagement\users\users.js" />
     <Content Include="app\widgets\sidebar\appSidebar.js" />
@@ -817,6 +828,7 @@
     <Folder Include="app\presales\" />
     <Folder Include="App_Data\" />
     <Folder Include="Images\Brokers\Temp\" />
+    <Folder Include="Images\Tasks\Temp\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

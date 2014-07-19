@@ -17,6 +17,7 @@ namespace Myware.Data.Entity.DataContextMigrations
                         Title = c.String(nullable: false, maxLength: 200),
                         Description = c.String(maxLength: 500),
                         TaskStatus = c.String(nullable: false, maxLength: 30),
+                        TaskType = c.String(maxLength: 30),
                         Created = c.DateTime(nullable: false),
                         IsParentTask = c.Boolean(),
                         ParentTaskId = c.Int(),
@@ -102,11 +103,11 @@ namespace Myware.Data.Entity.DataContextMigrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         FileUrl = c.String(),
-                        AssignedTask_Id = c.Int(),
+                        AssignedTaskId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AssignedTasks", t => t.AssignedTask_Id)
-                .Index(t => t.AssignedTask_Id);
+                .ForeignKey("dbo.AssignedTasks", t => t.AssignedTaskId)
+                .Index(t => t.AssignedTaskId);
             
             CreateTable(
                 "dbo.BrokerContactNumbers",
@@ -608,7 +609,7 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropForeignKey("dbo.Brokers", "LocalityId", "dbo.Localities");
             DropForeignKey("dbo.BrokerContactNumbers", "BrokerId", "dbo.Brokers");
             DropForeignKey("dbo.AssignedTasks", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.TasksRelatedFiles", "AssignedTask_Id", "dbo.AssignedTasks");
+            DropForeignKey("dbo.TasksRelatedFiles", "AssignedTaskId", "dbo.AssignedTasks");
             DropForeignKey("dbo.AssignedTasks", "ParentTaskId", "dbo.AssignedTasks");
             DropForeignKey("dbo.AssignedTasks", "AssignedToId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AssignedTasks", "AssignedFromId", "dbo.AspNetUsers");
@@ -661,7 +662,7 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropIndex("dbo.Brokers", new[] { "UpdatedByUserId" });
             DropIndex("dbo.Brokers", new[] { "LocalityId" });
             DropIndex("dbo.BrokerContactNumbers", new[] { "BrokerId" });
-            DropIndex("dbo.TasksRelatedFiles", new[] { "AssignedTask_Id" });
+            DropIndex("dbo.TasksRelatedFiles", new[] { "AssignedTaskId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });

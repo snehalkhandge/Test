@@ -40,6 +40,11 @@ namespace Myware.Data.Entity.Models.UserTasks
         [DataMember]  
         public string TaskStatus { get; set; }
 
+        
+        [StringLength(30)]
+        [DataMember]
+        public string TaskType { get; set; }
+
         [DataMember]
         public DateTime Created { get; set; }
         
