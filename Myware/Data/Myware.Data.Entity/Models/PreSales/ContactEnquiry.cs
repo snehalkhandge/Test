@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Myware.Data.Entity.Models.PresalesUnit;
+using Myware.Data.Entity.Models.UserManagement;
 
 
 namespace Myware.Data.Entity.Models.PreSales
@@ -11,21 +12,21 @@ namespace Myware.Data.Entity.Models.PreSales
     [DataContract(IsReference = true)]
     public class ContactEnquiry : BaseEntity
     {
-        
-        [DataMember]
-        public int TransactionTypeId { get; set; }
-
-        [ForeignKey("TransactionTypeId")]
-        [DataMember]
-        public TransactionType TransactionType { get; set; }
-
 
         [DataMember]
-        public int LookingForTypeId { get; set; }
+        public string Remarks { get; set; }
 
-        [ForeignKey("LookingForTypeId")]
         [DataMember]
-        public LookingForType LookingForType { get; set; }
+        public DateTime AssignedDate { get; set; }
+
+        [DataMember]
+        public string LeadStatus { get; set; }
+
+        [DataMember]  
+        public string TransactionType { get; set; }
+
+        [DataMember]  
+        public string LookingForType { get; set; }
 
 
         [DataMember]  
@@ -63,24 +64,25 @@ namespace Myware.Data.Entity.Models.PreSales
 
         [DataMember]  
         public Nullable<System.DateTime> EnquiryDate { get; set; }
-
+                
         [DataMember]
-        public int FacingTypeId { get; set; }
+        public string FacingType { get; set; }
 
-        [ForeignKey("FacingTypeId")]
+        
         [DataMember]
-        public FacingType FacingType { get; set; }
-
-        [DataMember]
-        public int ContactStatusId { get; set; }
-
-        [ForeignKey("ContactStatusId")]
-        [DataMember]
-        public ContactStatus ContactStatus { get; set; }
+        public string ContactStatus { get; set; }
 
         [DataMember]  
-        public virtual ICollection<UnitType> UnitTypes { get; set; }
+        public virtual ICollection<ContactEnquiryUnitType> PreferredUnitTypes { get; set; }
 
+
+        [DataMember]
+        public virtual ICollection<ContactEnquiryLocality> PreferredLocations { get; set; }
+
+
+        [DataMember]
+        public virtual ICollection<RelatedUser> RelatedUsers { get; set; }
+        
         [DataMember]
         public int PersonalInformationId { get; set; }
 

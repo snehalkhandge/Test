@@ -13,7 +13,7 @@ namespace Myware.Data.Entity.DataContextMigrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201407192124330_Initial"; }
+            get { return "201407211754044_Initial"; }
         }
         
         string IMigrationMetadata.Source

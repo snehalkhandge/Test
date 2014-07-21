@@ -50,6 +50,8 @@ namespace Myware.Web
                 .Include("~/app/presalesunit/brokers/*.js")
                 .Include("~/app/taskmanager/*.js")
                 .Include("~/app/taskmanager/components/*.js")
+                .Include("~/app/presales/*.js")
+                .Include("~/app/presales/personal/*.js")
                 );
 
 

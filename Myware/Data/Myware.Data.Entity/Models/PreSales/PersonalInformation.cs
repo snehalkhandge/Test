@@ -46,29 +46,35 @@ namespace Myware.Data.Entity.Models.PreSales
         [DataMember]  
         public string Remarks { get; set; }
 
+        
+        
+        [DataMember]
+        public string Locality { get; set; }
+
+
+        [DataMember]
+        public string City { get; set; }
+
+        [DataMember]
+        [StringLength(50)]
+        public string Campaign { get; set; }
+
+        [DataMember]
+        [StringLength(50)]
+        public string SubCampaign { get; set; }
+
+        [DataMember]
+        [StringLength(50)]
+        public string ContactType { get; set; }
+
         [DataMember]
         [DataType(DataType.ImageUrl)]
         public string ImageUrl { get; set; }
-        [DataMember]
-        public int LocalityId { get; set; }
-
-        [ForeignKey("LocalityId")]
-        [DataMember]
-        public Locality Locality { get; set; }
-
-        [DataMember]
-        public virtual ICollection<CustomerEnquiryTypeCollection> CustomerEnquiryTypeCollection { get; set; }
 
         [DataMember]
         public virtual ICollection<PersonalInformationBookingMeta> PersonalInformationBookingMeta { get; set; }
 
-        
-
         [DataMember]
-        public virtual ICollection<Campaign> Campaigns { get; set; }
-
-        
-        [DataMember]
-        public ICollection<BusinessInformation> BusinessInformation { get; set; }
+        public virtual ICollection<BusinessInformation> BusinessInformation { get; set; }
     }
 }

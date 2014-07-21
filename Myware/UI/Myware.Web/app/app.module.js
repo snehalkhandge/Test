@@ -35,6 +35,7 @@
         'app.dashboard',
         'app.usermanagement',
         'app.presalesunit',
+        'app.presales',
         'app.taskmanager',
         'app.layout'
     ]);

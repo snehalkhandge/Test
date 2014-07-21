@@ -1,0 +1,207 @@
+﻿<section class="mainbar" data-ng-controller="EditPersonal">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> {{title}} </h2>
+
+                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
+                        <hr />
+
+
+                        <form role="form" class="col-md-8" name="myForm" ng-submit="savePersonal(personal)" novalidate>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">First Name</label>
+                                    <input type="text" class="form-control" ng-model="personal.FirstName" ng-minlength="2"
+                                           required name="FirstName" value="{{personal.FirstName}}" placeholder="Enter first name">
+
+                                    <div ng-messages="myForm.FirstName.$error" class="has-feedback">
+                                        <div ng-message="required">Name is a required field.</div>
+                                        <div ng-message="minlength">Name is too short</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Last Name</label>
+                                    <input type="text" class="form-control" ng-model="personal.LastName" ng-minlength="2"
+                                           required name="LastName" value="{{personal.LastName}}" placeholder="Enter last name">
+
+                                    <div ng-messages="myForm.LastName.$error" class="has-feedback">
+                                        <div ng-message="required">Name is a required field.</div>
+                                        <div ng-message="minlength">Name is too short</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="Address">Address</label>
+                                    <textarea class="form-control " rows="3" ng-model="personal.Address" name="Address">{{personal.Address}}</textarea>
+                                    <label for="Localities">Locality</label>
+                                    <select class="form-control" name="Locality" ng-model="personal.Locality" ng-required="true" ng-selected="personal.Locality">
+                                        <option ng-repeat='value in Localities' value='{{value.Name}}'>
+                                            {{value.Name}}, {{value.Location.City}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Pincode</label>
+                                    <input type="text" class="form-control" ng-model="personal.PinCode" ng-minlength="2"
+                                           required name="PinCode" value="{{personal.PinCode}}" placeholder="Enter Pin code">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="Campaign">Campaign</label>
+                                    <select class="form-control" name="Campaign" ng-model="personal.Campaign" ng-required="true" ng-selected="personal.Campaign">
+                                        <option ng-repeat='value in Campaigns' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="SubCampaigns">SubCampaigns</label>
+                                    <select class="form-control" name="SubCampaigns" ng-model="personal.SubCampaigns" ng-required="true" ng-selected="personal.SubCampaigns">
+                                        <option ng-repeat='value in SubCampaigns' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="CustomerTypes">CustomerTypes</label>
+                                    <select class="form-control" name="ContactType" ng-model="personal.ContactType" ng-required="true" ng-selected="personal.ContactType">
+                                        <option ng-repeat='value in CustomerTypes' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="Email">Email:</label>
+                                    <input type="text" class="form-control" name="Email" ng-model="personal.Email" value="{{personal.Email}}" placeholder="Email">
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="Address">Remarks</label>
+                                    <textarea class="form-control " rows="3" ng-model="personal.Remarks" name="Address">{{personal.Remarks}}</textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group  col-md-6">
+                                    <label for=" name">Anniversary Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="personal.AnniversaryDate"
+                                               is-open="opened" min-date="minDate" max-date="'2025-06-22'"
+                                               datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                                               ng-required="true" close-text="Close" />
+
+                                    </div>
+                                </div>
+                            
+                                <div class="form-group  col-md-6">
+                                    <label for=" name">Date of Birth</label>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openDOB($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+
+                                        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="personal.DateOfBirth" is-open="openedDOB"
+                                               min-date="minDate" max-date="'2025-06-22'" datepicker-options="dateOptions"
+                                               date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="ContactNumbers">ContactNumbers</label>
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th class="col-md-3">
+                                                Number
+                                            </th>
+                                            <th class="col-md-3">
+                                                Type
+                                            </th>
+                                            <th class="col-md-3">
+                                                Action
+                                            </th>
+                                        </tr>
+                                        <tr ng-repeat="item in personal.ContactNumbers">
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="item.PhoneNumber" name="PhoneNumber" placeholder="Enter phone number">
+                                            </td>
+                                            <td>
+                                                <select class="form-control" name="Type" ng-model="item.Type" ng-selected="item.Type">
+                                                    <option value='Primary'>Primary</option>
+                                                    <option value='Secondary'>Secondary</option>
+                                                </select>
+
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-justified">
+                                                    <span class="btn btn-primary" role="button" ng-click="addContactNumber()">Add new number</span>
+                                                    <span class="btn btn-danger" role="button" ng-click="removeContactNumber($index)">Remove the number</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                            </div>
+
+
+
+                            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid">{{buttonText}}</button>
+                        </form>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

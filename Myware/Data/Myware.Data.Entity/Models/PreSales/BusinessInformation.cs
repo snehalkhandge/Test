@@ -20,11 +20,12 @@ namespace Myware.Data.Entity.Models.PreSales
         [StringLength(200)]
         [DataMember]  
         public string BusinessOrIndustry { get; set; }
+
+
         [StringLength(200)]
         [DataMember]
         public ICollection<ContactNumber> BusinessContactNumbers { get; set; }
-
-        
+                
         [DataMember]  
         public decimal InvestmentCapacity { get; set; }
 
@@ -38,12 +39,13 @@ namespace Myware.Data.Entity.Models.PreSales
 
 
         [DataMember]
-        public int BusinessLocalityId { get; set; }
+        public string Locality { get; set; }
 
-        [ForeignKey("BusinessLocalityId")]
         [DataMember]
-        public Locality BusinessLocality { get; set; }
+        public string City { get; set; }
+
         
+
 
         [DataMember]
         public int PersonalInformationId { get; set; }

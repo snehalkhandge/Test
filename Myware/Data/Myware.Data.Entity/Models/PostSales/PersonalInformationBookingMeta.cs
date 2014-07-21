@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 using Myware.Data.Entity.Models.PreSales;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Myware.Data.Entity.Models.PostSales
@@ -25,6 +26,7 @@ namespace Myware.Data.Entity.Models.PostSales
         public int PersonalInformationId { get; set; }
 
         [DataMember]
+        [ForeignKey("PersonalInformationId")]
         public virtual PersonalInformation PersonalInformation { get; set; }
 
         [DataMember]

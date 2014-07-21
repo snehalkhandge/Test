@@ -93,9 +93,9 @@
     <Compile Include="CustomStores\AppUserManager.cs" />
     <Compile Include="CustomStores\AppRoleStore.cs" />
     <Compile Include="CustomStores\AppUserStore.cs" />
-    <Compile Include="DataContextMigrations\201407192124330_Initial.cs" />
-    <Compile Include="DataContextMigrations\201407192124330_Initial.Designer.cs">
-      <DependentUpon>201407192124330_Initial.cs</DependentUpon>
+    <Compile Include="DataContextMigrations\201407211754044_Initial.cs" />
+    <Compile Include="DataContextMigrations\201407211754044_Initial.Designer.cs">
+      <DependentUpon>201407211754044_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\BaseEntity\BaseEntity.cs" />
@@ -119,8 +119,10 @@
     <Compile Include="Models\PresalesUnit\UnitType.cs" />
     <Compile Include="Models\PreSales\BusinessInformation.cs" />
     <Compile Include="Models\PreSales\ContactEnquiry.cs" />
-    <Compile Include="Models\PreSales\CustomerEnquiryTypeCollection.cs" />
+    <Compile Include="Models\PreSales\ContactEnquiryLocality.cs" />
+    <Compile Include="Models\PreSales\ContactEnquiryUnitType.cs" />
     <Compile Include="Models\PreSales\PersonalInformation.cs" />
+    <Compile Include="Models\PreSales\RelatedUser.cs" />
     <Compile Include="Models\UserManagement\Role.cs" />
     <Compile Include="Models\UserManagement\User.cs" />
     <Compile Include="Models\UserTasks\AssignedTask.cs" />
@@ -145,8 +147,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataContextMigrations\201407192124330_Initial.resx">
-      <DependentUpon>201407192124330_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="DataContextMigrations\201407211754044_Initial.resx">
+      <DependentUpon>201407211754044_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

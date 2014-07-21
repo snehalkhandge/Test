@@ -81,6 +81,28 @@ namespace Myware.Web.API.UserManagement
         }
 
 
+        [Route("source/all")]
+        public ListCampaignViewModel GetAllCampaigna()
+        {
+            var parent = db.Campaigns.Where(t => t.IsParentCampaign == false)
+                           .OrderByDescending(x => x.Id)
+                           .Select(t => new CampaignViewModel
+                           {
+                               Id = t.Id,
+                               Name = t.Name,
+                               ParentCampaignId = t.ParentCampaignId
+                           });
+
+            return new ListCampaignViewModel
+            {
+
+                TotalItems = 0,
+                Results = parent.ToList()
+
+            };
+
+        }
+
         [Route("saveSource/{id}")]
         [ResponseType(typeof(CreateCampaignViewModel))]
         public IHttpActionResult PostCampaign(int id, CreateCampaignViewModel typeVM)

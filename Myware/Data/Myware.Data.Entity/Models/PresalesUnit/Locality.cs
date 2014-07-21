@@ -23,12 +23,9 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         public  Location Location { get; set; }
         [DataMember]
         public  ICollection<Broker> Brokers { get; set; }
-        [DataMember]
-        public  ICollection<BusinessInformation> BusinessInformations { get; set; }
+        
         [DataMember]
         public  ICollection<Company> Companies { get; set; }
-        [DataMember]
-        public  ICollection<PersonalInformation> PersonalInformations { get; set; }
         
     }
 }

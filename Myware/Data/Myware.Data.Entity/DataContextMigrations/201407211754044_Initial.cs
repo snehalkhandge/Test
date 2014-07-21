@@ -175,20 +175,23 @@ namespace Myware.Data.Entity.DataContextMigrations
                         InvestmentCapacity = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Fax = c.String(maxLength: 200),
                         Website = c.String(maxLength: 200),
-                        BusinessLocalityId = c.Int(nullable: false),
+                        Locality = c.String(),
+                        City = c.String(),
+                        ImageUrl = c.String(),
                         PersonalInformationId = c.Int(nullable: false),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                         LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
                         IsActive = c.Boolean(nullable: false),
+                        Locality_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Localities", t => t.BusinessLocalityId)
                 .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformationId)
                 .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .Index(t => t.BusinessLocalityId)
+                .ForeignKey("dbo.Localities", t => t.Locality_Id)
                 .Index(t => t.PersonalInformationId)
-                .Index(t => t.UpdatedByUserId);
+                .Index(t => t.UpdatedByUserId)
+                .Index(t => t.Locality_Id);
             
             CreateTable(
                 "dbo.ContactNumbers",
@@ -293,66 +296,25 @@ namespace Myware.Data.Entity.DataContextMigrations
                         DateOfBirth = c.DateTime(),
                         AnniversaryDate = c.DateTime(),
                         Remarks = c.String(),
-                        ImageUrl = c.String(),
-                        LocalityId = c.Int(nullable: false),
+                        Locality = c.String(),
+                        City = c.String(),
+                        Campaign = c.String(maxLength: 50),
+                        SubCampaign = c.String(maxLength: 50),
+                        ContactType = c.String(maxLength: 50),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                         LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
                         IsActive = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Localities", t => t.LocalityId)
-                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .Index(t => t.LocalityId)
-                .Index(t => t.UpdatedByUserId);
-            
-            CreateTable(
-                "dbo.Campaigns",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 200),
-                        IsParentCampaign = c.Boolean(),
-                        ParentCampaignId = c.Int(),
-                        UpdatedByUserId = c.Int(nullable: false),
-                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                        IsActive = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Campaigns", t => t.ParentCampaignId)
-                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .Index(t => t.ParentCampaignId)
-                .Index(t => t.UpdatedByUserId);
-            
-            CreateTable(
-                "dbo.CustomerEnquiryTypeCollections",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        PersonalInformationId = c.Int(nullable: false),
-                        CustomerEnquiryTypeId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.CustomerEnquiryTypes", t => t.CustomerEnquiryTypeId)
-                .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformationId)
-                .Index(t => t.PersonalInformationId)
-                .Index(t => t.CustomerEnquiryTypeId);
-            
-            CreateTable(
-                "dbo.CustomerEnquiryTypes",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(maxLength: 20),
-                        UpdatedByUserId = c.Int(nullable: false),
-                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                        IsActive = c.Boolean(nullable: false),
+                        Locality_Id = c.Int(),
+                        Campaign_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .Index(t => t.UpdatedByUserId);
+                .ForeignKey("dbo.Localities", t => t.Locality_Id)
+                .ForeignKey("dbo.Campaigns", t => t.Campaign_Id)
+                .Index(t => t.UpdatedByUserId)
+                .Index(t => t.Locality_Id)
+                .Index(t => t.Campaign_Id);
             
             CreateTable(
                 "dbo.PersonalInformationBookingMetas",
@@ -394,12 +356,34 @@ namespace Myware.Data.Entity.DataContextMigrations
                 .Index(t => t.UpdatedByUserId);
             
             CreateTable(
+                "dbo.Campaigns",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 200),
+                        IsParentCampaign = c.Boolean(),
+                        ParentCampaignId = c.Int(),
+                        UpdatedByUserId = c.Int(nullable: false),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        IsActive = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Campaigns", t => t.ParentCampaignId)
+                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
+                .Index(t => t.ParentCampaignId)
+                .Index(t => t.UpdatedByUserId);
+            
+            CreateTable(
                 "dbo.ContactEnquiries",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        TransactionTypeId = c.Int(nullable: false),
-                        LookingForTypeId = c.Int(nullable: false),
+                        Remarks = c.String(),
+                        AssignedDate = c.DateTime(nullable: false),
+                        LeadStatus = c.String(),
+                        TransactionType = c.String(),
+                        LookingForType = c.String(),
                         BudgetFrom = c.Decimal(precision: 18, scale: 2),
                         BudgetTo = c.Decimal(precision: 18, scale: 2),
                         SaleAreaFrom = c.Decimal(precision: 18, scale: 2),
@@ -412,27 +396,66 @@ namespace Myware.Data.Entity.DataContextMigrations
                         Created = c.DateTime(nullable: false),
                         Updated = c.DateTime(nullable: false),
                         EnquiryDate = c.DateTime(),
-                        FacingTypeId = c.Int(nullable: false),
-                        ContactStatusId = c.Int(nullable: false),
+                        FacingType = c.String(),
+                        ContactStatus = c.String(),
                         PersonalInformationId = c.Int(nullable: false),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                         LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
                         IsActive = c.Boolean(nullable: false),
+                        FacingType_Id = c.Int(),
+                        LookingForType_Id = c.Int(),
+                        TransactionType_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ContactStatus", t => t.ContactStatusId)
-                .ForeignKey("dbo.FacingTypes", t => t.FacingTypeId)
-                .ForeignKey("dbo.LookingForTypes", t => t.LookingForTypeId)
                 .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformationId)
-                .ForeignKey("dbo.TransactionTypes", t => t.TransactionTypeId)
                 .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .Index(t => t.TransactionTypeId)
-                .Index(t => t.LookingForTypeId)
-                .Index(t => t.FacingTypeId)
-                .Index(t => t.ContactStatusId)
+                .ForeignKey("dbo.FacingTypes", t => t.FacingType_Id)
+                .ForeignKey("dbo.LookingForTypes", t => t.LookingForType_Id)
+                .ForeignKey("dbo.TransactionTypes", t => t.TransactionType_Id)
                 .Index(t => t.PersonalInformationId)
-                .Index(t => t.UpdatedByUserId);
+                .Index(t => t.UpdatedByUserId)
+                .Index(t => t.FacingType_Id)
+                .Index(t => t.LookingForType_Id)
+                .Index(t => t.TransactionType_Id);
+            
+            CreateTable(
+                "dbo.ContactEnquiryLocalities",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Locality = c.String(maxLength: 150),
+                        ContactEnquiry_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ContactEnquiries", t => t.ContactEnquiry_Id)
+                .Index(t => t.ContactEnquiry_Id);
+            
+            CreateTable(
+                "dbo.ContactEnquiryUnitTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 30),
+                        ContactEnquiry_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ContactEnquiries", t => t.ContactEnquiry_Id)
+                .Index(t => t.ContactEnquiry_Id);
+            
+            CreateTable(
+                "dbo.RelatedUsers",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false),
+                        ContactEnquiryId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ContactEnquiries", t => t.ContactEnquiryId)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId)
+                .Index(t => t.ContactEnquiryId);
             
             CreateTable(
                 "dbo.ContactStatus",
@@ -440,6 +463,21 @@ namespace Myware.Data.Entity.DataContextMigrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(maxLength: 30),
+                        UpdatedByUserId = c.Int(nullable: false),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        IsActive = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
+                .Index(t => t.UpdatedByUserId);
+            
+            CreateTable(
+                "dbo.CustomerEnquiryTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(maxLength: 20),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                         LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
@@ -480,39 +518,6 @@ namespace Myware.Data.Entity.DataContextMigrations
                 .Index(t => t.UpdatedByUserId);
             
             CreateTable(
-                "dbo.TransactionTypes",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(maxLength: 20),
-                        UpdatedByUserId = c.Int(nullable: false),
-                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                        IsActive = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .Index(t => t.UpdatedByUserId);
-            
-            CreateTable(
-                "dbo.UnitTypes",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 30),
-                        UpdatedByUserId = c.Int(nullable: false),
-                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                        IsActive = c.Boolean(nullable: false),
-                        ContactEnquiry_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .ForeignKey("dbo.ContactEnquiries", t => t.ContactEnquiry_Id)
-                .Index(t => t.UpdatedByUserId)
-                .Index(t => t.ContactEnquiry_Id);
-            
-            CreateTable(
                 "dbo.Permissions",
                 c => new
                     {
@@ -547,56 +552,72 @@ namespace Myware.Data.Entity.DataContextMigrations
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
-                "dbo.CampaignPersonalInformations",
+                "dbo.TransactionTypes",
                 c => new
                     {
-                        Campaign_Id = c.Int(nullable: false),
-                        PersonalInformation_Id = c.Int(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(maxLength: 20),
+                        UpdatedByUserId = c.Int(nullable: false),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        IsActive = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Campaign_Id, t.PersonalInformation_Id })
-                .ForeignKey("dbo.Campaigns", t => t.Campaign_Id, cascadeDelete: true)
-                .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformation_Id, cascadeDelete: true)
-                .Index(t => t.Campaign_Id)
-                .Index(t => t.PersonalInformation_Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
+                .Index(t => t.UpdatedByUserId);
+            
+            CreateTable(
+                "dbo.UnitTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 30),
+                        UpdatedByUserId = c.Int(nullable: false),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        IsActive = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
+                .Index(t => t.UpdatedByUserId);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.UnitTypes", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.TransactionTypes", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.ContactEnquiries", "TransactionType_Id", "dbo.TransactionTypes");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.RolePermissions", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.RolePermissions", "PermissionId", "dbo.Permissions");
-            DropForeignKey("dbo.ContactEnquiries", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.UnitTypes", "ContactEnquiry_Id", "dbo.ContactEnquiries");
-            DropForeignKey("dbo.UnitTypes", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.TransactionTypes", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.ContactEnquiries", "TransactionTypeId", "dbo.TransactionTypes");
-            DropForeignKey("dbo.ContactEnquiries", "PersonalInformationId", "dbo.PersonalInformations");
             DropForeignKey("dbo.LookingForTypes", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.ContactEnquiries", "LookingForTypeId", "dbo.LookingForTypes");
+            DropForeignKey("dbo.ContactEnquiries", "LookingForType_Id", "dbo.LookingForTypes");
             DropForeignKey("dbo.FacingTypes", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.ContactEnquiries", "FacingTypeId", "dbo.FacingTypes");
-            DropForeignKey("dbo.ContactEnquiries", "ContactStatusId", "dbo.ContactStatus");
+            DropForeignKey("dbo.ContactEnquiries", "FacingType_Id", "dbo.FacingTypes");
+            DropForeignKey("dbo.CustomerEnquiryTypes", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ContactStatus", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.ContactEnquiries", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.RelatedUsers", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.RelatedUsers", "ContactEnquiryId", "dbo.ContactEnquiries");
+            DropForeignKey("dbo.ContactEnquiryUnitTypes", "ContactEnquiry_Id", "dbo.ContactEnquiries");
+            DropForeignKey("dbo.ContactEnquiryLocalities", "ContactEnquiry_Id", "dbo.ContactEnquiries");
+            DropForeignKey("dbo.ContactEnquiries", "PersonalInformationId", "dbo.PersonalInformations");
+            DropForeignKey("dbo.Campaigns", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.PersonalInformations", "Campaign_Id", "dbo.Campaigns");
+            DropForeignKey("dbo.Campaigns", "ParentCampaignId", "dbo.Campaigns");
             DropForeignKey("dbo.Brokers", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Localities", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.PersonalInformations", "Locality_Id", "dbo.Localities");
             DropForeignKey("dbo.Locations", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Localities", "LocationId", "dbo.Locations");
+            DropForeignKey("dbo.BusinessInformations", "Locality_Id", "dbo.Localities");
             DropForeignKey("dbo.BusinessInformations", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.PersonalInformations", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.PersonalInformationBookingMetas", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.PersonalInformationBookingMetas", "PersonalInformationId", "dbo.PersonalInformations");
-            DropForeignKey("dbo.PersonalInformations", "LocalityId", "dbo.Localities");
-            DropForeignKey("dbo.CustomerEnquiryTypeCollections", "PersonalInformationId", "dbo.PersonalInformations");
-            DropForeignKey("dbo.CustomerEnquiryTypeCollections", "CustomerEnquiryTypeId", "dbo.CustomerEnquiryTypes");
-            DropForeignKey("dbo.CustomerEnquiryTypes", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ContactNumbers", "PersonalInformation_Id", "dbo.PersonalInformations");
-            DropForeignKey("dbo.Campaigns", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.CampaignPersonalInformations", "PersonalInformation_Id", "dbo.PersonalInformations");
-            DropForeignKey("dbo.CampaignPersonalInformations", "Campaign_Id", "dbo.Campaigns");
-            DropForeignKey("dbo.Campaigns", "ParentCampaignId", "dbo.Campaigns");
             DropForeignKey("dbo.BusinessInformations", "PersonalInformationId", "dbo.PersonalInformations");
-            DropForeignKey("dbo.BusinessInformations", "BusinessLocalityId", "dbo.Localities");
             DropForeignKey("dbo.ContactNumbers", "BusinessInformation_Id", "dbo.BusinessInformations");
             DropForeignKey("dbo.ContactNumbers", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Developers", "ContactNumber_Id", "dbo.ContactNumbers");
@@ -616,34 +637,33 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropIndex("dbo.CampaignPersonalInformations", new[] { "PersonalInformation_Id" });
-            DropIndex("dbo.CampaignPersonalInformations", new[] { "Campaign_Id" });
+            DropIndex("dbo.UnitTypes", new[] { "UpdatedByUserId" });
+            DropIndex("dbo.TransactionTypes", new[] { "UpdatedByUserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.RolePermissions", new[] { "PermissionId" });
             DropIndex("dbo.RolePermissions", new[] { "RoleId" });
             DropIndex("dbo.Permissions", new[] { "Name" });
-            DropIndex("dbo.UnitTypes", new[] { "ContactEnquiry_Id" });
-            DropIndex("dbo.UnitTypes", new[] { "UpdatedByUserId" });
-            DropIndex("dbo.TransactionTypes", new[] { "UpdatedByUserId" });
             DropIndex("dbo.LookingForTypes", new[] { "UpdatedByUserId" });
             DropIndex("dbo.FacingTypes", new[] { "UpdatedByUserId" });
+            DropIndex("dbo.CustomerEnquiryTypes", new[] { "UpdatedByUserId" });
             DropIndex("dbo.ContactStatus", new[] { "UpdatedByUserId" });
+            DropIndex("dbo.RelatedUsers", new[] { "ContactEnquiryId" });
+            DropIndex("dbo.RelatedUsers", new[] { "UserId" });
+            DropIndex("dbo.ContactEnquiryUnitTypes", new[] { "ContactEnquiry_Id" });
+            DropIndex("dbo.ContactEnquiryLocalities", new[] { "ContactEnquiry_Id" });
+            DropIndex("dbo.ContactEnquiries", new[] { "TransactionType_Id" });
+            DropIndex("dbo.ContactEnquiries", new[] { "LookingForType_Id" });
+            DropIndex("dbo.ContactEnquiries", new[] { "FacingType_Id" });
             DropIndex("dbo.ContactEnquiries", new[] { "UpdatedByUserId" });
             DropIndex("dbo.ContactEnquiries", new[] { "PersonalInformationId" });
-            DropIndex("dbo.ContactEnquiries", new[] { "ContactStatusId" });
-            DropIndex("dbo.ContactEnquiries", new[] { "FacingTypeId" });
-            DropIndex("dbo.ContactEnquiries", new[] { "LookingForTypeId" });
-            DropIndex("dbo.ContactEnquiries", new[] { "TransactionTypeId" });
+            DropIndex("dbo.Campaigns", new[] { "UpdatedByUserId" });
+            DropIndex("dbo.Campaigns", new[] { "ParentCampaignId" });
             DropIndex("dbo.Locations", new[] { "UpdatedByUserId" });
             DropIndex("dbo.PersonalInformationBookingMetas", new[] { "UpdatedByUserId" });
             DropIndex("dbo.PersonalInformationBookingMetas", new[] { "PersonalInformationId" });
-            DropIndex("dbo.CustomerEnquiryTypes", new[] { "UpdatedByUserId" });
-            DropIndex("dbo.CustomerEnquiryTypeCollections", new[] { "CustomerEnquiryTypeId" });
-            DropIndex("dbo.CustomerEnquiryTypeCollections", new[] { "PersonalInformationId" });
-            DropIndex("dbo.Campaigns", new[] { "UpdatedByUserId" });
-            DropIndex("dbo.Campaigns", new[] { "ParentCampaignId" });
+            DropIndex("dbo.PersonalInformations", new[] { "Campaign_Id" });
+            DropIndex("dbo.PersonalInformations", new[] { "Locality_Id" });
             DropIndex("dbo.PersonalInformations", new[] { "UpdatedByUserId" });
-            DropIndex("dbo.PersonalInformations", new[] { "LocalityId" });
             DropIndex("dbo.CompanyContactNumbers", new[] { "CompanyId" });
             DropIndex("dbo.Companies", new[] { "UpdatedByUserId" });
             DropIndex("dbo.Companies", new[] { "LocalityId" });
@@ -654,9 +674,9 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropIndex("dbo.ContactNumbers", new[] { "PersonalInformation_Id" });
             DropIndex("dbo.ContactNumbers", new[] { "BusinessInformation_Id" });
             DropIndex("dbo.ContactNumbers", new[] { "UpdatedByUserId" });
+            DropIndex("dbo.BusinessInformations", new[] { "Locality_Id" });
             DropIndex("dbo.BusinessInformations", new[] { "UpdatedByUserId" });
             DropIndex("dbo.BusinessInformations", new[] { "PersonalInformationId" });
-            DropIndex("dbo.BusinessInformations", new[] { "BusinessLocalityId" });
             DropIndex("dbo.Localities", new[] { "UpdatedByUserId" });
             DropIndex("dbo.Localities", new[] { "LocationId" });
             DropIndex("dbo.Brokers", new[] { "UpdatedByUserId" });
@@ -672,21 +692,22 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropIndex("dbo.AssignedTasks", new[] { "ParentTaskId" });
             DropIndex("dbo.AssignedTasks", new[] { "AssignedToId" });
             DropIndex("dbo.AssignedTasks", new[] { "AssignedFromId" });
-            DropTable("dbo.CampaignPersonalInformations");
+            DropTable("dbo.UnitTypes");
+            DropTable("dbo.TransactionTypes");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.RolePermissions");
             DropTable("dbo.Permissions");
-            DropTable("dbo.UnitTypes");
-            DropTable("dbo.TransactionTypes");
             DropTable("dbo.LookingForTypes");
             DropTable("dbo.FacingTypes");
+            DropTable("dbo.CustomerEnquiryTypes");
             DropTable("dbo.ContactStatus");
+            DropTable("dbo.RelatedUsers");
+            DropTable("dbo.ContactEnquiryUnitTypes");
+            DropTable("dbo.ContactEnquiryLocalities");
             DropTable("dbo.ContactEnquiries");
+            DropTable("dbo.Campaigns");
             DropTable("dbo.Locations");
             DropTable("dbo.PersonalInformationBookingMetas");
-            DropTable("dbo.CustomerEnquiryTypes");
-            DropTable("dbo.CustomerEnquiryTypeCollections");
-            DropTable("dbo.Campaigns");
             DropTable("dbo.PersonalInformations");
             DropTable("dbo.CompanyContactNumbers");
             DropTable("dbo.Companies");
