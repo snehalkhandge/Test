@@ -165,90 +165,6 @@ namespace Myware.Data.Entity.DataContextMigrations
                 .Index(t => t.UpdatedByUserId);
             
             CreateTable(
-                "dbo.BusinessInformations",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        CompanyName = c.String(maxLength: 200),
-                        Designation = c.String(maxLength: 200),
-                        BusinessOrIndustry = c.String(maxLength: 200),
-                        InvestmentCapacity = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Fax = c.String(maxLength: 200),
-                        Website = c.String(maxLength: 200),
-                        Locality = c.String(),
-                        City = c.String(),
-                        ImageUrl = c.String(),
-                        PersonalInformationId = c.Int(nullable: false),
-                        UpdatedByUserId = c.Int(nullable: false),
-                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                        IsActive = c.Boolean(nullable: false),
-                        Locality_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformationId)
-                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .ForeignKey("dbo.Localities", t => t.Locality_Id)
-                .Index(t => t.PersonalInformationId)
-                .Index(t => t.UpdatedByUserId)
-                .Index(t => t.Locality_Id);
-            
-            CreateTable(
-                "dbo.ContactNumbers",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        PhoneNumber = c.String(),
-                        Type = c.String(),
-                        UpdatedByUserId = c.Int(nullable: false),
-                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                        IsActive = c.Boolean(nullable: false),
-                        BusinessInformation_Id = c.Int(),
-                        PersonalInformation_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .ForeignKey("dbo.BusinessInformations", t => t.BusinessInformation_Id)
-                .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformation_Id)
-                .Index(t => t.UpdatedByUserId)
-                .Index(t => t.BusinessInformation_Id)
-                .Index(t => t.PersonalInformation_Id);
-            
-            CreateTable(
-                "dbo.Developers",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(maxLength: 20),
-                        Description = c.String(maxLength: 200),
-                        UpdatedByUserId = c.Int(nullable: false),
-                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                        IsActive = c.Boolean(nullable: false),
-                        ContactNumber_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .ForeignKey("dbo.ContactNumbers", t => t.ContactNumber_Id)
-                .Index(t => t.UpdatedByUserId)
-                .Index(t => t.ContactNumber_Id);
-            
-            CreateTable(
-                "dbo.DeveloperCompanies",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        DeveloperId = c.Int(nullable: false),
-                        CompanyId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Companies", t => t.CompanyId)
-                .ForeignKey("dbo.Developers", t => t.DeveloperId)
-                .Index(t => t.DeveloperId)
-                .Index(t => t.CompanyId);
-            
-            CreateTable(
                 "dbo.Companies",
                 c => new
                     {
@@ -284,6 +200,104 @@ namespace Myware.Data.Entity.DataContextMigrations
                 .Index(t => t.CompanyId);
             
             CreateTable(
+                "dbo.DeveloperCompanies",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        DeveloperId = c.Int(nullable: false),
+                        CompanyId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Companies", t => t.CompanyId)
+                .ForeignKey("dbo.Developers", t => t.DeveloperId)
+                .Index(t => t.DeveloperId)
+                .Index(t => t.CompanyId);
+            
+            CreateTable(
+                "dbo.Developers",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(maxLength: 20),
+                        Description = c.String(maxLength: 200),
+                        UpdatedByUserId = c.Int(nullable: false),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        IsActive = c.Boolean(nullable: false),
+                        ContactNumber_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
+                .ForeignKey("dbo.ContactNumbers", t => t.ContactNumber_Id)
+                .Index(t => t.UpdatedByUserId)
+                .Index(t => t.ContactNumber_Id);
+            
+            CreateTable(
+                "dbo.Locations",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        City = c.String(maxLength: 200),
+                        State = c.String(maxLength: 50),
+                        Country = c.String(maxLength: 50),
+                        UpdatedByUserId = c.Int(nullable: false),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        IsActive = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
+                .Index(t => t.UpdatedByUserId);
+            
+            CreateTable(
+                "dbo.BusinessInformations",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        CompanyName = c.String(maxLength: 200),
+                        Designation = c.String(maxLength: 200),
+                        BusinessOrIndustry = c.String(maxLength: 200),
+                        InvestmentCapacity = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Fax = c.String(maxLength: 200),
+                        Website = c.String(maxLength: 200),
+                        Locality = c.String(),
+                        City = c.String(),
+                        Type = c.String(),
+                        PersonalInformationId = c.Int(nullable: false),
+                        UpdatedByUserId = c.Int(nullable: false),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        IsActive = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformationId)
+                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
+                .Index(t => t.PersonalInformationId)
+                .Index(t => t.UpdatedByUserId);
+            
+            CreateTable(
+                "dbo.ContactNumbers",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        PhoneNumber = c.String(),
+                        Type = c.String(),
+                        UpdatedByUserId = c.Int(nullable: false),
+                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                        IsActive = c.Boolean(nullable: false),
+                        BusinessInformation_Id = c.Int(),
+                        PersonalInformation_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
+                .ForeignKey("dbo.BusinessInformations", t => t.BusinessInformation_Id)
+                .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformation_Id)
+                .Index(t => t.UpdatedByUserId)
+                .Index(t => t.BusinessInformation_Id)
+                .Index(t => t.PersonalInformation_Id);
+            
+            CreateTable(
                 "dbo.PersonalInformations",
                 c => new
                     {
@@ -301,19 +315,17 @@ namespace Myware.Data.Entity.DataContextMigrations
                         Campaign = c.String(maxLength: 50),
                         SubCampaign = c.String(maxLength: 50),
                         ContactType = c.String(maxLength: 50),
+                        ImageUrl = c.String(),
                         UpdatedByUserId = c.Int(nullable: false),
                         TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                         LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
                         IsActive = c.Boolean(nullable: false),
-                        Locality_Id = c.Int(),
                         Campaign_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
-                .ForeignKey("dbo.Localities", t => t.Locality_Id)
                 .ForeignKey("dbo.Campaigns", t => t.Campaign_Id)
                 .Index(t => t.UpdatedByUserId)
-                .Index(t => t.Locality_Id)
                 .Index(t => t.Campaign_Id);
             
             CreateTable(
@@ -336,23 +348,6 @@ namespace Myware.Data.Entity.DataContextMigrations
                 .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformationId)
                 .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
                 .Index(t => t.PersonalInformationId)
-                .Index(t => t.UpdatedByUserId);
-            
-            CreateTable(
-                "dbo.Locations",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        City = c.String(maxLength: 200),
-                        State = c.String(maxLength: 50),
-                        Country = c.String(maxLength: 50),
-                        UpdatedByUserId = c.Int(nullable: false),
-                        TimeStamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                        LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                        IsActive = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
                 .Index(t => t.UpdatedByUserId);
             
             CreateTable(
@@ -606,12 +601,6 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropForeignKey("dbo.Campaigns", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.PersonalInformations", "Campaign_Id", "dbo.Campaigns");
             DropForeignKey("dbo.Campaigns", "ParentCampaignId", "dbo.Campaigns");
-            DropForeignKey("dbo.Brokers", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Localities", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.PersonalInformations", "Locality_Id", "dbo.Localities");
-            DropForeignKey("dbo.Locations", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Localities", "LocationId", "dbo.Locations");
-            DropForeignKey("dbo.BusinessInformations", "Locality_Id", "dbo.Localities");
             DropForeignKey("dbo.BusinessInformations", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.PersonalInformations", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.PersonalInformationBookingMetas", "UpdatedByUserId", "dbo.AspNetUsers");
@@ -621,10 +610,14 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropForeignKey("dbo.ContactNumbers", "BusinessInformation_Id", "dbo.BusinessInformations");
             DropForeignKey("dbo.ContactNumbers", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Developers", "ContactNumber_Id", "dbo.ContactNumbers");
-            DropForeignKey("dbo.Developers", "UpdatedByUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.DeveloperCompanies", "DeveloperId", "dbo.Developers");
+            DropForeignKey("dbo.Brokers", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Localities", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Locations", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Localities", "LocationId", "dbo.Locations");
             DropForeignKey("dbo.Companies", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Companies", "LocalityId", "dbo.Localities");
+            DropForeignKey("dbo.Developers", "UpdatedByUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.DeveloperCompanies", "DeveloperId", "dbo.Developers");
             DropForeignKey("dbo.DeveloperCompanies", "CompanyId", "dbo.Companies");
             DropForeignKey("dbo.CompanyContactNumbers", "CompanyId", "dbo.Companies");
             DropForeignKey("dbo.Brokers", "LocalityId", "dbo.Localities");
@@ -658,25 +651,23 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropIndex("dbo.ContactEnquiries", new[] { "PersonalInformationId" });
             DropIndex("dbo.Campaigns", new[] { "UpdatedByUserId" });
             DropIndex("dbo.Campaigns", new[] { "ParentCampaignId" });
-            DropIndex("dbo.Locations", new[] { "UpdatedByUserId" });
             DropIndex("dbo.PersonalInformationBookingMetas", new[] { "UpdatedByUserId" });
             DropIndex("dbo.PersonalInformationBookingMetas", new[] { "PersonalInformationId" });
             DropIndex("dbo.PersonalInformations", new[] { "Campaign_Id" });
-            DropIndex("dbo.PersonalInformations", new[] { "Locality_Id" });
             DropIndex("dbo.PersonalInformations", new[] { "UpdatedByUserId" });
-            DropIndex("dbo.CompanyContactNumbers", new[] { "CompanyId" });
-            DropIndex("dbo.Companies", new[] { "UpdatedByUserId" });
-            DropIndex("dbo.Companies", new[] { "LocalityId" });
-            DropIndex("dbo.DeveloperCompanies", new[] { "CompanyId" });
-            DropIndex("dbo.DeveloperCompanies", new[] { "DeveloperId" });
-            DropIndex("dbo.Developers", new[] { "ContactNumber_Id" });
-            DropIndex("dbo.Developers", new[] { "UpdatedByUserId" });
             DropIndex("dbo.ContactNumbers", new[] { "PersonalInformation_Id" });
             DropIndex("dbo.ContactNumbers", new[] { "BusinessInformation_Id" });
             DropIndex("dbo.ContactNumbers", new[] { "UpdatedByUserId" });
-            DropIndex("dbo.BusinessInformations", new[] { "Locality_Id" });
             DropIndex("dbo.BusinessInformations", new[] { "UpdatedByUserId" });
             DropIndex("dbo.BusinessInformations", new[] { "PersonalInformationId" });
+            DropIndex("dbo.Locations", new[] { "UpdatedByUserId" });
+            DropIndex("dbo.Developers", new[] { "ContactNumber_Id" });
+            DropIndex("dbo.Developers", new[] { "UpdatedByUserId" });
+            DropIndex("dbo.DeveloperCompanies", new[] { "CompanyId" });
+            DropIndex("dbo.DeveloperCompanies", new[] { "DeveloperId" });
+            DropIndex("dbo.CompanyContactNumbers", new[] { "CompanyId" });
+            DropIndex("dbo.Companies", new[] { "UpdatedByUserId" });
+            DropIndex("dbo.Companies", new[] { "LocalityId" });
             DropIndex("dbo.Localities", new[] { "UpdatedByUserId" });
             DropIndex("dbo.Localities", new[] { "LocationId" });
             DropIndex("dbo.Brokers", new[] { "UpdatedByUserId" });
@@ -706,15 +697,15 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropTable("dbo.ContactEnquiryLocalities");
             DropTable("dbo.ContactEnquiries");
             DropTable("dbo.Campaigns");
-            DropTable("dbo.Locations");
             DropTable("dbo.PersonalInformationBookingMetas");
             DropTable("dbo.PersonalInformations");
-            DropTable("dbo.CompanyContactNumbers");
-            DropTable("dbo.Companies");
-            DropTable("dbo.DeveloperCompanies");
-            DropTable("dbo.Developers");
             DropTable("dbo.ContactNumbers");
             DropTable("dbo.BusinessInformations");
+            DropTable("dbo.Locations");
+            DropTable("dbo.Developers");
+            DropTable("dbo.DeveloperCompanies");
+            DropTable("dbo.CompanyContactNumbers");
+            DropTable("dbo.Companies");
             DropTable("dbo.Localities");
             DropTable("dbo.Brokers");
             DropTable("dbo.BrokerContactNumbers");

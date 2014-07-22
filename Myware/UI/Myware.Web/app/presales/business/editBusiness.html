@@ -1,0 +1,197 @@
+﻿<section class="mainbar" data-ng-controller="EditPersonal">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> {{title}} </h2>
+
+                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
+                        <hr />
+
+
+                        <form role="form" class="col-md-8" name="myForm" ng-submit="saveBusiness(business)" novalidate>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Company Name</label>
+                                    <input type="text" class="form-control" ng-model="business.CompanyName" ng-minlength="2"
+                                           required name="CompanyName" value="{{business.CompanyName}}" placeholder="Enter first name">
+
+                                    <div ng-messages="myForm.CompanyName.$error" class="has-feedback">
+                                        <div ng-message="required">Name is a required field.</div>
+                                        <div ng-message="minlength">Name is too short</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Designation</label>
+                                    <input type="text" class="form-control" ng-model="business.Designation" ng-minlength="2"
+                                           required name="Designation" value="{{business.Designation}}" placeholder="Enter first name">
+
+                                    <div ng-messages="myForm.Designation.$error" class="has-feedback">
+                                        <div ng-message="required">Name is a required field.</div>
+                                        <div ng-message="minlength">Name is too short</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">BusinessOrIndustry</label>
+                                    <input type="text" class="form-control" ng-model="business.BusinessOrIndustry" ng-minlength="2"
+                                           required name="BusinessOrIndustry" value="{{business.BusinessOrIndustry}}" placeholder="Enter first name">
+
+                                    <div ng-messages="myForm.BusinessOrIndustry.$error" class="has-feedback">
+                                        <div ng-message="required">Name is a required field.</div>
+                                        <div ng-message="minlength">Name is too short</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">InvestmentCapacity</label>
+                                    <input type="text" class="form-control" ng-model="business.InvestmentCapacity" ng-minlength="2"
+                                           required name="InvestmentCapacity" value="{{business.InvestmentCapacity}}" placeholder="Enter first name">
+
+                                    <div ng-messages="myForm.InvestmentCapacity.$error" class="has-feedback">
+                                        <div ng-message="required">Name is a required field.</div>
+                                        <div ng-message="minlength">Name is too short</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Fax</label>
+                                    <input type="text" class="form-control" ng-model="business.Fax" ng-minlength="2"
+                                           required name="Fax" value="{{business.Fax}}" placeholder="Enter first name">
+
+                                    <div ng-messages="myForm.Fax.$error" class="has-feedback">
+                                        <div ng-message="required">Name is a required field.</div>
+                                        <div ng-message="minlength">Name is too short</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Website</label>
+                                    <input type="text" class="form-control" ng-model="business.Website" ng-minlength="2"
+                                           required name="Website" value="{{business.Website}}" placeholder="Enter first name">
+
+                                    <div ng-messages="myForm.Website.$error" class="has-feedback">
+                                        <div ng-message="required">Name is a required field.</div>
+                                        <div ng-message="minlength">Name is too short</div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="form-group col-md-6">                                    
+                                    <label for="Localities">Locality</label>
+                                    <select class="form-control" name="Locality" ng-model="business.Locality" ng-required="true" ng-selected="personal.Locality">
+                                        <option ng-repeat='value in Localities' value='{{value.Name}}'>
+                                            {{value.Name}}, {{value.Location.City}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div
+
+                            <div class="row">
+
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Type</label>
+                                    <input type="text" class="form-control" ng-model="business.Type" ng-minlength="2"
+                                           required name="Type" value="{{business.Type}}" placeholder="Enter type">
+                                </div>
+
+                            </div>
+
+                          
+
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="ContactNumbers">ContactNumbers</label>
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th class="col-md-3">
+                                                Number
+                                            </th>
+                                            <th class="col-md-3">
+                                                Type
+                                            </th>
+                                            <th class="col-md-3">
+                                                Action
+                                            </th>
+                                        </tr>
+                                        <tr ng-repeat="item in business.BusinessContactNumbers">
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="item.PhoneNumber" name="PhoneNumber" placeholder="Enter phone number">
+                                            </td>
+                                            <td>
+                                                <select class="form-control" name="Type" ng-model="item.Type" ng-selected="item.Type">
+                                                    <option value='Primary'>Primary</option>
+                                                    <option value='Secondary'>Secondary</option>
+                                                </select>
+
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-justified">
+                                                    <span class="btn btn-primary" role="button" ng-click="addContactNumber()">Add new number</span>
+                                                    <span class="btn btn-danger" role="button" ng-click="removeContactNumber($index)">Remove the number</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6" ng-show="business.PersonalInformationId">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label for=" name"> Broker Image</label>
+                                                <img style="width:120px;" ng-src="{{business.ImageUrl}}" fallback-src
+                                                     alt="Profile Image" holder-fix />
+                                            </td>
+                                            <td>
+                                                <div class="progress">
+                                                    <div class="progress-bar  progress-bar-success" role="progressbar" ng-style="{ 'width': progress + '%' }"></div>
+                                                </div>
+                                                <input type="file" ng-file-select="onFileSelect($files)">
+
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid">{{buttonText}}</button>
+                        </form>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

@@ -44,7 +44,8 @@ namespace Myware.Data.Entity.Models.PreSales
         [DataMember]
         public string City { get; set; }
 
-        
+        [DataMember]
+        public string Type { get; set; }
 
 
         [DataMember]

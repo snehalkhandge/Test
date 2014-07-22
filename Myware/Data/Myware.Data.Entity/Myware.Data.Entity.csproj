@@ -93,9 +93,9 @@
     <Compile Include="CustomStores\AppUserManager.cs" />
     <Compile Include="CustomStores\AppRoleStore.cs" />
     <Compile Include="CustomStores\AppUserStore.cs" />
-    <Compile Include="DataContextMigrations\201407211754044_Initial.cs" />
-    <Compile Include="DataContextMigrations\201407211754044_Initial.Designer.cs">
-      <DependentUpon>201407211754044_Initial.cs</DependentUpon>
+    <Compile Include="DataContextMigrations\201407221404470_Initial.cs" />
+    <Compile Include="DataContextMigrations\201407221404470_Initial.Designer.cs">
+      <DependentUpon>201407221404470_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\BaseEntity\BaseEntity.cs" />
@@ -147,8 +147,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataContextMigrations\201407211754044_Initial.resx">
-      <DependentUpon>201407211754044_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="DataContextMigrations\201407221404470_Initial.resx">
+      <DependentUpon>201407221404470_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
