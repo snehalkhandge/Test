@@ -1,0 +1,209 @@
+﻿<section class="mainbar" data-ng-controller="EditPersonal">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> {{title}} </h2>
+
+                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
+                        <hr />
+
+
+                        <form role="form" class="col-md-8" name="myForm" ng-submit="saveContactEnquiry(enquiry)" novalidate>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Budget From</label>
+                                    <input type="text" class="form-control" ng-model="enquiry.BudgetFrom"
+                                           name="BudgetFrom" value="{{enquiry.BudgetFrom}}" placeholder="Enter budget from">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Budget To</label>
+                                    <input type="text" class="form-control" ng-model="enquiry.BudgetTo"
+                                           name="BudgetTo" value="{{enquiry.BudgetTo}}" placeholder="Enter budget to">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">IsFurnished</label>
+                                    <input type="checkbox" class="form-control" 
+                                           ng-model="enquiry.IsFurnished" name="IsFurnished" >
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Offered Rate</label>
+                                    <input type="text" class="form-control" ng-model="enquiry.OfferedRate"
+                                           name="OfferedRate" value="{{enquiry.OfferedRate}}" placeholder="Enter OfferedRate">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">ContactStatus</label>                                    
+                                    <select class="form-control" name="ContactStatus" ng-model="enquiry.ContactStatus"
+                                            ng-selected="enquiry.ContactStatus" multiple>
+                                        <option ng-repeat='value in ContactStatuses' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Lead Status</label>
+                                    <select class="form-control" name="LeadStatus" ng-model="enquiry.LeadStatus"
+                                            ng-selected="enquiry.LeadStatus" multiple>
+                                        <option ng-repeat='value in LeadStatuses' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+                                    
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">AssignedDate</label>                                    
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openAssignedDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+
+                                        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="enquiry.AssignedDate" is-open="openedAssignedDate"
+                                               min-date="minDate" max-date="'2025-06-22'" datepicker-options="dateOptions" name="AssignedDate"
+                                               date-disabled="disabled(date, mode)" close-text="Close" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Enquiry Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openEnquiryDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+
+                                        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="enquiry.EnquiryDate" is-open="openedEnquiryDate"
+                                               min-date="minDate" max-date="'2025-06-22'" datepicker-options="dateOptions" name="EnquiryDate"
+                                               date-disabled="disabled(date, mode)" close-text="Close" />
+                                    </div>                                    
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Sale Area From</label>
+                                    <input type="text" class="form-control" ng-model="enquiry.SaleAreaFrom"
+                                           name="SaleAreaFrom" value="{{enquiry.SaleAreaFrom}}" placeholder="Enter SaleAreaFrom">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Sale Area To</label>
+                                    <input type="text" class="form-control" ng-model="enquiry.SaleAreaTo"
+                                           name="SaleAreaTo" value="{{enquiry.SaleAreaTo}}" placeholder="Enter budget to">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">CarpetAreaFrom</label>
+                                    <input type="text" class="form-control" ng-model="enquiry.CarpetAreaFrom"
+                                           name="CarpetAreaFrom" value="{{enquiry.CarpetAreaFrom}}" placeholder="Enter CarpetAreaFrom">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for=" name">CarpetAreaTo</label>
+                                    <input type="text" class="form-control" ng-model="enquiry.CarpetAreaTo"
+                                           name="CarpetAreaTo" value="{{enquiry.CarpetAreaTo}}" placeholder="Enter CarpetAreaTo">
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">TransactionType</label>
+                                    <select class="form-control" name="TransactionType" ng-model="enquiry.TransactionType"
+                                            ng-selected="enquiry.TransactionType">
+                                        <option ng-repeat='value in TransactionTypes' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>                                    
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="LookingForType">LookingForType</label>
+                                    <select class="form-control" name="LookingForType" ng-model="enquiry.LookingForType"
+                                             ng-selected="enquiry.LookingForType">
+                                        <option ng-repeat='value in LookingForTypes' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="Localities">Preferred Locality</label>
+                                    <select class="form-control" name="PreferredLocations" ng-model="enquiry.PreferredLocations" 
+                                            ng-selected="enquiry.PreferredLocations" multiple>
+                                        <option ng-repeat='value in Localities' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="PreferredUnitTypes">Preferred Unit Types</label>
+                                    <select class="form-control" name="PreferredUnitTypes" ng-model="enquiry.PreferredUnitTypes"
+                                            ng-selected="enquiry.PreferredUnitTypes" multiple>
+                                        <option ng-repeat='value in UnitTypes' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="FacingType">Facing Type</label>
+                                    <select class="form-control" name="FacingType" ng-model="enquiry.FacingType"
+                                            ng-selected="enquiry.FacingType" multiple>
+                                        <option ng-repeat='value in FacingTypes' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="PropertyAge">PropertyAge</label>
+                                    <select class="form-control" name="PropertyAge" ng-model="enquiry.PropertyAge"
+                                            ng-selected="enquiry.PropertyAge" multiple>
+                                        <option ng-repeat='value in PropertyAges' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="Address">Address</label>
+                                    <textarea class="form-control " rows="3" ng-model="enquiry.Remarks" name="Remarks">{{enquiry.Remarks}}</textarea>
+                                </div>
+                            </div>
+
+                                <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid">{{buttonText}}</button>
+</form>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

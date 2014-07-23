@@ -261,6 +261,8 @@
     <Compile Include="API\PreSalesUnit\ManageFacingTypesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageContactStatusTypesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageCustomerTypesController.cs" />
+    <Compile Include="API\PreSales\ManageBusinessInformationController.cs" />
+    <Compile Include="API\PreSales\ManagePersonalInformationController.cs" />
     <Compile Include="API\TaskManager\ManageTasksController.cs" />
     <Compile Include="API\UserManagement\ManagePermissionsController.cs" />
     <Compile Include="API\UserManagement\ManageRolesController.cs" />
@@ -316,6 +318,8 @@
     <Compile Include="Models\PreSalesUnit\ListBrokerViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\ListDeveloperViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\LocalityViewModel.cs" />
+    <Compile Include="Models\PreSales\BusinessInformationViewModel.cs" />
+    <Compile Include="Models\PreSales\PersonalInformationViewModel.cs" />
     <Compile Include="Models\TaskManagement\TaskViewModel.cs" />
     <Compile Include="Models\UserManagement\PermissionViewModel.cs" />
     <Compile Include="Models\UserManagement\LogInModel.cs" />
@@ -409,7 +413,10 @@
     <Content Include="app\presales\business\editBusiness.html" />
     <Content Include="app\presales\business\editBusiness.js" />
     <Content Include="app\presales\business\businessFactory.js" />
+    <Content Include="app\presales\contactenquiry\contactEnquiryFactory.js" />
     <Content Include="app\presales\contactenquiry\config.route.js" />
+    <Content Include="app\presales\contactenquiry\editContactEnquiry.html" />
+    <Content Include="app\presales\contactenquiry\editContactEnquiry.js" />
     <Content Include="app\presales\customers\config.route.js" />
     <Content Include="app\presales\enquiries\config.route.js" />
     <Content Include="app\presales\personal\editPersonal.js" />
@@ -839,6 +846,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\Brokers\Temp\" />
+    <Folder Include="Images\Customers\Temp\" />
     <Folder Include="Images\Tasks\Temp\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Base\" />

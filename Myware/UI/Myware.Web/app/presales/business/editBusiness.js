@@ -45,6 +45,9 @@
         $scope.title = (businessId > 0) ? 'Edit Business Information' : 'Add Business Information';
         $scope.buttonText = (businessId > 0) ? 'Update Business Information' : 'Add New Business Information';
 
+        $scope.showEnquiry = false;
+        $scope.showOther = false;
+
         $scope.Localities = {};
         
 
@@ -94,7 +97,7 @@
             for (var i = 0; i < $files.length; i++) {
                 var file = $files[i];
                 $scope.upload = $upload.upload({
-                    url: common.apiUrl + '/saveCustomerImage', 
+                    url: common.apiUrl + '/savePersonalInfoImage',
                     method: 'POST',
                     // headers: {'header-key': 'header-value'},
                     // withCredentials: true,
@@ -105,7 +108,7 @@
 
                 }).success(function (data, status, headers, config) {
                     // file is uploaded successfully
-                    $scope.business.ImageUrl = data;
+                    $scope.business.ImageUrl = data.replace(/"/g, "");
                     common.logger.success("Successfully saved the image.");
                     $scope.alerts.push({ type: 'success', msg: "Successfully saved the image." });
                 })
@@ -145,6 +148,26 @@
                 $scope.addContactNumber();
             }
 
+
+
+            personalFactory.getPersonalById(personalId)
+                .then(function (result) {
+                    $scope.business.ImageUrl = result.ImageUrl;
+
+                    if (result.contactType == "Enquiry")
+                    {
+                        $scope.showEnquiry = true;
+                    }
+                    else
+                    {
+                        $scope.showOther = true;
+                    }
+
+                }, function (reason) {
+                    common.logger.error(reason);
+                    $scope.alerts.push({ type: 'danger', msg: reason });
+
+                });
 
             localityFactory.getAllLocality()
                          .then(function (result) {

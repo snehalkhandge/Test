@@ -287,15 +287,12 @@ namespace Myware.Data.Entity.DataContextMigrations
                         LastUpdated = c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"),
                         IsActive = c.Boolean(nullable: false),
                         BusinessInformation_Id = c.Int(),
-                        PersonalInformation_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
                 .ForeignKey("dbo.BusinessInformations", t => t.BusinessInformation_Id)
-                .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformation_Id)
                 .Index(t => t.UpdatedByUserId)
-                .Index(t => t.BusinessInformation_Id)
-                .Index(t => t.PersonalInformation_Id);
+                .Index(t => t.BusinessInformation_Id);
             
             CreateTable(
                 "dbo.PersonalInformations",
@@ -325,8 +322,23 @@ namespace Myware.Data.Entity.DataContextMigrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UpdatedByUserId)
                 .ForeignKey("dbo.Campaigns", t => t.Campaign_Id)
+                .Index(t => t.Email, unique: true)
                 .Index(t => t.UpdatedByUserId)
                 .Index(t => t.Campaign_Id);
+            
+            CreateTable(
+                "dbo.PersonalContactNumbers",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        PersonalInformationId = c.Int(nullable: false),
+                        PhoneNumber = c.Long(nullable: false),
+                        Type = c.String(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.PersonalInformations", t => t.PersonalInformationId)
+                .Index(t => t.PersonalInformationId)
+                .Index(t => t.PhoneNumber, unique: true);
             
             CreateTable(
                 "dbo.PersonalInformationBookingMetas",
@@ -605,7 +617,7 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropForeignKey("dbo.PersonalInformations", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.PersonalInformationBookingMetas", "UpdatedByUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.PersonalInformationBookingMetas", "PersonalInformationId", "dbo.PersonalInformations");
-            DropForeignKey("dbo.ContactNumbers", "PersonalInformation_Id", "dbo.PersonalInformations");
+            DropForeignKey("dbo.PersonalContactNumbers", "PersonalInformationId", "dbo.PersonalInformations");
             DropForeignKey("dbo.BusinessInformations", "PersonalInformationId", "dbo.PersonalInformations");
             DropForeignKey("dbo.ContactNumbers", "BusinessInformation_Id", "dbo.BusinessInformations");
             DropForeignKey("dbo.ContactNumbers", "UpdatedByUserId", "dbo.AspNetUsers");
@@ -653,9 +665,11 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropIndex("dbo.Campaigns", new[] { "ParentCampaignId" });
             DropIndex("dbo.PersonalInformationBookingMetas", new[] { "UpdatedByUserId" });
             DropIndex("dbo.PersonalInformationBookingMetas", new[] { "PersonalInformationId" });
+            DropIndex("dbo.PersonalContactNumbers", new[] { "PhoneNumber" });
+            DropIndex("dbo.PersonalContactNumbers", new[] { "PersonalInformationId" });
             DropIndex("dbo.PersonalInformations", new[] { "Campaign_Id" });
             DropIndex("dbo.PersonalInformations", new[] { "UpdatedByUserId" });
-            DropIndex("dbo.ContactNumbers", new[] { "PersonalInformation_Id" });
+            DropIndex("dbo.PersonalInformations", new[] { "Email" });
             DropIndex("dbo.ContactNumbers", new[] { "BusinessInformation_Id" });
             DropIndex("dbo.ContactNumbers", new[] { "UpdatedByUserId" });
             DropIndex("dbo.BusinessInformations", new[] { "UpdatedByUserId" });
@@ -698,6 +712,7 @@ namespace Myware.Data.Entity.DataContextMigrations
             DropTable("dbo.ContactEnquiries");
             DropTable("dbo.Campaigns");
             DropTable("dbo.PersonalInformationBookingMetas");
+            DropTable("dbo.PersonalContactNumbers");
             DropTable("dbo.PersonalInformations");
             DropTable("dbo.ContactNumbers");
             DropTable("dbo.BusinessInformations");

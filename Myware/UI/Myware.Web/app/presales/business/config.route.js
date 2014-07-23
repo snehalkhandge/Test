@@ -11,7 +11,7 @@
         return [
             
             {
-                url: '/presales/business/edit/:personalId',
+                url: '/presales/business/edit/:personalId/:contactType/:businessId',
                 config: {
                     templateUrl: '/app/presales/business/editBusiness.html',
                     title: 'Edit Business',

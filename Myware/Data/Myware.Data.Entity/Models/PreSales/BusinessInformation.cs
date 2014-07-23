@@ -24,7 +24,7 @@ namespace Myware.Data.Entity.Models.PreSales
 
         [StringLength(200)]
         [DataMember]
-        public ICollection<ContactNumber> BusinessContactNumbers { get; set; }
+        public ICollection<BusinessContactNumber> BusinessContactNumbers { get; set; }
                 
         [DataMember]  
         public decimal InvestmentCapacity { get; set; }

@@ -7,7 +7,10 @@
                     <div class="widget-content customerTypes">
                         <h2> {{title}} </h2>
 
-                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+                            {{alert.msg}}
+                            <span class='btn btn-primary' ng-show="showUpdateButton" ng-click='updateData()'>Click here to update the screen</span>
+                        </alert>
 
                         <hr />
 
@@ -18,7 +21,7 @@
                                 <div class="form-group col-md-6">
                                     <label for=" name">First Name</label>
                                     <input type="text" class="form-control" ng-model="personal.FirstName" ng-minlength="2"
-                                           required name="FirstName" value="{{personal.FirstName}}" placeholder="Enter first name">
+                                            name="FirstName" value="{{personal.FirstName}}" placeholder="Enter first name">
 
                                     <div ng-messages="myForm.FirstName.$error" class="has-feedback">
                                         <div ng-message="required">Name is a required field.</div>
@@ -31,7 +34,7 @@
                                 <div class="form-group col-md-6">
                                     <label for=" name">Last Name</label>
                                     <input type="text" class="form-control" ng-model="personal.LastName" ng-minlength="2"
-                                           required name="LastName" value="{{personal.LastName}}" placeholder="Enter last name">
+                                            name="LastName" value="{{personal.LastName}}" placeholder="Enter last name">
 
                                     <div ng-messages="myForm.LastName.$error" class="has-feedback">
                                         <div ng-message="required">Name is a required field.</div>
@@ -46,7 +49,7 @@
                                     <label for="Address">Address</label>
                                     <textarea class="form-control " rows="3" ng-model="personal.Address" name="Address">{{personal.Address}}</textarea>
                                     <label for="Localities">Locality</label>
-                                    <select class="form-control" name="Locality" ng-model="personal.Locality" ng-required="true" ng-selected="personal.Locality">
+                                    <select class="form-control" name="Locality" ng-model="personal.Locality"  ng-selected="personal.Locality">
                                         <option ng-repeat='value in Localities' value='{{value.Name}}'>
                                             {{value.Name}}, {{value.Location.City}}
                                         </option>
@@ -57,8 +60,8 @@
 
                                 <div class="form-group col-md-6">
                                     <label for=" name">Pincode</label>
-                                    <input type="text" class="form-control" ng-model="personal.PinCode" ng-minlength="2"
-                                           required name="PinCode" value="{{personal.PinCode}}" placeholder="Enter Pin code">
+                                    <input type="text" class="form-control" ng-model="personal.PinCode" 
+                                           name="PinCode" value="{{personal.PinCode}}" placeholder="Enter Pin code">
                                 </div>
 
                             </div>
@@ -67,7 +70,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="Campaign">Campaign</label>
-                                    <select class="form-control" name="Campaign" ng-model="personal.Campaign" ng-required="true" ng-selected="personal.Campaign">
+                                    <select class="form-control" name="Campaign" ng-model="personal.Campaign"  ng-selected="personal.Campaign">
                                         <option ng-repeat='value in Campaigns' value='{{value.Name}}'>
                                             {{value.Name}}
                                         </option>
@@ -78,7 +81,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="SubCampaigns">SubCampaigns</label>
-                                    <select class="form-control" name="SubCampaigns" ng-model="personal.SubCampaigns" ng-required="true" ng-selected="personal.SubCampaigns">
+                                    <select class="form-control" name="SubCampaigns" ng-model="personal.SubCampaigns"  ng-selected="personal.SubCampaigns">
                                         <option ng-repeat='value in SubCampaigns' value='{{value.Name}}'>
                                             {{value.Name}}
                                         </option>
@@ -90,7 +93,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="CustomerTypes">CustomerTypes</label>
-                                    <select class="form-control" name="ContactType" ng-model="personal.ContactType" ng-required="true" ng-selected="personal.ContactType">
+                                    <select class="form-control" name="ContactType" ng-model="personal.ContactType"  ng-selected="personal.ContactType">
                                         <option ng-repeat='value in CustomerTypes' value='{{value.Name}}'>
                                             {{value.Name}}
                                         </option>
@@ -104,7 +107,8 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="Email">Email:</label>
-                                    <input type="text" class="form-control" name="Email" ng-model="personal.Email" value="{{personal.Email}}" placeholder="Email">
+                                    <input type="text" class="form-control" name="Email" ng-model="personal.Email"
+                                           ng-change="isUniqueEmail(personal.Email)" value="{{personal.Email}}" placeholder="Email">
                                 </div>
                             </div>
 
@@ -112,8 +116,8 @@
                             <div class="row">
 
                                 <div class="form-group col-md-6">
-                                    <label for="Address">Remarks</label>
-                                    <textarea class="form-control " rows="3" ng-model="personal.Remarks" name="Address">{{personal.Remarks}}</textarea>
+                                    <label for="Remarks">Remarks</label>
+                                    <textarea class="form-control " rows="3" ng-model="personal.Remarks" name="Remarks">{{personal.Remarks}}</textarea>
                                 </div>
                             </div>
 
@@ -127,12 +131,11 @@
                                         </span>
                                         <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="personal.AnniversaryDate"
                                                is-open="opened" min-date="minDate" max-date="'2025-06-22'"
-                                               datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
-                                               ng-required="true" close-text="Close" />
+                                               datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
 
                                     </div>
                                 </div>
-                            
+
                                 <div class="form-group  col-md-6">
                                     <label for=" name">Date of Birth</label>
                                     <div class="input-group">
@@ -142,7 +145,7 @@
 
                                         <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="personal.DateOfBirth" is-open="openedDOB"
                                                min-date="minDate" max-date="'2025-06-22'" datepicker-options="dateOptions"
-                                               date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                               date-disabled="disabled(date, mode)"  close-text="Close" />
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +168,8 @@
                                         </tr>
                                         <tr ng-repeat="item in personal.ContactNumbers">
                                             <td>
-                                                <input type="text" class="form-control" ng-model="item.PhoneNumber" name="PhoneNumber" placeholder="Enter phone number">
+                                                <input type="text" class="form-control" ng-model="item.PhoneNumber" name="PhoneNumber"
+                                                       ng-change="isUniqueContactNumber(item.PhoneNumber)" placeholder="Enter phone number">
                                             </td>
                                             <td>
                                                 <select class="form-control" name="Type" ng-model="item.Type" ng-selected="item.Type">

@@ -234,7 +234,7 @@ namespace Myware.Data.Entity.DataContextMigrations
 
             var customerEnquiryType = new CustomerEnquiryType
             {
-                Name = "CustEnq1",
+                Name = "Enquiry",
                 UpdatedByUserId = 1
             };
 
@@ -242,12 +242,19 @@ namespace Myware.Data.Entity.DataContextMigrations
 
             var customerEnquiryType1 = new CustomerEnquiryType
             {
-                Name = "CustEnq2",
+                Name = "Invitee",
                 UpdatedByUserId = 1
             };
 
             context.CustomerEnquiryTypes.Add(customerEnquiryType1);
 
+            var customerEnquiryType2 = new CustomerEnquiryType
+            {
+                Name = "Broker",
+                UpdatedByUserId = 1
+            };
+
+            context.CustomerEnquiryTypes.Add(customerEnquiryType2);
             context.SaveChanges();
 
 

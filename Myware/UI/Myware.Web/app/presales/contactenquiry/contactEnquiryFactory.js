@@ -1,7 +1,7 @@
 ﻿(function() {
     'use strict';
 
-    var serviceId = 'businessFactory';
+    var serviceId = 'contactEnquiryFactory';
 
     angular.module('app.presales')
         .factory(serviceId, dataservice);
@@ -15,7 +15,7 @@
 
         
 
-        var businessCache = DSCacheFactory('businessCache', {
+        var contactEnquiryCache = DSCacheFactory('contactEnquiryCache', {
             maxAge: 3600000,
             capacity: 100,
             deleteOnExpire: 'aggressive',
@@ -25,14 +25,14 @@
             }
         });
 
-        var dataCache = DSCacheFactory.get('businessCache');
+        var dataCache = DSCacheFactory.get('contactEnquiryCache');
 
         
-        var getbusinessById = function (id) {
+        var getcontactEnquiryById = function (id) {
             var deferred = $q.defer(),
                 start = new Date().getTime();
                 
-            $http.get(common.apiUrl + '/businessInformationById/' + id)
+            $http.get(common.apiUrl + '/contactEnquiryById/' +id)
                     .success(function (data) {
                         data = data || {};                        
                         deferred.resolve(data);
@@ -47,15 +47,15 @@
 
 
 
-        var savebusiness = function (business) {
+        var savecontactEnquiry = function (contactEnquiry) {
 
            var deferred = $q.defer();
-           if (business.Id == '') {
-               business.Id = 0;
+           if (contactEnquiry.Id == '') {
+               contactEnquiry.Id = 0;
            }
 
            
-            $http.post(common.apiUrl + '/saveBusinessInformation/' + business.Id, business)
+            $http.post(common.apiUrl + '/savecontactEnquiry/' + contactEnquiry.Id, contactEnquiry)
                     .success(function (data) {
 
                         if (dataCache.info()) {
@@ -73,8 +73,8 @@
        };
 
         return {
-            savebusiness: savebusiness,
-            getbusinessById: getbusinessById
+            savecontactEnquiry: savecontactEnquiry,
+            getcontactEnquiryById: getcontactEnquiryById
             
         };
 

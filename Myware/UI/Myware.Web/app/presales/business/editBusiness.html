@@ -1,4 +1,4 @@
-﻿<section class="mainbar" data-ng-controller="EditPersonal">
+﻿<section class="mainbar" data-ng-controller="EditBusiness">
     <section class="matter">
         <div class="container-fluid">
             <div class="row">
@@ -17,105 +17,81 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for=" name">Company Name</label>
-                                    <input type="text" class="form-control" ng-model="business.CompanyName" ng-minlength="2"
-                                           required name="CompanyName" value="{{business.CompanyName}}" placeholder="Enter first name">
+                                    <input type="text" class="form-control" ng-model="business.CompanyName"
+                                           name="CompanyName" value="{{business.CompanyName}}" placeholder="Enter first name">
 
-                                    <div ng-messages="myForm.CompanyName.$error" class="has-feedback">
-                                        <div ng-message="required">Name is a required field.</div>
-                                        <div ng-message="minlength">Name is too short</div>
-                                    </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for=" name">Designation</label>
-                                    <input type="text" class="form-control" ng-model="business.Designation" ng-minlength="2"
-                                           required name="Designation" value="{{business.Designation}}" placeholder="Enter first name">
+                                    <input type="text" class="form-control" ng-model="business.Designation"
+                                           name="Designation" value="{{business.Designation}}" placeholder="Enter first name">
 
-                                    <div ng-messages="myForm.Designation.$error" class="has-feedback">
-                                        <div ng-message="required">Name is a required field.</div>
-                                        <div ng-message="minlength">Name is too short</div>
-                                    </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for=" name">BusinessOrIndustry</label>
-                                    <input type="text" class="form-control" ng-model="business.BusinessOrIndustry" ng-minlength="2"
-                                           required name="BusinessOrIndustry" value="{{business.BusinessOrIndustry}}" placeholder="Enter first name">
+                                    <input type="text" class="form-control" ng-model="business.BusinessOrIndustry"
+                                           name="BusinessOrIndustry" value="{{business.BusinessOrIndustry}}" placeholder="Enter first name">
 
-                                    <div ng-messages="myForm.BusinessOrIndustry.$error" class="has-feedback">
-                                        <div ng-message="required">Name is a required field.</div>
-                                        <div ng-message="minlength">Name is too short</div>
-                                    </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for=" name">InvestmentCapacity</label>
-                                    <input type="text" class="form-control" ng-model="business.InvestmentCapacity" ng-minlength="2"
-                                           required name="InvestmentCapacity" value="{{business.InvestmentCapacity}}" placeholder="Enter first name">
+                                    <input type="text" class="form-control" ng-model="business.InvestmentCapacity"
+                                           name="InvestmentCapacity" value="{{business.InvestmentCapacity}}" placeholder="Enter first name">
 
-                                    <div ng-messages="myForm.InvestmentCapacity.$error" class="has-feedback">
-                                        <div ng-message="required">Name is a required field.</div>
-                                        <div ng-message="minlength">Name is too short</div>
-                                    </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for=" name">Fax</label>
-                                    <input type="text" class="form-control" ng-model="business.Fax" ng-minlength="2"
-                                           required name="Fax" value="{{business.Fax}}" placeholder="Enter first name">
+                                    <input type="text" class="form-control" ng-model="business.Fax"
+                                           name="Fax" value="{{business.Fax}}" placeholder="Enter first name">
 
-                                    <div ng-messages="myForm.Fax.$error" class="has-feedback">
-                                        <div ng-message="required">Name is a required field.</div>
-                                        <div ng-message="minlength">Name is too short</div>
-                                    </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for=" name">Website</label>
-                                    <input type="text" class="form-control" ng-model="business.Website" ng-minlength="2"
-                                           required name="Website" value="{{business.Website}}" placeholder="Enter first name">
+                                    <input type="text" class="form-control" ng-model="business.Website"
+                                           name="Website" value="{{business.Website}}" placeholder="Enter first name">
 
-                                    <div ng-messages="myForm.Website.$error" class="has-feedback">
-                                        <div ng-message="required">Name is a required field.</div>
-                                        <div ng-message="minlength">Name is too short</div>
-                                    </div>
                                 </div>
                             </div>
 
 
 
                             <div class="row">
-                                <div class="form-group col-md-6">                                    
+                                <div class="form-group col-md-6">
                                     <label for="Localities">Locality</label>
-                                    <select class="form-control" name="Locality" ng-model="business.Locality" ng-required="true" ng-selected="personal.Locality">
+                                    <select class="form-control" name="Locality" ng-model="business.Locality" ng-selected="personal.Locality">
                                         <option ng-repeat='value in Localities' value='{{value.Name}}'>
                                             {{value.Name}}, {{value.Location.City}}
                                         </option>
                                     </select>
                                 </div>
-                            </div
+                            </div>
 
                             <div class="row">
 
                                 <div class="form-group col-md-6">
                                     <label for=" name">Type</label>
-                                    <input type="text" class="form-control" ng-model="business.Type" ng-minlength="2"
-                                           required name="Type" value="{{business.Type}}" placeholder="Enter type">
+                                    <input type="text" class="form-control" ng-model="business.Type" 
+                                           name="Type" value="{{business.Type}}" placeholder="Enter type">
                                 </div>
 
                             </div>
 
-                          
+
 
                             <div class="row">
                                 <div class="form-group col-md-12">

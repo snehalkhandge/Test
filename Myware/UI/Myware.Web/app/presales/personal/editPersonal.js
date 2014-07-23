@@ -5,9 +5,13 @@
         .module('app.presales')
         .controller('EditPersonal', EditPersonal);
 
-    EditPersonal.$inject = ['$scope', '$routeParams', 'common', 'authService', 'personalFactory', 'localityFactory', 'sourceFactory', 'customerTypeFactory'];
+    EditPersonal.$inject = ['$scope', '$timeout', '$location', '$http',
+                            '$routeParams', 'common', 'authService', 'personalFactory',
+                            'localityFactory', 'sourceFactory', 'customerTypeFactory'];
 
-    function EditPersonal($scope, $routeParams, common, authService, personalFactory, localityFactory, sourceFactory, customerTypeFactory) {
+    function EditPersonal($scope, $timeout, $location, $http,
+                          $routeParams, common, authService, personalFactory,
+                          localityFactory, sourceFactory, customerTypeFactory) {
         var log = common.logger.info;
 
         /*jshint validthis: true */
@@ -29,7 +33,8 @@
             Campaign: '',
             SubCampaign: '',
             ContactType: '',
-            ContactNumbers: []
+            ContactNumbers: [],
+            BusinessInformation:[]
         };
 
         $scope.personal = defaultForm;
@@ -48,7 +53,7 @@
         $scope.Campaigns = {};
         $scope.SubCampaigns = {};
         $scope.SelectedLocalities = {};
-
+        $scope.showUpdateButton = false;
 
         $scope.isClean = function () {
             return angular.equals(original, $scope.personal);
@@ -60,10 +65,22 @@
             angular.extend(personal, { UserId: authService.authentication.userId });
                         
             personalFactory.savePersonal(personal)
-                .then(function () {
+                .then(function (result) {
                     $scope.buttonText = "Update Personal Information"
                     common.logger.success("Successfully saved the item");
                     $scope.alerts.push({ type: 'success', msg: "Successfully saved the item" });
+
+                    var businessId = 0;
+
+                    if(result.BusinessInformation.length > 0)
+                    {
+                        businessId = result.BusinessInformation[0].Id;
+                    }
+
+                    $timeout(function () {
+                        $location.path("/presales/business/edit/" + result.Id + "/" + result.ContactType + "/"+businessId);
+                    }, 500);
+
                 });
         };
 
@@ -84,13 +101,65 @@
             $scope.personal.ContactNumbers.push($scope.inserted);
         };
 
-        $scope.removeContactNumber = function($index)
-        {
-            $scope.personal.ContactNumbers.splice($index,1);
-        }
+        $scope.removeContactNumber = function ($index) {
+            $scope.personal.ContactNumbers.splice($index, 1);
+        };
 
-        
+        $scope.dataToUpdate = {};
 
+        $scope.updateData = function () {
+            $scope.personal = $scope.dataToUpdate;
+        };
+
+        $scope.isUniqueEmail = function (email) {
+
+            if (email.length < 10) {
+                return;
+            }
+            $http({
+                url: common.apiUrl + '/customerEmailIsUnique',
+                method: "POST",
+                data: {
+                    email: email
+                },
+
+            }).success(function (data) {
+                        
+                        if(!data.IsUnique)
+                        {
+                            $scope.dataToUpdate = data.PersonalInformation;
+                            common.logger.error("Error,  There is account associated with it.");
+                            $scope.alerts.push({ type: 'danger', msg: "Error, There is account associated with it." });
+                            $scope.showUpdateButton = true;
+
+                        }
+           }).error(function (data, status, headers, config) {
+                        $scope.alerts.push({ type: 'danger', msg: "Error, Unable to contact the serve." });
+           });
+        };
+
+        $scope.isUniqueContactNumber = function (number) {
+
+            if (number.length < 8)
+            {
+                return;
+            }
+            
+            $http.get(common.apiUrl + '/customerContactNumberIsUnique/' + number)
+                    .success(function (data) {
+
+                        if (!data.IsUnique) {
+                            $scope.dataToUpdate = data.PersonalInformation;
+                            common.logger.error("Error,  There is account associated with it.");
+                            $scope.alerts.push({ type: 'danger', msg: "Error, There is account associated with it." });
+                            $scope.showUpdateButton = true;
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        $scope.alerts.push({ type: 'danger', msg: "Error, Unable to contact the serve." });
+                    });
+
+        };
 
         activate();
 

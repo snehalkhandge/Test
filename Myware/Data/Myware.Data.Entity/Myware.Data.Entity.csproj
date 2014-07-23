@@ -93,9 +93,9 @@
     <Compile Include="CustomStores\AppUserManager.cs" />
     <Compile Include="CustomStores\AppRoleStore.cs" />
     <Compile Include="CustomStores\AppUserStore.cs" />
-    <Compile Include="DataContextMigrations\201407221404470_Initial.cs" />
-    <Compile Include="DataContextMigrations\201407221404470_Initial.Designer.cs">
-      <DependentUpon>201407221404470_Initial.cs</DependentUpon>
+    <Compile Include="DataContextMigrations\201407222058373_Initial.cs" />
+    <Compile Include="DataContextMigrations\201407222058373_Initial.Designer.cs">
+      <DependentUpon>201407222058373_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\BaseEntity\BaseEntity.cs" />
@@ -117,6 +117,8 @@
     <Compile Include="Models\PresalesUnit\LookingForType.cs" />
     <Compile Include="Models\PresalesUnit\TransactionType.cs" />
     <Compile Include="Models\PresalesUnit\UnitType.cs" />
+    <Compile Include="Models\PreSales\BusinessContactNumber.cs" />
+    <Compile Include="Models\PreSales\PersonalContactNumber.cs" />
     <Compile Include="Models\PreSales\BusinessInformation.cs" />
     <Compile Include="Models\PreSales\ContactEnquiry.cs" />
     <Compile Include="Models\PreSales\ContactEnquiryLocality.cs" />
@@ -147,8 +149,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataContextMigrations\201407221404470_Initial.resx">
-      <DependentUpon>201407221404470_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="DataContextMigrations\201407222058373_Initial.resx">
+      <DependentUpon>201407222058373_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
