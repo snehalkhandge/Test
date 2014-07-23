@@ -7,11 +7,11 @@
 
     EditPersonal.$inject = ['$scope', '$timeout', '$location', '$http',
                             '$routeParams', 'common', 'authService', 'personalFactory',
-                            'localityFactory', 'sourceFactory', 'customerTypeFactory'];
+                            'localityFactory', 'sourceFactory', 'customerTypeFactory', 'locationFactory'];
 
     function EditPersonal($scope, $timeout, $location, $http,
                           $routeParams, common, authService, personalFactory,
-                          localityFactory, sourceFactory, customerTypeFactory) {
+                          localityFactory, sourceFactory, customerTypeFactory, locationFactory) {
         var log = common.logger.info;
 
         /*jshint validthis: true */
@@ -48,6 +48,7 @@
         $scope.title = (personalId > 0) ? 'Edit Personal Information' : 'Add Personal Information';
         $scope.buttonText = (personalId > 0) ? 'Update Personal Information' : 'Add New Personal Information';
 
+        $scope.Cities = {};
         $scope.Localities = {};
         $scope.CustomerTypes = {};
         $scope.Campaigns = {};
@@ -69,6 +70,8 @@
                     $scope.buttonText = "Update Personal Information"
                     common.logger.success("Successfully saved the item");
                     $scope.alerts.push({ type: 'success', msg: "Successfully saved the item" });
+
+                    $scope.personal.Id = result.Id;
 
                     var businessId = 0;
 
@@ -193,6 +196,18 @@
                          .then(function (result) {
 
                              $scope.Localities = result.Results;
+
+                         }, function (reason) {
+                             common.logger.error(reason);
+                             $scope.alerts.push({ type: 'danger', msg: reason });
+                         });
+
+
+
+            locationFactory.getAllLocations()
+                         .then(function (result) {
+
+                             $scope.Cities = result.Results;
 
                          }, function (reason) {
                              common.logger.error(reason);

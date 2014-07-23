@@ -261,6 +261,8 @@
     <Compile Include="API\PreSalesUnit\ManageFacingTypesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageContactStatusTypesController.cs" />
     <Compile Include="API\PreSalesUnit\ManageCustomerTypesController.cs" />
+    <Compile Include="API\PreSales\ManageCustomerLeadsController.cs" />
+    <Compile Include="API\PreSales\ManageContactEnquiryController.cs" />
     <Compile Include="API\PreSales\ManageBusinessInformationController.cs" />
     <Compile Include="API\PreSales\ManagePersonalInformationController.cs" />
     <Compile Include="API\TaskManager\ManageTasksController.cs" />
@@ -318,7 +320,9 @@
     <Compile Include="Models\PreSalesUnit\ListBrokerViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\ListDeveloperViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\LocalityViewModel.cs" />
+    <Compile Include="Models\PreSales\ContactEnquiryViewModel.cs" />
     <Compile Include="Models\PreSales\BusinessInformationViewModel.cs" />
+    <Compile Include="Models\PreSales\CustomerLeadsViewModel.cs" />
     <Compile Include="Models\PreSales\PersonalInformationViewModel.cs" />
     <Compile Include="Models\TaskManagement\TaskViewModel.cs" />
     <Compile Include="Models\UserManagement\PermissionViewModel.cs" />
@@ -417,7 +421,10 @@
     <Content Include="app\presales\contactenquiry\config.route.js" />
     <Content Include="app\presales\contactenquiry\editContactEnquiry.html" />
     <Content Include="app\presales\contactenquiry\editContactEnquiry.js" />
+    <Content Include="app\presales\customers\customerPreSales.js" />
     <Content Include="app\presales\customers\config.route.js" />
+    <Content Include="app\presales\customers\customerPreSalesFactory.js" />
+    <Content Include="app\presales\customers\listCustomers.html" />
     <Content Include="app\presales\enquiries\config.route.js" />
     <Content Include="app\presales\personal\editPersonal.js" />
     <Content Include="app\presales\personal\editPersonal.html" />
@@ -463,6 +470,10 @@
     <Content Include="Content\images\breezelogo.png" />
     <Content Include="Content\images\busy.gif" />
     <Content Include="Content\images\icon.png" />
+    <Content Include="Content\select2\select2-bootstrap.css" />
+    <Content Include="Content\select2\select2-spinner.gif" />
+    <Content Include="Content\select2\select2.css" />
+    <Content Include="Content\select2\select2.png" />
     <Content Include="Content\styles.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
@@ -516,6 +527,7 @@
     <Content Include="Scripts\angular-file-upload-shim.min.js" />
     <Content Include="Scripts\angular-file-upload.js" />
     <Content Include="Scripts\angular-file-upload.min.js" />
+    <Content Include="Scripts\angular-ui\select2.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls-0.11.0.js" />
     <Content Include="Scripts\angular\extra\angular-cache.js" />
     <Content Include="Scripts\angular\extra\angular-cookies.js" />
@@ -530,6 +542,7 @@
     <Content Include="Scripts\FileAPI.flash.swf" />
     <Content Include="Scripts\FileAPI.min.js" />
     <Content Include="Scripts\jquery\extra\angular-file-upload-shim.js" />
+    <Content Include="Scripts\jquery\extra\select2.js" />
     <Content Include="Scripts\ken\extra\angular-kendo.js" />
     <Content Include="Scripts\angular\angular.js" />
     <Content Include="Scripts\angular\extra\angular-animate.js" />

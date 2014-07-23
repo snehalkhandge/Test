@@ -1,4 +1,4 @@
-﻿<section class="mainbar" data-ng-controller="EditPersonal">
+﻿<section class="mainbar" data-ng-controller="EditContactEnquiry">
     <section class="matter">
         <div class="container-fluid">
             <div class="row">
@@ -30,8 +30,8 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for=" name">IsFurnished</label>
-                                    <input type="checkbox" class="form-control" 
-                                           ng-model="enquiry.IsFurnished" name="IsFurnished" >
+                                    <input type="checkbox" class="form-control"
+                                           ng-model="enquiry.IsFurnished" name="IsFurnished">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for=" name">Offered Rate</label>
@@ -44,7 +44,7 @@
                                 <div class="form-group col-md-6">
                                     <label for=" name">ContactStatus</label>                                    
                                     <select class="form-control" name="ContactStatus" ng-model="enquiry.ContactStatus"
-                                            ng-selected="enquiry.ContactStatus" multiple>
+                                            ng-selected="enquiry.ContactStatus">
                                         <option ng-repeat='value in ContactStatuses' value='{{value.Name}}'>
                                             {{value.Name}}
                                         </option>
@@ -53,19 +53,19 @@
                                 <div class="form-group col-md-6">
                                     <label for=" name">Lead Status</label>
                                     <select class="form-control" name="LeadStatus" ng-model="enquiry.LeadStatus"
-                                            ng-selected="enquiry.LeadStatus" multiple>
+                                            ng-selected="enquiry.LeadStatus">
                                         <option ng-repeat='value in LeadStatuses' value='{{value.Name}}'>
                                             {{value.Name}}
                                         </option>
                                     </select>
-                                    
+
                                 </div>
                             </div>
 
 
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for=" name">AssignedDate</label>                                    
+                                    <label for=" name">AssignedDate</label>
                                     <div class="input-group">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default" ng-click="openAssignedDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -86,7 +86,7 @@
                                         <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="enquiry.EnquiryDate" is-open="openedEnquiryDate"
                                                min-date="minDate" max-date="'2025-06-22'" datepicker-options="dateOptions" name="EnquiryDate"
                                                date-disabled="disabled(date, mode)" close-text="Close" />
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </div>
 
@@ -126,12 +126,12 @@
                                         <option ng-repeat='value in TransactionTypes' value='{{value.Name}}'>
                                             {{value.Name}}
                                         </option>
-                                    </select>                                    
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="LookingForType">LookingForType</label>
                                     <select class="form-control" name="LookingForType" ng-model="enquiry.LookingForType"
-                                             ng-selected="enquiry.LookingForType">
+                                            ng-selected="enquiry.LookingForType">
                                         <option ng-repeat='value in LookingForTypes' value='{{value.Name}}'>
                                             {{value.Name}}
                                         </option>
@@ -143,7 +143,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="Localities">Preferred Locality</label>
-                                    <select class="form-control" name="PreferredLocations" ng-model="enquiry.PreferredLocations" 
+                                    <select class="form-control" name="PreferredLocations" ng-model="enquiry.PreferredLocations"
                                             ng-selected="enquiry.PreferredLocations" multiple>
                                         <option ng-repeat='value in Localities' value='{{value.Name}}'>
                                             {{value.Name}}
@@ -165,7 +165,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="FacingType">Facing Type</label>
                                     <select class="form-control" name="FacingType" ng-model="enquiry.FacingType"
-                                            ng-selected="enquiry.FacingType" multiple>
+                                            ng-selected="enquiry.FacingType">
                                         <option ng-repeat='value in FacingTypes' value='{{value.Name}}'>
                                             {{value.Name}}
                                         </option>
@@ -174,7 +174,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="PropertyAge">PropertyAge</label>
                                     <select class="form-control" name="PropertyAge" ng-model="enquiry.PropertyAge"
-                                            ng-selected="enquiry.PropertyAge" multiple>
+                                            ng-selected="enquiry.PropertyAge">
                                         <option ng-repeat='value in PropertyAges' value='{{value.Name}}'>
                                             {{value.Name}}
                                         </option>
@@ -190,8 +190,8 @@
                                 </div>
                             </div>
 
-                                <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid">{{buttonText}}</button>
-</form>
+                            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid">{{buttonText}}</button>
+                        </form>
 
                     </div>
 

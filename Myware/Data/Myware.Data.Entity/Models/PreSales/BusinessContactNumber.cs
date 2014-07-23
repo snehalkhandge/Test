@@ -24,8 +24,7 @@ namespace Myware.Data.Entity.Models.PreSales
         [ForeignKey("BusinessInformationId")]
         public BusinessInformation BusinessInformation { get; set; }
 
-        [DataMember]
-        [Index(IsUnique = true)]
+        [DataMember]        
         public long PhoneNumber { get; set; }
 
 

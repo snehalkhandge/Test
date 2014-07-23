@@ -5,9 +5,9 @@
         .module('app.presales')
         .controller('EditBusiness', EditBusiness);
 
-    EditBusiness.$inject = ['$scope', '$routeParams', '$upload', 'common', 'authService', 'personalFactory', 'localityFactory', 'businessFactory'];
+    EditBusiness.$inject = ['$scope', '$timeout', '$location', '$routeParams', '$upload', 'common', 'authService', 'personalFactory', 'localityFactory', 'businessFactory'];
 
-    function EditBusiness($scope, $routeParams,$upload, common, authService, personalFactory, localityFactory, businessFactory) {
+    function EditBusiness($scope, $timeout, $location, $routeParams, $upload, common, authService, personalFactory, localityFactory, businessFactory) {
         var log = common.logger.info;
 
         /*jshint validthis: true */
@@ -62,10 +62,21 @@
             angular.extend(business, { UserId: authService.authentication.userId });
                         
             businessFactory.saveBusiness(business)
-                .then(function () {
+                .then(function (result) {
+
+                    $scope.business.Id = result.Id;
                     $scope.buttonText = "Update Business Information"
                     common.logger.success("Successfully saved the item");
                     $scope.alerts.push({ type: 'success', msg: "Successfully saved the item" });
+
+                    if ($scope.showEnquiry) {
+
+                      $timeout(function () {
+                            $location.path("/presales/contactenquiry/edit/" +personalId + "/0");
+                      }, 500);
+                    }
+
+
                 });
         };
 
@@ -128,11 +139,11 @@
             if (businessId != 0)
             {
 
-                businessFactory.getBusinessById(businessId)
+                businessFactory.getbusinessById(businessId)
                     .then(function (result) {                        
                         $scope.business = result;
 
-                        if(result.ContactNumbers.length == 0)
+                        if (result.BusinessContactNumbers.length == 0)
                         {
                             $scope.addContactNumber();
                         }
@@ -154,7 +165,7 @@
                 .then(function (result) {
                     $scope.business.ImageUrl = result.ImageUrl;
 
-                    if (result.contactType == "Enquiry")
+                    if (result.ContactType == "Enquiry")
                     {
                         $scope.showEnquiry = true;
                     }

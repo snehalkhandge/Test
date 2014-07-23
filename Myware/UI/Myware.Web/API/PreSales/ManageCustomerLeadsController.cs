@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.SqlServer;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -20,13 +21,13 @@ using System.Web.Script.Serialization;
 
 namespace Myware.Web.API.PreSales
 {
-	public class ManageBusinessInformationController : ApiController
+	public class ManageCustomerLeadsController : ApiController
 	{
 	   private ApplicationDbContext db = new ApplicationDbContext();
 
 		// GET: api/ManagePermissions
 
-	   [Route("businessInformationById/{id}")]
+	   [Route("customersPreSales")]
 	   public BusinessInformationViewModel GetBusinessInformationId(int id)
 	   {
 
@@ -68,6 +69,26 @@ namespace Myware.Web.API.PreSales
 		   };
 
 	   }
+
+
+	   [Route("customersContactNumbers/all")]
+	   [HttpPost]	   
+	   public List<PartialCustomerContactNumber> PostContactNumbers(PartialSearchQuery query)
+	   {
+		   
+		   return new List<PartialCustomerContactNumber>();
+
+	   }
+
+	   [Route("customersBudgetTo/all")]
+
+	   [Route("customersBudgetFrom/all")]
+
+	   [Route("customerNames/all")]
+
+	   
+
+		
 
 	   [Route("saveBusinessInformation/{id}")]
 	   [ResponseType(typeof(BusinessInformationViewModel))]

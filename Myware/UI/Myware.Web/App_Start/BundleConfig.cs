@@ -63,6 +63,7 @@ namespace Myware.Web
                         .Include("~/Content/bootstrap-theme/*.css")
                         .Include("~/Content/styles.css")
                         .Include("~/Content/toastr.css")
+                        .Include("~/Content/select2/*.css")
                         .Include("~/Content/Site.css")
                     );
 

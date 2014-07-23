@@ -48,7 +48,7 @@ namespace Myware.Data.Entity.Models.PreSales
         public Nullable<decimal> CarpetAreaTo { get; set; }
 
         [DataMember]  
-        public Nullable<decimal> PropertyAge { get; set; }
+        public string PropertyAge { get; set; }
 
         [DataMember]  
         public Nullable<bool> IsFurnished { get; set; }
@@ -59,8 +59,6 @@ namespace Myware.Data.Entity.Models.PreSales
         [DataMember]  
         public System.DateTime Created { get; set; }
 
-        [DataMember]  
-        public System.DateTime Updated { get; set; }
 
         [DataMember]  
         public Nullable<System.DateTime> EnquiryDate { get; set; }
@@ -80,8 +78,6 @@ namespace Myware.Data.Entity.Models.PreSales
         public virtual ICollection<ContactEnquiryLocality> PreferredLocations { get; set; }
 
 
-        [DataMember]
-        public virtual ICollection<RelatedUser> RelatedUsers { get; set; }
         
         [DataMember]
         public int PersonalInformationId { get; set; }

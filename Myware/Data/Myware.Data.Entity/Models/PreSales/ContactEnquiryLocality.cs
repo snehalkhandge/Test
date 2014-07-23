@@ -17,5 +17,7 @@ namespace Myware.Data.Entity.Models.PreSales
         [StringLength(150)]
         public string Locality { get; set; }
 
+        public int ContactEnquiryId { get; set; } 
+
     }
 }

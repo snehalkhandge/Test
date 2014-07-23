@@ -33,7 +33,7 @@ namespace Myware.Web.Models.PreSales
         public string ImageUrl { get; set; }
         public int UserId { get; set; }
 
-        public List<BusinessInformation> BusinessInformation { get; set; }
+        public List<BusinessInformationViewModel> BusinessInformation { get; set; }
     }
 
     public class CheckUniquePersonalMessageViewModel

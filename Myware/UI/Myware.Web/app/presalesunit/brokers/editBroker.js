@@ -53,7 +53,8 @@
             delete broker.Locality;
             
             brokerFactory.saveBroker(broker)
-                .then(function () {
+                .then(function (result) {
+                    $scope.broker.Id = result.Id;
                     $scope.buttonText = "Update Broker"
                     common.logger.success("Successfully saved the item");
                     $scope.alerts.push({ type: 'success', msg: "Successfully saved the item" });

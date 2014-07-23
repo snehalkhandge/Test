@@ -51,6 +51,27 @@ namespace Myware.Web.API.PreSales
 			   });
 		   }
 
+		   var busiInfo = new List<BusinessInformationViewModel>();
+
+		   foreach (var cnt in result.BusinessInformation)
+		   {
+			   busiInfo.Add(new BusinessInformationViewModel
+			   {
+				   Id = cnt.Id,
+				   CompanyName = cnt.CompanyName,
+				   Designation = cnt.Designation,
+				   BusinessOrIndustry = cnt.BusinessOrIndustry,
+				  InvestmentCapacity = cnt.InvestmentCapacity,
+				  Fax = cnt.Fax,
+				  Website = cnt.Website,
+				  Locality = cnt.Locality,
+				  City = cnt.City,
+				  Type = cnt.Type,
+				  PersonalInformationId = cnt.PersonalInformationId
+			   });
+		   }
+
+
 
 		   return new PersonalInformationViewModel
 		   {
@@ -70,7 +91,7 @@ namespace Myware.Web.API.PreSales
 			   AnniversaryDate = result.AnniversaryDate,
 			   DateOfBirth = result.DateOfBirth,
 			   Remarks = result.Remarks,
-			   BusinessInformation = result.BusinessInformation.ToList()
+			   BusinessInformation = busiInfo
 		   };
 
 	   }
@@ -127,8 +148,31 @@ namespace Myware.Web.API.PreSales
 								   .Include(t => t.ContactNumbers)
 								   .Include(t => t.BusinessInformation)
 								   .Where(e => e.Id == id).SingleOrDefault();
+									  
+				   
 
-				   typeVM.BusinessInformation = oldType.BusinessInformation.ToList();
+				   var busiInfo = new List<BusinessInformationViewModel>();
+
+				   foreach (var cnt in oldType.BusinessInformation)
+				   {
+					   busiInfo.Add(new BusinessInformationViewModel
+					   {
+						   Id = cnt.Id,
+						   CompanyName = cnt.CompanyName,
+						   Designation = cnt.Designation,
+						   BusinessOrIndustry = cnt.BusinessOrIndustry,
+						   InvestmentCapacity = cnt.InvestmentCapacity,
+						   Fax = cnt.Fax,
+						   Website = cnt.Website,
+						   Locality = cnt.Locality,
+						   City = cnt.City,
+						   Type = cnt.Type,
+						   PersonalInformationId = cnt.PersonalInformationId
+					   });
+				   }
+
+				   typeVM.BusinessInformation = busiInfo;
+
 
 				   oldType.FirstName = typeVM.FirstName;
 				   oldType.LastName = typeVM.LastName;

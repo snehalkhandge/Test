@@ -27,7 +27,5 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         public  Campaign ParentCampaign { get; set; }
 
 
-        public  ICollection<PersonalInformation> PersonalInformations { get; set; }
-
     }
 }

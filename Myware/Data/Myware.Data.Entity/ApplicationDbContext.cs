@@ -80,6 +80,7 @@ namespace Myware.Data.Entity
         public DbSet<AssignedTask> AssignedTasks { get; set; }
         #endregion
         #region PreSales
+        public DbSet<ContactEnquiryLocality> ContactEnquiryLocalities { get; set; }
         public DbSet<ContactEnquiryUnitType> ContactEnquiryUnitTypes { get; set; }
         public DbSet<PersonalInformation> PersonalInformations { get; set; }
 

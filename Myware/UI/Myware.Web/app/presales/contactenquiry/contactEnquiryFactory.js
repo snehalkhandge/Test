@@ -32,7 +32,7 @@
             var deferred = $q.defer(),
                 start = new Date().getTime();
                 
-            $http.get(common.apiUrl + '/contactEnquiryById/' +id)
+            $http.get(common.apiUrl + '/contactEnquiryById/' + id)
                     .success(function (data) {
                         data = data || {};                        
                         deferred.resolve(data);
@@ -55,7 +55,7 @@
            }
 
            
-            $http.post(common.apiUrl + '/savecontactEnquiry/' + contactEnquiry.Id, contactEnquiry)
+            $http.post(common.apiUrl + '/saveContactEnquiry/' + contactEnquiry.Id, contactEnquiry)
                     .success(function (data) {
 
                         if (dataCache.info()) {

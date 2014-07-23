@@ -22,6 +22,7 @@
         'ngplus',
         'ngMessages',
         'ui.bootstrap',
+        'ui.select2',
         'LocalStorageModule',
         'app.core',
         'app.widgets',

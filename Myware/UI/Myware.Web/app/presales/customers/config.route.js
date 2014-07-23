@@ -11,13 +11,13 @@
         return [
             
             {
-                url: '/presales/customer/edit/:customerId',
+                url: '/presales/customers',
                 config: {
-                    templateUrl: '/app/presales/customers/listCustomer.html',
-                    title: 'Edit Customer',
+                    templateUrl: '/app/presales/customers/listCustomers.html',
+                    title: 'Customer Contact List',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Add Customer'
+                        content: '<i class="fa fa-dashboard"></i> Customer Contact List'
                     }
                 }
             }

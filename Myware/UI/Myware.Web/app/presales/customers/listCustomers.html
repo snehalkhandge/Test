@@ -1,0 +1,103 @@
+﻿<section class="mainbar" data-ng-controller="CustomerPreSales">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> List Customers </h2>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for=" name">Customer Name</label>
+                                <input ui-select2="groupSelectCustomerNames" ng-model="ContactLeadFilters.CustomerNames" data-placeholder="Select customer name" />
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for=" name">Locality</label>
+                                <input ui-select2="groupSelectLocalities" ng-model="ContactLeadFilters.Localities" data-placeholder="Select Locality" />                                
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for=" name">Contact Types</label>
+                                <input ui-select2="groupSelectCustomerTypes" ng-model="ContactLeadFilters.CustomerTypes" data-placeholder="Select contact type" />                                    
+                            </div>
+                            <div class="col-md-6">
+                                <label for=" name">Unit Types</label>
+                                <input ui-select2="groupSelectUnitTypes" ng-model="ContactLeadFilters.UnitTypes" data-placeholder="Select unit type" />                                    
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for=" name">Budget From</label>
+                                <input ui-select2="groupSelectBudgetFromList" ng-model="ContactLeadFilters.BudgetFromList" data-placeholder="Select budget from" />     
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <label for=" name">Budget To</label>
+                                <input ui-select2="groupSelectBudgetToList" ng-model="ContactLeadFilters.BudgetToList" data-placeholder="Select budget to" />                                     
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for=" name">Contact Numbers</label>
+                                <input ui-select2="groupSelectContactNumbers" ng-model="ContactLeadFilters.ContactNumbers" data-placeholder="Select Contact Numbers" />                                
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary" ng-click="SearchCustomers()">Search Customers</button>
+                            </div>
+                        </div>
+
+                        <pre>
+                                {{results | json}}
+                            </pre>
+                        <table class="table table-bordered table-hover table-condensed">
+                            <tr style="font-weight: bold">
+                                <td style="width:25%">Name</td>
+                                <td style="width:25%">Address</td>
+                                <td style="width:25%">Contact numbers</td>
+                                <td style="width:25%">Action</td>
+                            </tr>
+                            <tr ng-repeat="item in results">
+                                <td>
+                                    {{item.Name}}
+                                </td>
+                                <td>
+                                    {{item.Address}} , {{item.Locality.Name}} , {{item.Locality.City}}  , {{item.Locality.State}}
+                                </td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li ng-repeat="c in item.ContactNumbers">{{ c.PhoneNumber }}      </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-justified">
+                                        <a class="btn btn-primary" role="button" href="#/presalesunit/company/edit/{{item.Id}}">Edit</a>
+                                        <a class="btn btn-primary" role="button" href="#/presalesunit/company/{{item.Id}}">Detail</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="page" ng-change="pageChanged()" ng-hide="hidePagination"></pagination>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

@@ -18,5 +18,7 @@ namespace Myware.Data.Entity.Models.PreSales
        [StringLength(30)]
        [DataMember]
        public string Name { get; set; }
+
+       public int ContactEnquiryId { get; set; }
     }
 }

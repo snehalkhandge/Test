@@ -11,7 +11,7 @@
         return [
             
             {
-                url: '/presales/contactenquiry/edit/:personalId',
+                url: '/presales/contactenquiry/edit/:personalId/:enquiryId',
                 config: {
                     templateUrl: '/app/presales/contactenquiry/editContactEnquiry.html',
                     title: 'Edit Contact Enquiry',

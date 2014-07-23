@@ -47,7 +47,7 @@
 
 
 
-        var savebusiness = function (business) {
+        var saveBusiness = function (business) {
 
            var deferred = $q.defer();
            if (business.Id == '') {
@@ -73,7 +73,7 @@
        };
 
         return {
-            savebusiness: savebusiness,
+            saveBusiness: saveBusiness,
             getbusinessById: getbusinessById
             
         };

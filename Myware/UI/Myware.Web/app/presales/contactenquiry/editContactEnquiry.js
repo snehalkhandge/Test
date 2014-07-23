@@ -22,7 +22,7 @@
         
 
         var defaultForm = {
-            Id: businessId,
+            Id: '',
             PersonalInformationId: personalId,
             Remarks: '',
             AssignedDate: '',
@@ -96,8 +96,28 @@
             
             angular.extend(enquiry, { UserId: authService.authentication.userId });
                         
-            contactEnquiryFactory.saveContactEnquiry(busenquiryiness)
-                .then(function () {
+            var prefLoc = [];
+            
+            angular.forEach(enquiry.PreferredLocations, function (value, key) {
+                this.push({ Locality: value });
+            }, prefLoc);
+
+
+
+            enquiry.PreferredLocations = prefLoc;
+
+            var prefUnit = [];
+
+            angular.forEach(enquiry.PreferredUnitTypes, function(value, key) {
+                this.push({ UnitType: value });
+            }, prefUnit);
+
+            enquiry.PreferredUnitTypes = prefUnit;
+
+            contactEnquiryFactory.savecontactEnquiry(enquiry)
+                .then(function (result) {
+
+                    $scope.enquiry.Id = result.Id;
                     $scope.buttonText = "Update Enquiry Information"
                     common.logger.success("Successfully saved the item");
                     $scope.alerts.push({ type: 'success', msg: "Successfully saved the item" });
@@ -181,7 +201,7 @@
             $scope.openedAssignedDate = true;
         };
 
-        $scope.openedEnquiryDate = function ($event) {
+        $scope.openEnquiryDate = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
 

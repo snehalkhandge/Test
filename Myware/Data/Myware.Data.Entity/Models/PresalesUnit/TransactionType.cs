@@ -14,9 +14,6 @@ namespace Myware.Data.Entity.Models.PresalesUnit
         [StringLength(20)]
         [DataMember]  
         public string Name { get; set; }
-
-        [DataMember]
-        public  ICollection<ContactEnquiry> ContactEnquiries { get; set; }
-        
+                
     }
 }
