@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.SqlServer;
+using System.Data.Linq.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -18,6 +19,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Script.Serialization;
+
 
 namespace Myware.Web.API.PreSales
 {
@@ -75,17 +77,77 @@ namespace Myware.Web.API.PreSales
 	   [HttpPost]	   
 	   public List<PartialCustomerContactNumber> PostContactNumbers(PartialSearchQuery query)
 	   {
-		   
-		   return new List<PartialCustomerContactNumber>();
+           DbSqlQuery<PersonalContactNumber> data = db.PersonalContactNumbers.SqlQuery("SELECT * FROM [ApplicationDb].[dbo].[PersonalContactNumbers] WHERE  PhoneNumber LIKE '%" + query.Query + "%'");
 
+		   var results = new List<PartialCustomerContactNumber>();
+
+		   foreach (var item in data)
+		   {
+			   results.Add(new PartialCustomerContactNumber
+			   {
+				   PersonalInformationId = item.PersonalInformationId,
+				   Number = item.PhoneNumber
+			   });
+		   }
+
+		   return results;
 	   }
 
 	   [Route("customersBudgetTo/all")]
+	   [HttpPost]
+	   public List<PartialCustomerBudget> PostBudgetTo(PartialSearchQuery query)
+	   {
+		   DbSqlQuery<ContactEnquiry> data = db.ContactEnquiries.SqlQuery("SELECT * FROM [ApplicationDb].[dbo].[ContactEnquiries] WHERE  BudgetTo LIKE '%" + query.Query + "%'");
+
+		   var results = new List<PartialCustomerBudget>();
+
+		   foreach (var item in data)
+		   {
+			   results.Add(new PartialCustomerBudget
+			   {
+				   PersonalInformationId = item.PersonalInformationId,
+				   Budget = item.BudgetTo
+			   });
+		   }
+
+		   return results;
+		   
+	   }
 
 	   [Route("customersBudgetFrom/all")]
+	   [HttpPost]
+	   public List<PartialCustomerBudget> PostBudgetFrom(PartialSearchQuery query)
+	   {
+		   DbSqlQuery<ContactEnquiry> data = db.ContactEnquiries.SqlQuery("SELECT * FROM [ApplicationDb].[dbo].[ContactEnquiries] WHERE  BudgetFrom LIKE '%"+query.Query+"%'");
+
+		   var results = new List<PartialCustomerBudget>();
+
+		   foreach (var item in data)
+		   {
+			   results.Add(new PartialCustomerBudget
+			   {
+				   PersonalInformationId = item.PersonalInformationId,
+				   Budget = item.BudgetFrom
+			   });
+		   }
+
+		   return results;
+
+	   }
 
 	   [Route("customerNames/all")]
+	   [HttpPost]
+	   public List<PartialCustomerName> PostCustomerNames(PartialSearchQuery query)
+	   {
+		   return db.PersonalInformations
+					.Where(t => t.FirstName.Contains(query.Query) || t.LastName.Contains(query.Query))					
+					.Select(t => new PartialCustomerName
+					{
+						Id = t.Id,
+						Name = t.FirstName + " " + t.LastName
+					}).ToList();
 
+	   }
 	   
 
 		

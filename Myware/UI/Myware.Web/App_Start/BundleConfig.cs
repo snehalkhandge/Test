@@ -10,7 +10,7 @@ namespace Myware.Web
         {
             BundleTable.Bundles.Add(new ScriptBundle("~/bundles/js")
                     .Include("~/Scripts/jquery/*.js")
-                    .Include("~/Scripts/jquery/extra/*.js")
+                    .Include("~/Scripts/jquery/extra/*.js")                    
                     .Include("~/Scripts/angular/*.js")
                     .Include("~/Scripts/angular/extra/*.js")
                     .Include("~/Scripts/angular-ui/*.js"));
@@ -62,8 +62,7 @@ namespace Myware.Web
                         .Include("~/Content/bootstrap/*.css")
                         .Include("~/Content/bootstrap-theme/*.css")
                         .Include("~/Content/styles.css")
-                        .Include("~/Content/toastr.css")
-                        .Include("~/Content/select2/*.css")
+                        .Include("~/Content/toastr.css")                        
                         .Include("~/Content/Site.css")
                     );
 

@@ -16,12 +16,12 @@
         
 
         var customerPreSalesCache = DSCacheFactory('customerPreSalesCache', {
-            maxAge: 3600000,
+            maxAge: 3,
             capacity: 100,
             deleteOnExpire: 'aggressive',
             storageMode: 'localStorage',
             onExpire: function(key, value) {
-
+                
             }
         });
 
@@ -33,10 +33,12 @@
                 start = new Date().getTime(),
                 cacheId = "customerPreSales-AllCustomerNames";
 
+            dataCache.removeExpired();
+
             if (dataCache.get(cacheId)) {
                 deferred.resolve(dataCache.get(cacheId));
             } else {
-                $http.post(common.apiUrl + '/customerNames/all', queryParams.data)
+                $http.post(common.apiUrl + '/customerNames/all', queryParams)
                     .success(function (data) {
                         data = data || {};
                         if (data.Messages == null) {
@@ -59,10 +61,12 @@
                 start = new Date().getTime(),
                 cacheId = "customerPreSales-AllBudgetFrom";
 
+            dataCache.removeExpired();
+
             if (dataCache.get(cacheId)) {
                 deferred.resolve(dataCache.get(cacheId));
             } else {
-                $http.post(common.apiUrl + '/customersBudgetFrom/all', queryParams.data)
+                $http.post(common.apiUrl + '/customersBudgetFrom/all', queryParams)
                     .success(function (data) {
                         data = data || {};
                         if (data.Messages == null) {
@@ -88,7 +92,7 @@
             if (dataCache.get(cacheId)) {
                 deferred.resolve(dataCache.get(cacheId));
             } else {
-                $http.post(common.apiUrl + '/customersBudgetTo/all', queryParams.data)
+                $http.post(common.apiUrl + '/customersBudgetTo/all', queryParams)
                     .success(function (data) {
                         data = data || {};
                         if (data.Messages == null) {
@@ -114,7 +118,7 @@
             if (dataCache.get(cacheId)) {
                 deferred.resolve(dataCache.get(cacheId));
             } else {
-                $http.post(common.apiUrl + '/customersContactNumbers/all', queryParams.data)
+                $http.post(common.apiUrl + '/customersContactNumbers/all', queryParams)
                     .success(function (data) {
                         data = data || {};
                         if (data.Messages == null) {

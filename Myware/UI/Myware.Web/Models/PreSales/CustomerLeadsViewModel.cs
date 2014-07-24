@@ -12,7 +12,7 @@ namespace Myware.Web.Models.PreSales
 
     public class PartialCustomerName
     {
-        public int PersonalInformationId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 
@@ -43,7 +43,7 @@ namespace Myware.Web.Models.PreSales
     public class PartialCustomerBudget
     {
         public int PersonalInformationId { get; set; }
-        public decimal Budget { get; set; }
+        public decimal? Budget { get; set; }
     }
 
     public class PartialSearchQuery

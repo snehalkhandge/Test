@@ -28,13 +28,13 @@
 
 
         $scope.ContactLeadFilters = {
-            CustomerNames: [],
-            Localities: [],
-            CustomerTypes:[],
-            UnitTypes: [],
-            BudgetFromList: [],
-            BudgetToList: [],
-            ContactNumbers: [],
+            CustomerNames: '',
+            Localities: '',
+            CustomerTypes:'',
+            UnitTypes: '',
+            BudgetFromList: '',
+            BudgetToList: '',
+            ContactNumbers: '',
             page:'',
             pageSize:''
         };
@@ -65,43 +65,49 @@
 
 //--------------------------------------Filters----------------------------------------------------------------
 
-        $scope.CustomerNames = function (queryParams) {
+        
+        $scope.CustomerNames = function () {
 
-            customerPreSalesFactory.getAllCustomerNames(queryParams)
+            var query = {
+                Query: $scope.ContactLeadFilters.CustomerNames
+            };
+            
+            var items = [];
+
+            return customerPreSalesFactory.getAllCustomerNames(query)
                          .then(function (result) {
 
-                             return result.Results;
-
+                             
+                             angular.forEach(result, function (item) {
+                                 items.push({
+                                     Id: item.Id,
+                                     Name:item.Name
+                                 });
+                             });                           
+                             
+                             return items;
                          }, function (reason) {
                              common.logger.error(reason);
                              $scope.alerts.push({ type: 'danger', msg: reason });
                          });
+            
 
         };
 
-        $scope.groupSelectCustomerNames = {
-            minimumInputLength: 5,
-            multiple: true,
-            ajax: {
-                data: function (term, page) {
-                    return { query: term };
-                },
-                quietMillis: 500,
-                transport: $scope.CustomerNames,
-                results: function (data, page) {
-                    {
-                        results: data
-                    };
-                }
-            }
-        };
-
+        
         $scope.CustomerTypes = function (queryParams) {
 
-            customerTypeFactory.getAllCustomerTypes(queryParams)
+           return customerTypeFactory.getAllCustomerTypes(queryParams)
                          .then(function (result) {
+                             log = [];
+                             angular.forEach(result.Results, function (value, key) {
+                                 this.push({
+                                     Id : value.Id,
+                                     Name: value.Name
+                                 });
+                             }, log);
 
-                            return result.Results;
+                             return log;
 
                          }, function (reason) {
                              common.logger.error(reason);
@@ -109,28 +115,10 @@
                          });
 
         };
-
-        $scope.groupSelectCustomerTypes = {
-            minimumInputLength: 5,
-            multiple: true,
-            ajax: {
-                data: function (term, page) {
-                    return { query: term };
-                },
-                quietMillis: 500,
-                transport: $scope.CustomerTypes,
-                results: function (data, page) {
-                    {
-                        results: data
-                    };
-                }
-            }
-        };
-        
 
         $scope.UnitTypes = function (queryParams) {
             
-            unitTypeFactory.getAllUnitTypes(queryParams)
+          return  unitTypeFactory.getAllUnitTypes(queryParams)
                 .then(function (result) {
                    return result.Results;
                 }, function (reason) {
@@ -139,27 +127,12 @@
                 });
         };
 
-        $scope.groupSelectUnitTypes = {
-            minimumInputLength: 5,
-            multiple: true,
-            ajax: {
-                data: function (term, page) {
-                    return { query: term };
-                },
-                quietMillis: 500,
-                transport: $scope.UnitTypes,
-                results: function (data, page) {
-                    {
-                        results: data
-                    };
-                }
-            }
-        };
+        
 
         
         $scope.Localities = function (queryParams) {
                         
-            localityFactory.getAllLocality(queryParams)
+           return localityFactory.getAllLocality(queryParams)
                          .then(function (result) {
 
                              return result.Results
@@ -170,110 +143,80 @@
                          });
         };
 
-        $scope.groupSelectLocalities = {
-            minimumInputLength: 5,
-            multiple: true,
-            ajax: {
-                data: function (term, page) {
-                    return { query: term };
-                },
-                quietMillis: 500,
-                transport: $scope.Localities,
-                results: function (data, page) {
-                    {
-                        results: data
-                    };
-                }
-            }
-        };
-
-
-
+        
         $scope.BudgetFromList = function (queryParams) {
 
-            customerPreSalesFactory.getAllBudgetFrom(queryParams)
+            var query = {
+                Query: $scope.ContactLeadFilters.BudgetFromList
+            };
+
+            return customerPreSalesFactory.getAllBudgetFrom(query)
                          .then(function (result) {
-                             return result.Results
+
+                             var items = [];
+                             angular.forEach(result, function (item) {
+                                 items.push({
+                                     PersonalInformationId: item.PersonalInformationId,
+                                     Budget: item.Budget
+                                 });
+                             });
+
+                             return items;
+                             
                          }, function (reason) {
                              common.logger.error(reason);
                              $scope.alerts.push({ type: 'danger', msg: reason });
                          });
         };
 
-        $scope.groupSelectBudgetFromList = {
-            minimumInputLength: 5,
-            multiple: true,
-            ajax: {
-                data: function (term, page) {
-                    return { query: term };
-                },
-                quietMillis: 500,
-                transport: $scope.BudgetFromList,
-                results: function (data, page) {
-                    {
-                        results: data
-                    };
-                }
-            }
-        };
-
+        
 
         $scope.BudgetToList = function (queryParams) {
 
-            customerPreSalesFactory.getAllBudgetTo(queryParams)
+            var query = {
+                Query: $scope.ContactLeadFilters.BudgetToList
+            };
+            return customerPreSalesFactory.getAllBudgetTo(query)
                          .then(function (result) {
-                             return result.Results
+
+                             var items = [];
+                             angular.forEach(result, function (item) {
+                                 items.push({
+                                     PersonalInformationId: item.PersonalInformationId,
+                                     Budget: item.Budget
+                                 });
+                             });
+
+                             return items;
                          }, function (reason) {
                              common.logger.error(reason);
                              $scope.alerts.push({ type: 'danger', msg: reason });
                          });
         };
 
-        $scope.groupSelectBudgetToList = {
-            minimumInputLength: 5,
-            multiple: true,
-            ajax: {
-                data: function (term, page) {
-                    return { query: term };
-                },
-                quietMillis: 500,
-                transport: $scope.BudgetToList,
-                results: function (data, page) {
-                    {
-                        results: data
-                    };
-                }
-            }
-        };
-
-
+        
         $scope.ContactNumbers = function (queryParams) {
 
-            customerPreSalesFactory.getAllBudgetTo(queryParams)
+            var query = {
+                Query: $scope.ContactLeadFilters.ContactNumbers
+            };
+
+            return customerPreSalesFactory.getAllContactNumbers(query)
                          .then(function (result) {
-                             return result.Results
+                             var items = [];
+                             angular.forEach(result, function (item) {
+                                 items.push({
+                                     PersonalInformationId: item.PersonalInformationId,
+                                     Number: item.Number
+                                 });
+                             });
+
+                             return items;
                          }, function (reason) {
                              common.logger.error(reason);
                              $scope.alerts.push({ type: 'danger', msg: reason });
                          });
         };
-
-        $scope.groupSelectContactNumbers = {
-            minimumInputLength: 5,
-            multiple: true,
-            ajax: {
-                data: function (term, page) {
-                    return { query: term };
-                },
-                quietMillis: 500,
-                transport: $scope.ContactNumbers,
-                results: function (data, page) {
-                    {
-                        results: data
-                    };
-                }
-            }
-        };
-        
+                        
     }
 })();
