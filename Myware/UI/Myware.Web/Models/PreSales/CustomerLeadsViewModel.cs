@@ -7,6 +7,58 @@ namespace Myware.Web.Models.PreSales
 {
     public class CustomerLeadsViewModel
     {
+        public CustomerLeadsViewModel()
+        {
+            UnitTypes = new List<PartialCustomerUnitType>();
+            Localities = new List<PartialCustomerLocality>();
+            ContactNumbers = new List<PartialCustomerContactNumber>();
+        }
+        public int CustomerId { get; set; }
+        public string Name { get; set; }
+        public string ContactType { get; set; }
+        public List<PartialCustomerUnitType> UnitTypes { get; set; }
+        public List<PartialCustomerLocality> Localities { get; set; }
+        public List<PartialCustomerContactNumber> ContactNumbers { get; set; }
+        public string BudgetRange { get; set; }
+
+
+    }
+
+    public class ListCustomerQueries
+    {
+        public ListCustomerQueries()
+        {
+            Customers = new List<CustomerLeadsViewModel>();
+        }
+        public List<CustomerLeadsViewModel> Customers { get; set; }
+
+        public int Total { get; set; }
+    }
+
+    public class CustomerQueryViewModel
+    {
+        public CustomerQueryViewModel()
+        {
+            Page = 1;
+            PageSize = 7;
+        }
+        public PartialCustomerName CustomerNames { get; set; }
+
+        public PartialCustomerContactNumber ContactNumbers { get; set; }
+
+        public PartialCustomerContactType CustomerTypes { get; set; }
+
+        public PartialCustomerUnitType UnitTypes { get; set; }
+
+        public PartialCustomerLocality Localities { get; set; }
+
+        public PartialCustomerBudget BudgetFromList { get; set; }
+
+        public PartialCustomerBudget BudgetToList { get; set; }
+
+        public int Page { get; set; }
+
+        public int PageSize { get; set; }
     }
 
 

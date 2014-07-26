@@ -15,17 +15,21 @@
         $scope.title = 'Broker';
         $scope.results = {};
         $scope.totalItems = 0;
-        $scope.itemsPerPage = 7;
+        $scope.itemsPerPage = 2;
         $scope.page = 1;
         $scope.searchQuery = "all";
         $scope.setPage = function (pageNo) {
             $scope.page = pageNo;
         };
         $scope.pageChanged = function () {
-            activate();
+            SearchCustomers();
         };
         $scope.hidePagination = false;
 
+        $scope.alerts = [];
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
 
         $scope.ContactLeadFilters = {
             CustomerNames: '',
@@ -35,8 +39,8 @@
             BudgetFromList: '',
             BudgetToList: '',
             ContactNumbers: '',
-            page:'',
-            pageSize:''
+            Page:'',
+            PageSize:''
         };
 
         $scope.AllCustomers = [];
@@ -45,18 +49,30 @@
 
         function activate() {
 
-
         };
 
-
         $scope.SearchCustomers = function () {
+            $scope.ContactLeadFilters.Page = $scope.page = 1;
+            
+            SearchCustomers();
+        }; 
 
-            $scope.ContactLeadFilters.page = $scope.page;
-            $scope.ContactLeadFilters.pageSize = $scope.itemsPerPage;
+        function SearchCustomers() {
+
+            $scope.ContactLeadFilters.Page = $scope.page;
+            $scope.ContactLeadFilters.PageSize = $scope.itemsPerPage;
 
             customerPreSalesFactory.getCustomers($scope.ContactLeadFilters)
                          .then(function (result) {
-                             $scope.AllCustomers = result.Results
+                             $scope.AllCustomers = result.Customers;
+                             $scope.totalItems = result.Total;
+
+                             if ($scope.totalItems <= $scope.itemsPerPage) {
+                                 $scope.hidePagination = true;
+                             } else {
+                                 $scope.hidePagination = false;
+                             }
+
                          }, function (reason) {
                              common.logger.error(reason);
                              $scope.alerts.push({ type: 'danger', msg: reason });
@@ -126,9 +142,6 @@
                     $scope.alerts.push({ type: 'danger', msg: reason });
                 });
         };
-
-        
-
         
         $scope.Localities = function (queryParams) {
                         
@@ -143,7 +156,6 @@
                          });
         };
 
-        
         $scope.BudgetFromList = function (queryParams) {
 
             var query = {
@@ -169,8 +181,6 @@
                          });
         };
 
-        
-
         $scope.BudgetToList = function (queryParams) {
 
             var query = {
@@ -194,7 +204,6 @@
                          });
         };
 
-        
         $scope.ContactNumbers = function (queryParams) {
 
             var query = {

@@ -33,25 +33,16 @@
                 start = new Date().getTime(),
                 cacheId = "customerPreSales-AllCustomerNames";
 
-            dataCache.removeExpired();
-
-            if (dataCache.get(cacheId)) {
-                deferred.resolve(dataCache.get(cacheId));
-            } else {
                 $http.post(common.apiUrl + '/customerNames/all', queryParams)
                     .success(function (data) {
-                        data = data || {};
-                        if (data.Messages == null) {
-                            dataCache.put(cacheId, data);
-                        }
-
+            
                         deferred.resolve(data);
                     })
                     .error(function (data, status, headers, config) {
                         deferred.reject(new Error(angular.toJson(data)));
                     });
 
-            }
+            
 
             return deferred.promise;
         };
@@ -63,23 +54,16 @@
 
             dataCache.removeExpired();
 
-            if (dataCache.get(cacheId)) {
-                deferred.resolve(dataCache.get(cacheId));
-            } else {
                 $http.post(common.apiUrl + '/customersBudgetFrom/all', queryParams)
                     .success(function (data) {
-                        data = data || {};
-                        if (data.Messages == null) {
-                            dataCache.put(cacheId, data);
-                        }
-
+            
                         deferred.resolve(data);
                     })
                     .error(function (data, status, headers, config) {
                         deferred.reject(new Error(angular.toJson(data)));
                     });
 
-            }
+            
 
             return deferred.promise;
         };
@@ -89,23 +73,17 @@
                 start = new Date().getTime(),
                 cacheId = "customerPreSales-AllBudgetTo";
 
-            if (dataCache.get(cacheId)) {
-                deferred.resolve(dataCache.get(cacheId));
-            } else {
+            
                 $http.post(common.apiUrl + '/customersBudgetTo/all', queryParams)
                     .success(function (data) {
-                        data = data || {};
-                        if (data.Messages == null) {
-                            dataCache.put(cacheId, data);
-                        }
-
+            
                         deferred.resolve(data);
                     })
                     .error(function (data, status, headers, config) {
                         deferred.reject(new Error(angular.toJson(data)));
                     });
 
-            }
+            
 
             return deferred.promise;
         };
@@ -115,23 +93,17 @@
                 start = new Date().getTime(),
                 cacheId = "customerPreSales-ContactNumbers";
 
-            if (dataCache.get(cacheId)) {
-                deferred.resolve(dataCache.get(cacheId));
-            } else {
+            
                 $http.post(common.apiUrl + '/customersContactNumbers/all', queryParams)
                     .success(function (data) {
-                        data = data || {};
-                        if (data.Messages == null) {
-                            dataCache.put(cacheId, data);
-                        }
-
+            
                         deferred.resolve(data);
                     })
                     .error(function (data, status, headers, config) {
                         deferred.reject(new Error(angular.toJson(data)));
                     });
 
-            }
+            
 
             return deferred.promise;
         };
@@ -142,24 +114,16 @@
                 cacheId = "customerPreSales-" + contactLeadFilters.page + contactLeadFilters.pageSize + contactLeadFilters.toString();
 
 
-
-            if (dataCache.get(cacheId)) {
-                deferred.resolve(dataCache.get(cacheId));
-            } else {
                 $http.post(common.apiUrl + '/customersPreSales/', contactLeadFilters)
                     .success(function (data) {
-                        data = data || {};
-                        if (data.Messages == null) {
-                            dataCache.put(cacheId, data);
-                        }
-
+            
                         deferred.resolve(data);
                     })
                     .error(function (data, status, headers, config) {
                         deferred.reject(new Error(angular.toJson(data)));
                     });
 
-            }
+            
 
 
             return deferred.promise;

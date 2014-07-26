@@ -77,5 +77,8 @@ namespace Myware.Data.Entity.Models.PreSales
 
         [DataMember]
         public virtual ICollection<BusinessInformation> BusinessInformation { get; set; }
+
+        [DataMember]
+        public virtual ICollection<ContactEnquiry> ContactEnquiries { get; set; }
     }
 }

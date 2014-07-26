@@ -30,45 +30,155 @@ namespace Myware.Web.API.PreSales
 		// GET: api/ManagePermissions
 
 	   [Route("customersPreSales")]
-	   public BusinessInformationViewModel GetBusinessInformationId(int id)
+	   [HttpPost]
+	   public ListCustomerQueries SearchCustomeQueries(CustomerQueryViewModel query)
 	   {
+		   var sqlQuery = db.PersonalInformations
+							.Include(t => t.ContactNumbers)
+							.OrderByDescending(t => t.Id)
+							.AsNoTracking();
+		   #region Queries
 
-		   var query = db.BusinessInformations
-						 .Include(t => t.BusinessContactNumbers)						 
-						 .OrderByDescending(x => x.Id);
-
-		   var result = query.Where(r => r.Id == id)
-						   .SingleOrDefault();
-		   
-		   var cntNumber = new List<PartialPersonalContactNumber>();
-
-		   foreach (var cnt in result.BusinessContactNumbers)
+		   if (query.CustomerNames != null)
 		   {
-			   cntNumber.Add(new PartialPersonalContactNumber
-			   {
-				   PhoneNumber = cnt.PhoneNumber,
-				   Type = cnt.Type
+			   string[] words = query.CustomerNames.Name.Split(' ');
 
-			   });
+               string firstName = words[0];
+               string lastName = words[1];
+
+			   sqlQuery = sqlQuery.Where(t => t.FirstName.Contains(firstName) || t.LastName.Contains(lastName));
 		   }
 
-
-		   return new BusinessInformationViewModel
+		   if(query.ContactNumbers != null)
 		   {
-			   BusinessOrIndustry = result.BusinessOrIndustry,
-			   BusinessContactNumbers = cntNumber,
-			   CompanyName = result.CompanyName,
-			   City = result.City,
-			   Designation = result.Designation,
-			   Fax = result.Fax,
-			   InvestmentCapacity =result.InvestmentCapacity,
-			   Locality = result.Locality,
-			   PersonalInformationId = result.PersonalInformationId,
-			   Type = result.Type,
-			   Website = result.Website,
-			   Id = result.Id
+			   sqlQuery = sqlQuery.Where(t => t.ContactNumbers.Any(x => x.PhoneNumber == query.ContactNumbers.Number));
+		   }
 
-		   };
+		   if(query.CustomerTypes != null)
+		   {
+			   sqlQuery = sqlQuery.Where(t => t.ContactType.Contains(query.CustomerTypes.Name));
+		   }
+
+		   if(query.UnitTypes != null)
+		   {
+			   sqlQuery = sqlQuery.Where(t => 
+								  t.ContactEnquiries.Any(x => 
+								  x.PreferredUnitTypes.Any(z => 
+								  z.Name == query.UnitTypes.Name)));
+		   }
+
+		   if(query.Localities != null)
+		   {
+			   sqlQuery = sqlQuery.Where(t => 
+								  t.ContactEnquiries.Any(x => 
+								  x.PreferredLocations.Any(z => 
+								  z.Locality == query.Localities.Name)));
+		   }
+
+		   if(query.BudgetFromList != null)
+		   {
+			   sqlQuery = sqlQuery.Where(t => 
+								  t.ContactEnquiries.Any(x => 
+								  x.BudgetFrom == query.BudgetFromList.Budget));
+		   }
+
+		   if(query.BudgetToList != null)
+		   {
+			   sqlQuery = sqlQuery.Where(t => 
+								  t.ContactEnquiries.Any(x => 
+								  x.BudgetTo == query.BudgetToList.Budget));
+		   }
+
+		   #endregion
+
+		   var listCustomers = new ListCustomerQueries();
+		   listCustomers.Total =sqlQuery.Count();
+		   var results = sqlQuery.Skip(query.PageSize * (query.Page - 1))
+							  .Take(query.PageSize).ToList();
+
+		   foreach (var item in results)
+		   {
+
+			   var customer = new CustomerLeadsViewModel();
+
+			   customer.Name = item.FirstName + " " + item.LastName;
+			   customer.ContactType = item.ContactType;
+			   customer.CustomerId = item.Id;
+			   #region Personal Contact Numbers
+			   if (item.ContactNumbers != null)
+			   {
+				   var listNumbers = new List<PartialCustomerContactNumber>();
+
+				   foreach (var cnt in item.ContactNumbers)
+				   {
+					   listNumbers.Add(new PartialCustomerContactNumber
+					   {
+						   Number = cnt.PhoneNumber,
+						   PersonalInformationId = cnt.PersonalInformationId
+					   });
+				   }
+
+				   customer.ContactNumbers = listNumbers;
+			   }
+			   else
+			   {
+				   customer.ContactNumbers = null;
+			   }
+			   #endregion
+
+			   #region Budget Locality Unit Types
+			   var enquiry = db.ContactEnquiries
+								 .Include(t => t.PreferredUnitTypes)
+								 .Include(t => t.PreferredLocations)
+								 .OrderByDescending(t => t.LastUpdated)
+								 .AsNoTracking()
+								 .FirstOrDefault();
+			   if (enquiry != null && item.ContactType == "Enquiry")
+			   {
+					  
+					   foreach (var loc in enquiry.PreferredLocations)
+					   {
+							customer.Localities.Add(new PartialCustomerLocality{
+								Name = loc.Locality,
+								PersonalInformationId = item.Id
+							});   
+					   }
+
+					   foreach (var unit in enquiry.PreferredUnitTypes)
+					   {
+						   customer.UnitTypes.Add(new PartialCustomerUnitType
+						   {
+							   Name = unit.Name,
+							   PersonalInformationId = item.Id
+						   });
+					   }
+
+					   if(enquiry.BudgetFrom != null && enquiry.BudgetTo != null)
+					   {
+						   customer.BudgetRange = enquiry.BudgetFrom.ToString() + " - " + enquiry.BudgetTo.ToString();                      
+					   }
+					   else
+					   {
+						   customer.BudgetRange = "";
+					   }
+
+				   listCustomers.Customers.Add(customer);
+			   }
+			   else
+			   {
+				   customer.Localities = null;
+				   customer.BudgetRange = "";
+				   customer.UnitTypes = null;
+				   listCustomers.Customers.Add(customer);
+			   }
+
+
+			   #endregion
+
+		   }
+
+		   return listCustomers;
+		   
 
 	   }
 
@@ -77,16 +187,20 @@ namespace Myware.Web.API.PreSales
 	   [HttpPost]	   
 	   public List<PartialCustomerContactNumber> PostContactNumbers(PartialSearchQuery query)
 	   {
-           DbSqlQuery<PersonalContactNumber> data = db.PersonalContactNumbers.SqlQuery("SELECT * FROM [ApplicationDb].[dbo].[PersonalContactNumbers] WHERE  PhoneNumber LIKE '%" + query.Query + "%'");
+		   string Query = @"SELECT DISTINCT [PhoneNumber]
+							FROM [ApplicationDb].[dbo].[PersonalContactNumbers]							
+							WHERE  [PhoneNumber] LIKE '%" + query.Query + "%'";
 
+		   var data = db.Database.SqlQuery<long>(Query).ToList(); 
+		   
 		   var results = new List<PartialCustomerContactNumber>();
 
 		   foreach (var item in data)
 		   {
 			   results.Add(new PartialCustomerContactNumber
 			   {
-				   PersonalInformationId = item.PersonalInformationId,
-				   Number = item.PhoneNumber
+				   PersonalInformationId = 0,
+				   Number = item
 			   });
 		   }
 
@@ -97,16 +211,20 @@ namespace Myware.Web.API.PreSales
 	   [HttpPost]
 	   public List<PartialCustomerBudget> PostBudgetTo(PartialSearchQuery query)
 	   {
-		   DbSqlQuery<ContactEnquiry> data = db.ContactEnquiries.SqlQuery("SELECT * FROM [ApplicationDb].[dbo].[ContactEnquiries] WHERE  BudgetTo LIKE '%" + query.Query + "%'");
+		   string Query = @"SELECT DISTINCT [BudgetTo]
+							FROM [ApplicationDb].[dbo].[ContactEnquiries] 
+							WHERE  BudgetTo LIKE '%" + query.Query + "%'";
 
+		   var data = db.Database.SqlQuery<decimal>(Query).ToList(); 
+		   
 		   var results = new List<PartialCustomerBudget>();
 
 		   foreach (var item in data)
 		   {
 			   results.Add(new PartialCustomerBudget
 			   {
-				   PersonalInformationId = item.PersonalInformationId,
-				   Budget = item.BudgetTo
+				   PersonalInformationId = 0,
+				   Budget = item
 			   });
 		   }
 
@@ -118,7 +236,13 @@ namespace Myware.Web.API.PreSales
 	   [HttpPost]
 	   public List<PartialCustomerBudget> PostBudgetFrom(PartialSearchQuery query)
 	   {
-		   DbSqlQuery<ContactEnquiry> data = db.ContactEnquiries.SqlQuery("SELECT * FROM [ApplicationDb].[dbo].[ContactEnquiries] WHERE  BudgetFrom LIKE '%"+query.Query+"%'");
+		   string Query = @"SELECT DISTINCT [BudgetFrom]							  
+							FROM [ApplicationDb].[dbo].[ContactEnquiries] 
+							WHERE  BudgetFrom LIKE '%" + query.Query + "%'";
+
+		   
+
+		   var data = db.Database.SqlQuery<decimal>(Query).ToList(); 
 
 		   var results = new List<PartialCustomerBudget>();
 
@@ -126,8 +250,8 @@ namespace Myware.Web.API.PreSales
 		   {
 			   results.Add(new PartialCustomerBudget
 			   {
-				   PersonalInformationId = item.PersonalInformationId,
-				   Budget = item.BudgetFrom
+				   PersonalInformationId = 0,
+				   Budget = item
 			   });
 		   }
 

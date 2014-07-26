@@ -47,7 +47,9 @@ namespace Myware.Data.Entity.Models.UserTasks
 
         [DataMember]
         public DateTime Created { get; set; }
-        
+
+
+        public Nullable<int> ContactEnquiryId { get; set; }
 
         [DataMember]
         public virtual ICollection<TasksRelatedFile> TasksRelatedFiles { get; set; }

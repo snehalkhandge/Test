@@ -11,6 +11,8 @@ namespace Myware.Data.Entity.DataContextMigrations
     using Myware.Data.Entity.Models.PresalesUnit;
     using Myware.Data.Entity.Models.UserManagement;
     using System.Security;
+    using Myware.Data.Entity.Models.UserTasks;
+    using Myware.Data.Entity.Models.PreSales;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Myware.Data.Entity.ApplicationDbContext>
     {
@@ -464,7 +466,410 @@ namespace Myware.Data.Entity.DataContextMigrations
             context.Developers.Add(developer1);
             context.SaveChanges();
             #endregion
-           
+
+
+            #region User Tasks
+
+            var userTask = new AssignedTask
+            {
+                AssignedFromId = 1,
+                AssignedToId = 2,
+                Created = DateTime.UtcNow,
+                Description = "Description sj fsd kjds dfsd ksd kfd kjfds kdjffdk dfk d",
+                IsActive = true,
+                IsParentTask=true,
+                LastUpdated = DateTime.UtcNow,
+                TaskStatus="Assigned",
+                TaskType="Custom",
+                Title = "Task Title 1",                
+                UpdatedByUserId = 1
+            };
+            context.AssignedTasks.Add(userTask);
+            context.SaveChanges();
+
+            var userTask1 = new AssignedTask
+            {
+                AssignedFromId = 2,
+                AssignedToId = 1,
+                Created = DateTime.UtcNow,
+                Description = "Description sj fsd kjds dfsd ksd kfd kjfds kdjffdk dfk d",
+                IsActive = true,
+                IsParentTask = true,
+                LastUpdated = DateTime.UtcNow,
+                TaskStatus = "Assigned",
+                TaskType = "Custom",
+                Title = "Reply Task Title 1",
+                UpdatedByUserId = 1
+            };
+            context.AssignedTasks.Add(userTask1);
+            context.SaveChanges();
+
+            var userTask3 = new AssignedTask
+            {
+                AssignedFromId = 1,
+                AssignedToId = 1,
+                Created = DateTime.UtcNow,
+                Description = "Description sj fsd kjds dfsd ksd kfd kjfds kdjffdk dfk d",
+                IsActive = true,
+                IsParentTask = true,
+                LastUpdated = DateTime.UtcNow,
+                TaskStatus = "Assigned",
+                TaskType = "Notification",
+                Title = "Task Title 3",
+                UpdatedByUserId = 1
+            };
+            context.AssignedTasks.Add(userTask3);
+            context.SaveChanges();
+
+            var userTask4 = new AssignedTask
+            {
+                AssignedFromId = 1,
+                AssignedToId = 1,
+                Created = DateTime.UtcNow,
+                Description = "Description sj fsd kjds dfsd ksd kfd kjfds kdjffdk dfk d",
+                IsActive = true,
+                IsParentTask = true,
+                LastUpdated = DateTime.UtcNow,
+                TaskStatus = "Assigned",
+                TaskType = "ContactEnquiry",
+                Title = "Task Title 3",
+                UpdatedByUserId = 1,
+                ContactEnquiryId = 1
+            };
+            context.AssignedTasks.Add(userTask4);
+            context.SaveChanges();
+            #endregion
+
+            #region Customer Lead
+                #region Personal Information
+            var personalInfo = new PersonalInformation
+            {
+                Address = "djk dfsjf jkdfddfs  fd",
+                AnniversaryDate = DateTime.UtcNow,
+                Campaign=campaign.Name,
+                SubCampaign = campaign3.Name,
+                City = location.City,
+                ContactType = customerEnquiryType.Name,
+                DateOfBirth = DateTime.UtcNow,
+                Email="mallabhinav@hotmail.com",
+                FirstName="Abhinav",
+                LastName="Mall",
+                Locality = locality.Name,
+                PinCode="NNDDD",
+                Remarks="fgkgrkldgfkl l klgdkf gfdlk fdgklgfdlk gfdlk gfd gdf",
+                UpdatedByUserId = 1
+            };
+            var personalInfo1 = new PersonalInformation
+            {
+                Address = "djk dfsjf jkdfddfs  fd",
+                AnniversaryDate = DateTime.UtcNow,
+                Campaign = campaign.Name,
+                SubCampaign = campaign3.Name,
+                City = location.City,
+                ContactType = customerEnquiryType.Name,
+                DateOfBirth = DateTime.UtcNow,
+                Email = "mallabhinav1@hotmail.com",
+                FirstName = "Abhinav1",
+                LastName = "Mall1",
+                Locality = locality.Name,
+                PinCode = "NNDDD",
+                Remarks = "fgkgrkldgfkl l klgdkf gfdlk fdgklgfdlk gfdlk gfd gdf",
+                UpdatedByUserId = 1
+            };
+            var personalInfo2 = new PersonalInformation
+            {
+                Address = "2 djk dfsjf jkdfddfs  fd",
+                AnniversaryDate = DateTime.UtcNow,
+                Campaign = campaign.Name,
+                SubCampaign = campaign3.Name,
+                City = location.City,
+                ContactType = customerEnquiryType1.Name,
+                DateOfBirth = DateTime.UtcNow,
+                Email = "mallabhinav2@hotmail.com",
+                FirstName = "Abhinav2",
+                LastName = "Mall2",
+                Locality = locality.Name,
+                PinCode = "NNDDD",
+                Remarks = "fgkgrkldgfkl l klgdkf gfdlk fdgklgfdlk gfdlk gfd gdf",
+                UpdatedByUserId = 1
+            };
+            var personalInfo3 = new PersonalInformation
+            {
+                Address = " 3 djk dfsjf jkdfddfs  fd",
+                AnniversaryDate = DateTime.UtcNow,
+                Campaign = campaign.Name,
+                SubCampaign = campaign3.Name,
+                City = location.City,
+                ContactType = customerEnquiryType2.Name,
+                DateOfBirth = DateTime.UtcNow,
+                Email = "mallabhinav3@hotmail.com",
+                FirstName = "Abhinav 3",
+                LastName = "Mall 3",
+                Locality = locality.Name,
+                PinCode = "NNDDD",
+                Remarks = "fgkgrkldgfkl l klgdkf gfdlk fdgklgfdlk gfdlk gfd gdf",
+                UpdatedByUserId = 1
+            };
+            context.PersonalInformations.Add(personalInfo);
+            context.PersonalInformations.Add(personalInfo1);
+            context.PersonalInformations.Add(personalInfo2);
+            context.PersonalInformations.Add(personalInfo3);            
+            context.SaveChanges();
+
+            var contNum = new PersonalContactNumber
+            {
+                PhoneNumber=9827564562,
+                Type="Primary",
+                PersonalInformationId=1,
+            };
+            var contNum1 = new PersonalContactNumber
+            {
+                PhoneNumber = 9826564562,
+                Type = "Primary",
+                PersonalInformationId = 1,
+            };
+            var contNum2 = new PersonalContactNumber
+            {
+                PhoneNumber = 9825564562,
+                Type = "Primary",
+                PersonalInformationId = 2,
+            };
+            var contNum3 = new PersonalContactNumber
+            {
+                PhoneNumber = 9828564562,
+                Type = "Primary",
+                PersonalInformationId = 3,
+            };
+            var contNum4 = new PersonalContactNumber
+            {
+                PhoneNumber = 9822464562,
+                Type = "Primary",
+                PersonalInformationId = 4,
+            };
+            var contNum5 = new PersonalContactNumber
+            {
+                PhoneNumber = 9829364562,
+                Type = "Primary",
+                PersonalInformationId = 2,
+            };
+
+            context.PersonalContactNumbers.Add(contNum);
+            context.PersonalContactNumbers.Add(contNum1);
+            context.PersonalContactNumbers.Add(contNum2);
+            context.PersonalContactNumbers.Add(contNum3);
+            context.PersonalContactNumbers.Add(contNum4);
+            context.PersonalContactNumbers.Add(contNum5);
+            context.SaveChanges();
+            #endregion
+
+                #region Business Information
+            var busInfo = new BusinessInformation
+            {
+                BusinessOrIndustry = "Bus Ind Tel",
+                City= location.City,
+                CompanyName = "Company Name 1",
+                Designation="Designation 1",
+                Fax="897526452",
+                InvestmentCapacity=8897.25m,
+                IsActive=true,
+                LastUpdated=DateTime.UtcNow,
+                Locality= locality.Name,
+                PersonalInformationId=1,
+                Type="I dont know",
+                UpdatedByUserId=1,
+                Website="abhinav.com"
+            };
+
+            var busInfo1 = new BusinessInformation
+            {
+                BusinessOrIndustry = "1 Bus Ind Tel",
+                City = location.City,
+                CompanyName = "1 Company Name 1",
+                Designation = " 1 Designation 1",
+                Fax = "897526452",
+                InvestmentCapacity = 8897.25m,
+                IsActive = true,
+                LastUpdated = DateTime.UtcNow,
+                Locality = locality.Name,
+                PersonalInformationId = 1,
+                Type = "I dont know",
+                UpdatedByUserId = 1,
+                Website = "1 abhinav.com"
+            };
+
+            var busInfo2 = new BusinessInformation
+            {
+                BusinessOrIndustry = "2 Bus Ind Tel",
+                City = location1.City,
+                CompanyName = "2 Company Name 1",
+                Designation = " 2 Designation 1",
+                Fax = "897526452",
+                InvestmentCapacity = 8897.25m,
+                IsActive = true,
+                LastUpdated = DateTime.UtcNow,
+                Locality = locality1.Name,
+                PersonalInformationId = 1,
+                Type = "I dont know",
+                UpdatedByUserId = 1,
+                Website = "2abhinav.com"
+            };
+
+            var busInfo3 = new BusinessInformation
+            {
+                BusinessOrIndustry = "3 Bus Ind Tel",
+                City = location.City,
+                CompanyName = "3 Company Name 1",
+                Designation = "3 Designation 1",
+                Fax = "897526452",
+                InvestmentCapacity = 8897.25m,
+                IsActive = true,
+                LastUpdated = DateTime.UtcNow,
+                Locality = locality.Name,
+                PersonalInformationId = 1,
+                Type = "I dont know",
+                UpdatedByUserId = 1,
+                Website = "3abhinav.com"
+            };
+
+            context.BusinessInformations.Add(busInfo);
+            context.BusinessInformations.Add(busInfo1);
+            context.BusinessInformations.Add(busInfo2);
+            context.BusinessInformations.Add(busInfo3);
+            context.SaveChanges();
+
+            var busNum = new BusinessContactNumber
+            {
+                PhoneNumber = 9817564562,
+                Type = "Primary",
+                BusinessInformationId = 1,
+            };
+
+            var busNum1 = new BusinessContactNumber
+            {
+                PhoneNumber = 9827564562,
+                Type = "Primary",
+                BusinessInformationId = 2,
+            };
+
+            var busNum2 = new BusinessContactNumber
+            {
+                PhoneNumber = 9837564562,
+                Type = "Primary",
+                BusinessInformationId = 3,
+            };
+
+            var busNum3 = new BusinessContactNumber
+            {
+                PhoneNumber = 9847564562,
+                Type = "Primary",
+                BusinessInformationId = 1,
+            };
+
+            var busNum4 = new BusinessContactNumber
+            {
+                PhoneNumber = 9857564562,
+                Type = "Primary",
+                BusinessInformationId = 1,
+            };
+
+            context.BusinessContactNumbers.Add(busNum);
+            context.BusinessContactNumbers.Add(busNum1);
+            context.BusinessContactNumbers.Add(busNum2);
+            context.BusinessContactNumbers.Add(busNum3);
+            context.BusinessContactNumbers.Add(busNum4);
+            context.SaveChanges();
+            #endregion
+
+            #region Contact Enquiries
+            var cntEnquiry = new ContactEnquiry
+            {
+                AssignedDate = DateTime.UtcNow,
+                BudgetFrom= 566.00m,
+                BudgetTo= 599.0m,
+                CarpetAreaFrom=999.0m,
+                CarpetAreaTo=999.0m,
+                ContactStatus = contactStatus1.Name,
+                Created = DateTime.UtcNow,
+                EnquiryDate = DateTime.UtcNow,
+                FacingType = facingType.Name,
+                IsFurnished = true,
+                IsActive = true,
+                LastUpdated = DateTime.Now,
+                LeadStatus = "Lead Status 1",
+                LookingForType = "LF Type 1",
+                OfferedRate = 11.0m,
+                PersonalInformationId = 1,
+                PropertyAge="1-4 years",
+                Remarks="Notes are alwary ggod  idea",
+                SaleAreaFrom = 887.0m,
+                SaleAreaTo=999.0m,
+                TransactionType = transactionType.Name,
+                UpdatedByUserId = 1
+
+            };
+            var cntEnquiry1 = new ContactEnquiry
+            {
+                AssignedDate = DateTime.UtcNow,
+                BudgetFrom = 1566.00m,
+                BudgetTo = 1599.0m,
+                CarpetAreaFrom = 1999.0m,
+                CarpetAreaTo = 1999.0m,
+                ContactStatus = contactStatus1.Name,
+                Created = DateTime.UtcNow,
+                EnquiryDate = DateTime.UtcNow,
+                FacingType = facingType.Name,
+                IsFurnished = true,
+                IsActive = true,
+                LastUpdated = DateTime.Now,
+                LeadStatus = "1Lead Status 1",
+                LookingForType = "1LF Type 1",
+                OfferedRate = 11.0m,
+                PersonalInformationId = 1,
+                PropertyAge = "11-4 years",
+                Remarks = "1Notes are alwary ggod  idea",
+                SaleAreaFrom = 1887.0m,
+                SaleAreaTo = 1999.0m,
+                TransactionType = transactionType.Name,
+                UpdatedByUserId = 1
+
+            };
+
+            context.ContactEnquiries.Add(cntEnquiry);
+            context.ContactEnquiries.Add(cntEnquiry1);
+            context.SaveChanges();
+
+            var enqLocality = new ContactEnquiryLocality
+            {
+                Locality= locality.Name,
+                ContactEnquiryId = cntEnquiry.Id
+            };
+            var enqLocality1 = new ContactEnquiryLocality
+            {
+                Locality = locality1.Name,
+                ContactEnquiryId = cntEnquiry1.Id
+            };
+            context.ContactEnquiryLocalities.Add(enqLocality);
+            context.ContactEnquiryLocalities.Add(enqLocality1);
+            context.SaveChanges();
+
+
+            var enqUnit = new ContactEnquiryUnitType
+            {
+                Name = unitType.Name,
+                ContactEnquiryId = cntEnquiry.Id
+            };
+            var enqUnit1 = new ContactEnquiryUnitType
+            {
+                Name = unitType.Name,
+                ContactEnquiryId = cntEnquiry1.Id
+            };
+            context.ContactEnquiryUnitTypes.Add(enqUnit);
+            context.ContactEnquiryUnitTypes.Add(enqUnit1);
+            context.SaveChanges();
+
+            #endregion
+            #endregion
+
         }
     }
 }

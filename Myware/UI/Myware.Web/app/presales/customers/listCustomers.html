@@ -6,18 +6,20 @@
                     <div data-cc-widget-header title="{{title}}"></div>
                     <div class="widget-content customerTypes">
                         <h2> List Customers </h2>
+                        <span>Page : {{page}}</span> <span>Items per page : {{itemsPerPage}}</span>
+                        <span>Total items : {{totalItems}}</span>
                         <hr />
 
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label for=" name">Customer Name</label>
-                                
+
                                 <input type="text" ng-model="ContactLeadFilters.CustomerNames"
                                        placeholder="Select customer name" autocomplete="off" typeahead-min-length="3"
                                        typeahead="item as item.Name for item  in CustomerNames($viewValue)| filter:$viewValue  | limitTo:8 "
                                        typeahead-loading="loadingCustomerNames" class="form-control" typeahead-wait-ms="500">
-                                <i ng-show="loadingCustomerNames" class="glyphicon glyphicon-refresh"></i>
-                                
+
+
                             </div>
                             <div class="col-md-6">
                                 <label for=" name">Locality</label>
@@ -25,8 +27,8 @@
                                        placeholder="Select Locality" autocomplete="off" typeahead-min-length="3"
                                        typeahead="item as item.Name for item  in Localities($viewValue)| filter:$viewValue  | limitTo:8 "
                                        typeahead-loading="loadingLocalities" class="form-control" typeahead-wait-ms="500">
-                                <i ng-show="loadingLocalities" class="glyphicon glyphicon-refresh"></i>
-                                
+
+
                             </div>
                         </div>
 
@@ -38,8 +40,8 @@
                                        placeholder="Select contact type" autocomplete="off" typeahead-min-length="3"
                                        typeahead="item as item.Name for item  in CustomerTypes($viewValue)| filter:$viewValue  | limitTo:8 "
                                        typeahead-loading="loadingContactType" class="form-control" typeahead-wait-ms="500">
-                                <i ng-show="loadingContactType" class="glyphicon glyphicon-refresh"></i>
-                               
+
+
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for=" name">Unit Types</label>
@@ -47,8 +49,8 @@
                                        placeholder="Select unit type" autocomplete="off" typeahead-min-length="1"
                                        typeahead="item as item.Name for item  in UnitTypes($viewValue)| filter:$viewValue  | limitTo:8 "
                                        typeahead-loading="loadingUnitType" class="form-control" typeahead-wait-ms="500">
-                                <i ng-show="loadingUnitType" class="glyphicon glyphicon-refresh"></i>
-                                
+
+
                             </div>
                         </div>
 
@@ -59,8 +61,8 @@
                                        placeholder="Select budget from" autocomplete="off" typeahead-min-length="1"
                                        typeahead="item as item.Budget for item  in BudgetFromList($viewValue)| filter:$viewValue  | limitTo:8 "
                                        typeahead-loading="loadingBudgetFrom" class="form-control" typeahead-wait-ms="500">
-                                <i ng-show="loadingBudgetFrom" class="glyphicon glyphicon-refresh"></i>
-                                
+
+
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for=" name">Budget To</label>
@@ -68,8 +70,8 @@
                                        placeholder="Select budget to" autocomplete="off" typeahead-min-length="1"
                                        typeahead="item as item.Budget for item  in BudgetToList($viewValue)| filter:$viewValue  | limitTo:8 "
                                        typeahead-loading="loadingBudgetTo" class="form-control" typeahead-wait-ms="500">
-                                <i ng-show="loadingBudgetTo" class="glyphicon glyphicon-refresh"></i>
-                                
+
+
                             </div>
                         </div>
 
@@ -80,40 +82,52 @@
                                        placeholder="Select Contact Numbers" autocomplete="off" typeahead-min-length="1"
                                        typeahead="item as item.Number for item  in ContactNumbers($viewValue)| filter:$viewValue  | limitTo:8 "
                                        typeahead-loading="loadingCntNumber" class="form-control" typeahead-wait-ms="500">
-                                <i ng-show="loadingCntNumber" class="glyphicon glyphicon-refresh"></i>
-                                
+
+
                             </div>
                             <div class="col-md-6 form-group">
                                 <button type="button" class="btn btn-primary" ng-click="SearchCustomers()">Search Customers</button>
                             </div>
                         </div>
 
-                        <pre>
-                                {{BudgetFromList | json}}
-                            {{ContactLeadFilters.BudgetFromList | json}}
-                            </pre>
                         <table class="table table-bordered table-hover table-condensed">
                             <tr style="font-weight: bold">
-                                <td style="width:25%">Name</td>
-                                <td style="width:25%">Address</td>
-                                <td style="width:25%">Contact numbers</td>
-                                <td style="width:25%">Action</td>
+                                <td style="width:14.3%">Name</td>
+                                <td style="width:15.3%">Contact Type</td>
+                                <td style="width:15.3%">Contact Numbers</td>
+                                <td style="width:15.3%">Unit Type</td>
+                                <td style="width:15.3%">Preferred Localities</td>
+                                <td style="width:15.3%">Budget Range</td>
+                                <td style="width:4.3%">Action</td>
                             </tr>
-                            <tr ng-repeat="item in results">
+                            <tr ng-repeat="item in AllCustomers">
                                 <td>
                                     {{item.Name}}
                                 </td>
                                 <td>
-                                    {{item.Address}} , {{item.Locality.Name}} , {{item.Locality.City}}  , {{item.Locality.State}}
+                                    {{item.ContactType}}
                                 </td>
                                 <td>
                                     <ul class="list-inline">
-                                        <li ng-repeat="c in item.ContactNumbers">{{ c.PhoneNumber }}      </li>
+                                        <li ng-repeat="c in item.ContactNumbers">{{ c.Number }}      </li>
                                     </ul>
                                 </td>
                                 <td>
+                                    <ul class="list-inline">
+                                        <li ng-repeat="c in item.UnitTypes">{{ c.Name }}      </li>
+                                    </ul>
+                                </td>
+
+                                <td>
+                                    <ul class="list-inline">
+                                        <li ng-repeat="c in item.Localities">{{ c.Name }}      </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    {{item.BudgetRange}}
+                                </td>
+                                <td>
                                     <div class="btn-group btn-group-justified">
-                                        <a class="btn btn-primary" role="button" href="#/presalesunit/company/edit/{{item.Id}}">Edit</a>
                                         <a class="btn btn-primary" role="button" href="#/presalesunit/company/{{item.Id}}">Detail</a>
                                     </div>
                                 </td>
