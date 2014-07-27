@@ -20,6 +20,18 @@
                         content: '<i class="fa fa-dashboard"></i> Customer Contact List'
                     }
                 }
+            },
+
+            {
+                url: '/presales/customer/detail/:personalId',
+                config: {
+                    templateUrl: '/app/presales/customers/detailCustomerPreSales.html',
+                    title: 'Customer Detail',
+                    settings: {
+                        nav: 1,
+                        content: '<i class="fa fa-dashboard"></i> Customer Detail'
+                    }
+                }
             }
         ];
     }

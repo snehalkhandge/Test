@@ -20,6 +20,8 @@
         'angularFileUpload',
         'xeditable',
         'ngplus',
+        'ngSanitize',
+        'ngTable',
         'ngMessages',
         'ui.bootstrap',        
         'LocalStorageModule',

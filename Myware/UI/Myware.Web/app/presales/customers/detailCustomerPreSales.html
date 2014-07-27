@@ -1,0 +1,487 @@
+﻿<section class="mainbar" data-ng-controller="DetailCustomerPreSales">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+
+                        <h2>{{title}}</h2>
+
+                        <hr />
+                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+                            {{alert.msg}}
+                            <span class='btn btn-primary' ng-show="showUpdateButton" ng-click='updateData()'>Click here to update the screen</span>
+                        </alert>
+
+                        <hr />
+
+                        <tabset>
+                            <tab heading="Personal Information">
+                                <tab-heading>
+                                    <i class="glyphicon glyphicon-bell"></i> Personal Information
+                                </tab-heading>
+
+                                <div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for=" name">Name</label>
+                                            <p>
+                                                {{personal.FirstName}}     {{personal.LastName}}
+                                            </p>
+
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="Address">Address</label>
+                                            <p>
+                                                {{personal.Address}} <br />
+                                                {{personal.Locality}}, {{personal.City}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    Fix rest of it accordingly.
+
+                                    <div class="row">
+
+                                        <div class="form-group col-md-6">
+                                            <label for=" name">Pincode</label>
+                                            <input type="text" class="form-control" ng-model="personal.PinCode"
+                                                   name="PinCode" value="{{personal.PinCode}}" placeholder="Enter Pin code">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="form-group col-md-6">
+                                            <label for="Campaign">Campaign</label>
+                                            <p>
+                                                {{personal.Campaign}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="form-group col-md-6">
+                                            <label for="SubCampaigns">SubCampaigns</label>
+                                            <p>
+                                                {{personal.SubCampaigns}}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="form-group col-md-6">
+                                            <label for="CustomerTypes">CustomerTypes</label>
+                                            <p>
+                                                {{personal.ContactType}}
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="form-group col-md-6">
+                                            <label for="Email">Email:</label>
+                                            <input type="text" class="form-control" name="Email" ng-model="personal.Email"
+                                                   ng-change="isUniqueEmail(personal.Email)" value="{{personal.Email}}" placeholder="Email">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <div class="form-group col-md-6">
+                                            <label for="Remarks">Remarks</label>
+                                            <textarea class="form-control " rows="3" ng-model="personal.Remarks" name="Remarks">{{personal.Remarks}}</textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group  col-md-6">
+                                            <label for=" name">Anniversary Date</label>
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="personal.AnniversaryDate"
+                                                       is-open="opened" min-date="minDate" max-date="'2025-06-22'"
+                                                       datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group  col-md-6">
+                                            <label for=" name">Date of Birth</label>
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="openDOB($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+
+                                                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="personal.DateOfBirth" is-open="openedDOB"
+                                                       min-date="minDate" max-date="'2025-06-22'" datepicker-options="dateOptions"
+                                                       date-disabled="disabled(date, mode)" close-text="Close" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="ContactNumbers">ContactNumbers</label>
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th class="col-md-3">
+                                                        Number
+                                                    </th>
+                                                    <th class="col-md-3">
+                                                        Type
+                                                    </th>
+                                                </tr>
+                                                <tr ng-repeat="item in personal.ContactNumbers">
+                                                    <td>
+                                                        <p>
+                                                            {{item.PhoneNumber}}
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            {{item.Type}}
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+
+                            </tab>
+
+                            <tab heading="Business Information" select="getBusinessInformation()">
+                                <tab-heading>
+                                    <i class="glyphicon glyphicon-bell"></i> Business Information
+                                </tab-heading>
+
+                                <div ng-repeat="business in personal.BusinessInformation">
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for=" name">Company Name</label>
+                                            <p>
+                                                {{business.CompanyName}}
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for=" name">Designation</label>
+                                            <input type="text" class="form-control" ng-model="business.Designation"
+                                                   name="Designation" value="{{business.Designation}}" placeholder="Enter first name">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for=" name">BusinessOrIndustry</label>
+                                            <input type="text" class="form-control" ng-model="business.BusinessOrIndustry"
+                                                   name="BusinessOrIndustry" value="{{business.BusinessOrIndustry}}" placeholder="Enter first name">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for=" name">InvestmentCapacity</label>
+                                            <input type="text" class="form-control" ng-model="business.InvestmentCapacity"
+                                                   name="InvestmentCapacity" value="{{business.InvestmentCapacity}}" placeholder="Enter first name">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for=" name">Fax</label>
+                                            <input type="text" class="form-control" ng-model="business.Fax"
+                                                   name="Fax" value="{{business.Fax}}" placeholder="Enter first name">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for=" name">Website</label>
+                                            <input type="text" class="form-control" ng-model="business.Website"
+                                                   name="Website" value="{{business.Website}}" placeholder="Enter first name">
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="Localities">Locality</label>
+                                            <select class="form-control" name="Locality" ng-model="business.Locality" ng-selected="personal.Locality">
+                                                <option ng-repeat='value in Localities' value='{{value.Name}}'>
+                                                    {{value.Name}}, {{value.Location.City}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="form-group col-md-6">
+                                            <label for=" name">Type</label>
+                                            <input type="text" class="form-control" ng-model="business.Type"
+                                                   name="Type" value="{{business.Type}}" placeholder="Enter type">
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="ContactNumbers">ContactNumbers</label>
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th class="col-md-3">
+                                                        Number
+                                                    </th>
+                                                    <th class="col-md-3">
+                                                        Type
+                                                    </th>
+                                                </tr>
+                                                <tr ng-repeat="item in business.BusinessContactNumbers">
+                                                    <td>
+                                                        <p>
+                                                            {{item.PhoneNumber}}
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            {{item.Type}}
+                                                        </p>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6" ng-show="business.PersonalInformationId">
+                                            <img style="width:120px;" ng-src="{{business.ImageUrl}}" fallback-src
+                                                 alt="Profile Image" holder-fix />
+
+                                        </div>
+                                    </div>
+
+                                    <hr />
+
+
+                                </div>
+
+                            </tab>
+
+                            <tab select="getEnquiries()">
+                                <tab-heading>
+                                    <i class="glyphicon glyphicon-bell"></i> Related Enquiries
+                                </tab-heading>
+                                <!--
+                                    ng-show="personal.ContactType == 'Enquiry'"
+                                -->
+                                
+                                <accordion close-others="oneAtATime">
+                                    
+                                    <accordion-group ng-repeat="enquiry in ContactEnquiries">
+                                        <accordion-heading>
+                                            {{$index + 1}} 
+                                        </accordion-heading>
+                                        <div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Budget From</label>
+                                                    <p>{{enquiry.BudgetFrom}}</p>
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Budget To</label>
+                                                    <p>{{enquiry.BudgetTo}}</p>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">IsFurnished</label>
+                                                    <p>{{enquiry.IsFurnished}}</p>
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Offered Rate</label>
+                                                    <p>{{enquiry.OfferedRate}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">ContactStatus</label>
+                                                    <p>{{enquiry.ContactStatus | json}}</p>
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Lead Status</label>
+                                                    <p>{{enquiry.LeadStatus | json}}</p>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">AssignedDate</label>
+                                                    <p>{{enquiry.AssignedDate | date:'MM/dd/yyyy'}}</p>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Enquiry Date</label>
+                                                    <p>{{enquiry.EnquiryDate | date:'MM/dd/yyyy'}}</p>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Sale Area From</label>
+                                                    <input type="text" class="form-control" ng-model="enquiry.SaleAreaFrom"
+                                                           name="SaleAreaFrom" value="{{enquiry.SaleAreaFrom}}" placeholder="Enter SaleAreaFrom">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Sale Area To</label>
+                                                    <input type="text" class="form-control" ng-model="enquiry.SaleAreaTo"
+                                                           name="SaleAreaTo" value="{{enquiry.SaleAreaTo}}" placeholder="Enter budget to">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">CarpetAreaFrom</label>
+                                                    <input type="text" class="form-control" ng-model="enquiry.CarpetAreaFrom"
+                                                           name="CarpetAreaFrom" value="{{enquiry.CarpetAreaFrom}}" placeholder="Enter CarpetAreaFrom">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">CarpetAreaTo</label>
+                                                    <input type="text" class="form-control" ng-model="enquiry.CarpetAreaTo"
+                                                           name="CarpetAreaTo" value="{{enquiry.CarpetAreaTo}}" placeholder="Enter CarpetAreaTo">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">TransactionType</label>
+                                                    <select class="form-control" name="TransactionType" ng-model="enquiry.TransactionType"
+                                                            ng-selected="enquiry.TransactionType">
+                                                        <option ng-repeat='value in TransactionTypes' value='{{value.Name}}'>
+                                                            {{value.Name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="LookingForType">LookingForType</label>
+                                                    <select class="form-control" name="LookingForType" ng-model="enquiry.LookingForType"
+                                                            ng-selected="enquiry.LookingForType">
+                                                        <option ng-repeat='value in LookingForTypes' value='{{value.Name}}'>
+                                                            {{value.Name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="Localities">Preferred Locality</label>
+                                                    <p>{{enquiry.PreferredLocations | json}}</p>
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="PreferredUnitTypes">Preferred Unit Types</label>
+                                                    <p>{{enquiry.PreferredUnitTypes | json}}</p>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="FacingType">Facing Type</label>
+                                                    <select class="form-control" name="FacingType" ng-model="enquiry.FacingType"
+                                                            ng-selected="enquiry.FacingType">
+                                                        <option ng-repeat='value in FacingTypes' value='{{value.Name}}'>
+                                                            {{value.Name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="PropertyAge">PropertyAge</label>
+                                                    <select class="form-control" name="PropertyAge" ng-model="enquiry.PropertyAge"
+                                                            ng-selected="enquiry.PropertyAge">
+                                                        <option ng-repeat='value in PropertyAges' value='{{value.Name}}'>
+                                                            {{value.Name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="Address">Address</label>
+                                                    <textarea class="form-control " rows="3" ng-model="enquiry.Remarks" name="Remarks">{{enquiry.Remarks}}</textarea>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </accordion-group>
+
+                                </accordion>
+
+
+
+                                    
+</tab>
+                        </tabset>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

@@ -13,7 +13,9 @@ namespace Myware.Web
                     .Include("~/Scripts/jquery/extra/*.js")                    
                     .Include("~/Scripts/angular/*.js")
                     .Include("~/Scripts/angular/extra/*.js")
-                    .Include("~/Scripts/angular-ui/*.js"));
+                    .Include("~/Scripts/angular-ui/*.js")
+                    
+                    );
             bundles.Add(new ScriptBundle("~/bundles/app")
                 .Include("~/app/*.js")
                 .Include("~/app/blocks/*.js")
@@ -55,6 +57,7 @@ namespace Myware.Web
                 .Include("~/app/presales/business/*.js")
                 .Include("~/app/presales/contactenquiry/*.js")
                 .Include("~/app/presales/customers/*.js")
+                .Include("~/app/presales/import/*.js")
                 );
 
 

@@ -70,11 +70,31 @@
                     });
            return deferred.promise;
 
-       };
+        };
+
+
+        var getAllContactEnquiriesByPersonalId = function (id) {
+            var deferred = $q.defer(),
+                start = new Date().getTime();
+
+            $http.get(common.apiUrl + '/getAllContactEnquiriesByPersonalId/' + id)
+                    .success(function (data) {
+                        data = data || {};
+                        deferred.resolve(data);
+                    })
+                    .error(function (data, status, headers, config) {
+                        deferred.reject(new Error(angular.toJson(data)));
+                    });
+
+            return deferred.promise;
+
+        };
+
 
         return {
             savecontactEnquiry: savecontactEnquiry,
-            getcontactEnquiryById: getcontactEnquiryById
+            getcontactEnquiryById: getcontactEnquiryById,
+            getAllContactEnquiriesByPersonalId: getAllContactEnquiriesByPersonalId
             
         };
 

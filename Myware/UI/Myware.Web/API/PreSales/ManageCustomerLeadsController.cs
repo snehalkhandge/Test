@@ -43,8 +43,8 @@ namespace Myware.Web.API.PreSales
 		   {
 			   string[] words = query.CustomerNames.Name.Split(' ');
 
-               string firstName = words[0];
-               string lastName = words[1];
+			   string firstName = words[0];
+			   string lastName = words[1];
 
 			   sqlQuery = sqlQuery.Where(t => t.FirstName.Contains(firstName) || t.LastName.Contains(lastName));
 		   }

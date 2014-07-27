@@ -87,6 +87,81 @@ namespace Myware.Web.API.PreSales
 
 	   }
 
+
+	   [Route("getAllContactEnquiriesByPersonalId/{id}")]
+	   [HttpGet]
+	   public List<ContactEnquiryViewModel> GetAllContactEnquiriesByPersonalId(int id)
+	   {
+
+		   var query = db.ContactEnquiries
+						 .Include(t => t.PreferredUnitTypes)
+						 .Include(t => t.PreferredLocations)
+						 .OrderByDescending(x => x.LastUpdated);
+
+		   var resultEnquiries = query.Where(r => r.PersonalInformationId == id).ToList();
+
+		   var enquiries = new List<ContactEnquiryViewModel>();
+
+		   foreach (var result in resultEnquiries)
+		   {
+			   var loc = new List<PartialContactEnquiryLocality>();
+
+			   foreach (var item in result.PreferredLocations.ToList())
+			   {
+
+				   loc.Add(new PartialContactEnquiryLocality
+				   {
+					   Locality = item.Locality
+				   });
+
+			   }
+
+			   var unit = new List<PartialContactEnquiryUnit>();
+
+			   foreach (var item in result.PreferredUnitTypes.ToList())
+			   {
+
+				   unit.Add(new PartialContactEnquiryUnit
+				   {
+					   UnitType = item.Name
+				   });
+
+			   }
+
+			   enquiries.Add(new ContactEnquiryViewModel
+						   {
+							   Id = result.Id,
+							   AssignedDate = result.AssignedDate,
+							   BudgetFrom = result.BudgetFrom,
+							   BudgetTo = result.BudgetTo,
+							   CarpetAreaFrom = result.CarpetAreaFrom,
+							   CarpetAreaTo = result.CarpetAreaTo,
+							   ContactStatus = result.ContactStatus,
+							   EnquiryDate = result.EnquiryDate,
+							   FacingType = result.FacingType,
+							   IsFurnished = result.IsFurnished,
+							   LeadStatus = result.LeadStatus,
+							   LookingForType = result.LookingForType,
+							   OfferedRate = result.OfferedRate,
+							   PersonalInformationId = result.PersonalInformationId,
+							   PreferredLocations = loc,
+							   PreferredUnitTypes = unit,
+							   PropertyAge = result.PropertyAge,
+							   Remarks = result.Remarks,
+							   SaleAreaFrom = result.SaleAreaFrom,
+							   SaleAreaTo = result.SaleAreaTo,
+							   TransactionType = result.TransactionType
+						   });
+
+
+
+			   
+		   }
+
+		   return enquiries;
+	   }
+
+
 	   [Route("saveContactEnquiry/{id}")]
 	   [ResponseType(typeof(ContactEnquiryViewModel))]
 	   public IHttpActionResult PostBusiness(int id, ContactEnquiryViewModel typeVM)

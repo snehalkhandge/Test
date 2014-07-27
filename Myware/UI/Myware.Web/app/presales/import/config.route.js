@@ -11,13 +11,13 @@
         return [
             
             {
-                url: '/presales/enquiry/edit/:enquiryId',
+                url: '/presales/import/customers',
                 config: {
-                    templateUrl: '/app/presales/enquiries/editEnquiry.html',
-                    title: 'Edit Enquiry',
+                    templateUrl: '/app/presales/import/importCustomers.html',
+                    title: 'Import Customers',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Add Enquiry'
+                        content: '<i class="fa fa-dashboard"></i> Import Customers'
                     }
                 }
             }

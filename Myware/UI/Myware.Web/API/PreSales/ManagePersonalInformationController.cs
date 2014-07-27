@@ -40,59 +40,68 @@ namespace Myware.Web.API.PreSales
 
 
 		   var cntNumber = new List<PartialPersonalContactNumber>();
-
-		   foreach (var cnt in result.ContactNumbers)
-		   {
-			   cntNumber.Add(new PartialPersonalContactNumber
-			   {
-				   PhoneNumber = cnt.PhoneNumber,
-				   Type = cnt.Type
-
-			   });
-		   }
-
 		   var busiInfo = new List<BusinessInformationViewModel>();
 
-		   foreach (var cnt in result.BusinessInformation)
+		   if (result != null)
 		   {
-			   busiInfo.Add(new BusinessInformationViewModel
+			   foreach (var cnt in result.ContactNumbers)
 			   {
-				   Id = cnt.Id,
-				   CompanyName = cnt.CompanyName,
-				   Designation = cnt.Designation,
-				   BusinessOrIndustry = cnt.BusinessOrIndustry,
-				  InvestmentCapacity = cnt.InvestmentCapacity,
-				  Fax = cnt.Fax,
-				  Website = cnt.Website,
-				  Locality = cnt.Locality,
-				  City = cnt.City,
-				  Type = cnt.Type,
-				  PersonalInformationId = cnt.PersonalInformationId
-			   });
+				   cntNumber.Add(new PartialPersonalContactNumber
+				   {
+					   PhoneNumber = cnt.PhoneNumber,
+					   Type = cnt.Type
+
+				   });
+			   }
+
+			   var sortBusiInfo = result.BusinessInformation.OrderByDescending(t => t.LastUpdated).ToList();
+			   foreach (var cnt in sortBusiInfo)
+			   {
+				   busiInfo.Add(new BusinessInformationViewModel
+				   {
+					   Id = cnt.Id,
+					   CompanyName = cnt.CompanyName,
+					   Designation = cnt.Designation,
+					   BusinessOrIndustry = cnt.BusinessOrIndustry,
+					   InvestmentCapacity = cnt.InvestmentCapacity,
+					   Fax = cnt.Fax,
+					   Website = cnt.Website,
+					   Locality = cnt.Locality,
+					   City = cnt.City,
+					   Type = cnt.Type,
+					   PersonalInformationId = cnt.PersonalInformationId
+				   });
+			   }
+
+
+
+
+			   return new PersonalInformationViewModel
+			   {
+				   Id = result.Id,
+				   FirstName = result.FirstName,
+				   LastName = result.LastName,
+				   Email = result.Email,
+				   Address = result.Address,
+				   PinCode = result.PinCode,
+				   Campaign = result.Campaign,
+				   SubCampaign = result.SubCampaign,
+				   ContactType = result.ContactType,
+				   Locality = result.Locality,
+				   City = result.City,
+				   ContactNumbers = cntNumber,
+				   ImageUrl = result.ImageUrl,
+				   AnniversaryDate = result.AnniversaryDate,
+				   DateOfBirth = result.DateOfBirth,
+				   Remarks = result.Remarks,
+				   BusinessInformation = busiInfo
+			   };
 		   }
-
-
-
-		   return new PersonalInformationViewModel
+		   else
 		   {
-			   Id = result.Id,
-			   FirstName = result.FirstName,
-			   LastName = result.LastName,
-			   Email = result.Email,
-			   Address = result.Address,
-			   PinCode = result.PinCode,
-			   Campaign = result.Campaign,
-			   SubCampaign = result.SubCampaign,
-			   ContactType = result.ContactType,
-			   Locality = result.Locality,
-			   City = result.City,
-			   ContactNumbers = cntNumber,
-			   ImageUrl = result.ImageUrl,
-			   AnniversaryDate = result.AnniversaryDate,
-			   DateOfBirth = result.DateOfBirth,
-			   Remarks = result.Remarks,
-			   BusinessInformation = busiInfo
-		   };
+			   return new PersonalInformationViewModel();
+
+		   }
 
 	   }
 

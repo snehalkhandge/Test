@@ -1,0 +1,276 @@
+﻿<section class="mainbar" data-ng-controller="ImportCustomers">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> {{title}} </h2>
+
+                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+                            {{alert.msg}}
+                            <span class='btn btn-primary' ng-show="showUpdateButton" ng-click='updateData()'>Click here to update the screen</span>
+                        </alert>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                
+                                    <label for="csvFileInput">
+                                        <strong>CSV File:</strong>
+                                    </label>
+                                    <input type="file" id="csvFileInput" ng-file-select="getFile($files)"
+                                           accept=".csv">
+                            </div>
+                            <div class="col-md-8" ng-show="progress > 0" ng-hide="progress > 0.99">
+                                        <progressbar class="progress-striped active" value="progress*100+'%'"></progressbar>
+                             </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="panel panel-danger" style="width:99%;overflow-x:scroll;" ng-show="csv.invalidContent">
+                                    <div class="panel-heading">Please remove the extra comma in the following rows and upload the file again.</div>
+                                    <div class="panel-body">                                   
+                                        <table class="table table-hover ">
+                                            <tbody>
+                                                <tr ng-repeat="item in csv.invalidContent" ng-if="item.length > 1">
+                                                    <td>
+                                                        Row number: {{ item[0] }}
+                                                    </td>
+                                                    <td>
+                                                        {{  item[1] }}
+                                                    </td>
+                                                    <td>
+                                                        {{  item[2] }}
+                                                    </td>
+                                                    <td>
+                                                        {{  item[3] }}
+                                                    </td>
+                                                    <td>
+                                                        {{  item[4] }}
+                                                    </td>
+                                                    <td>
+                                                        {{  item[5] }}
+                                                    </td>
+                                                    <td>
+                                                        {{  item[6] }}
+                                                    </td>
+                                                    <td>
+                                                        {{  item[7] }}
+                                                    </td>
+                                                    <td>
+                                                        {{  item[8] }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                            </div>
+
+                            <div class="well col-md-12" style="width:99%;overflow-x:scroll;">
+
+                                <table ng-table="tableParams" class="table table-hover">
+                                    <tbody>
+                                        <tr ng-repeat="item in csv.result" ng-class-odd="'odd'" ng-class-even="'even'">
+
+                                            <td data-title="'Contact Type'">
+                                                <span ng-if="!item.$edit">{{item.ContactType}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.ContactType" /></div>
+                                            </td>
+                                            <td data-title="'First Name'">
+                                                <span ng-if="!item.$edit">{{item.FirstName}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.FirstName" /></div>
+                                            </td>
+                                            <td data-title="'Last Name'">
+                                                <span ng-if="!item.$edit">{{item.LastName}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.LastName" /></div>
+                                            </td>
+                                            <td data-title="'Contact Numbers'">
+                                                <span ng-if="!item.$edit">{{item.ContactNumbers}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.ContactNumbers" /></div>
+                                            </td>
+                                            <td data-title="'Email'">
+                                                <span ng-if="!item.$edit">{{item.Email}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.Email" /></div>
+                                            </td>
+                                            <td data-title="'Address'">
+                                                <span ng-if="!item.$edit">{{item.Address}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.Address" /></div>
+                                            </td>
+                                            <td data-title="'City'">
+                                                <span ng-if="!item.$edit">{{item.City}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.City" /></div>
+                                            </td>
+                                            <td data-title="'Locality'">
+                                                <span ng-if="!item.$edit">{{item.Locality}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.Locality" /></div>
+                                            </td>
+                                            <td data-title="'PinCode'">
+                                                <span ng-if="!item.$edit">{{item.PinCode}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.PinCode" /></div>
+                                            </td>
+                                            <td data-title="'DateOfBirth'">
+                                                <span ng-if="!item.$edit">{{item.DateOfBirth}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.DateOfBirth" /></div>
+                                            </td>
+                                            <td data-title="'AnniversaryDate'">
+                                                <span ng-if="!item.$edit">{{item.AnniversaryDate}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.AnniversaryDate" /></div>
+                                            </td>
+                                            <td data-title="'Campaign'">
+                                                <span ng-if="!item.$edit">{{item.Campaign}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.Campaign" /></div>
+                                            </td>
+                                            <td data-title="'SubCampaign'">
+                                                <span ng-if="!item.$edit">{{item.SubCampaign}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.SubCampaign" /></div>
+                                            </td>
+                                            <td data-title="'CompanyName'">
+                                                <span ng-if="!item.$edit">{{item.CompanyName}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.CompanyName" /></div>
+                                            </td>
+                                            <td data-title="'Designation'">
+                                                <span ng-if="!item.$edit">{{item.Designation}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.Designation" /></div>
+                                            </td>
+                                            <td data-title="'BusinessOrIndustry'">
+                                                <span ng-if="!item.$edit">{{item.BusinessOrIndustry}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.BusinessOrIndustry" /></div>
+                                            </td>
+                                            <td data-title="'BusinessCity'">
+                                                <span ng-if="!item.$edit">{{item.BusinessCity}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.BusinessCity" /></div>
+                                            </td>
+                                            <td data-title="'BusinessLocality'">
+                                                <span ng-if="!item.$edit">{{item.BusinessLocality}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.BusinessLocality" /></div>
+                                            </td>
+                                            <td data-title="'InvestmentCapacity'">
+                                                <span ng-if="!item.$edit">{{item.InvestmentCapacity}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.InvestmentCapacity" /></div>
+                                            </td>
+                                            <td data-title="'BusinessContactNumbers'">
+                                                <span ng-if="!item.$edit">{{item.BusinessContactNumbers}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.BusinessContactNumbers" /></div>
+                                            </td>
+                                            <td data-title="'Fax'">
+                                                <span ng-if="!item.$edit">{{item.Fax}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.Fax" /></div>
+                                            </td>
+                                            <td data-title="'Website'">
+                                                <span ng-if="!item.$edit">{{item.Website}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.Website" /></div>
+                                            </td>
+                                            <td data-title="'EnquiryDate'">
+                                                <span ng-if="!item.$edit">{{item.EnquiryDate}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.EnquiryDate" /></div>
+                                            </td>
+                                            <td data-title="'LookingForType'">
+                                                <span ng-if="!item.$edit">{{item.LookingForType}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.LookingForType" /></div>
+                                            </td>
+                                            <td data-title="'PreferredUnitTypes'">
+                                                <span ng-if="!item.$edit">{{item.PreferredUnitTypes}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.PreferredUnitTypes" /></div>
+                                            </td>
+                                            <td data-title="'TransactionType'">
+                                                <span ng-if="!item.$edit">{{item.TransactionType}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.TransactionType" /></div>
+                                            </td>
+
+                                            <td data-title="'PropertyAge'">
+                                                <span ng-if="!item.$edit">{{item.PropertyAge}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.PropertyAge" /></div>
+                                            </td>
+                                            <td data-title="'BudgetFrom'">
+                                                <span ng-if="!item.$edit">{{item.BudgetFrom}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.BudgetFrom" /></div>
+                                            </td>
+                                            <td data-title="'BudgetTo'">
+                                                <span ng-if="!item.$edit">{{item.BudgetTo}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.BudgetTo" /></div>
+                                            </td>
+                                            <td data-title="'IsFurnished'">
+                                                <span ng-if="!item.$edit">{{item.IsFurnished}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="checkbox" ng-model="item.IsFurnished" /></div>
+                                            </td>
+                                            <td data-title="'SaleAreaFrom'">
+                                                <span ng-if="!item.$edit">{{item.SaleAreaFrom}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.SaleAreaFrom" /></div>
+                                            </td>
+                                            <td data-title="'SaleAreaTo'">
+                                                <span ng-if="!item.$edit">{{item.SaleAreaTo}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.SaleAreaTo" /></div>
+                                            </td>
+                                            <td data-title="'OfferedRate'">
+                                                <span ng-if="!item.$edit">{{item.OfferedRate}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.OfferedRate" /></div>
+                                            </td>
+                                            <td data-title="'CarpetAreaFrom'">
+                                                <span ng-if="!item.$edit">{{item.CarpetAreaFrom}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.CarpetAreaFrom" /></div>
+                                            </td>
+
+                                            <td data-title="'CarpetAreaTo'">
+                                                <span ng-if="!item.$edit">{{item.CarpetAreaTo}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.CarpetAreaTo" /></div>
+                                            </td>
+                                            <td data-title="'LeadStatus'">
+                                                <span ng-if="!item.$edit">{{item.LeadStatus}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.LeadStatus" /></div>
+                                            </td>
+                                            <td data-title="'Remarks'">
+                                                <span ng-if="!item.$edit">{{item.Remarks}}</span>
+                                                <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.Remarks" /></div>
+                                            </td>
+
+                                            <td data-title="'Actions'" width="200">
+                                                <a ng-if="!item.$edit" href="" class="btn btn-default btn-xs" ng-click="item.$edit = true">Edit</a>
+                                                <a ng-if="item.$edit" href="" class="btn btn-primary btn-xs" ng-click="item.$edit = false">Save</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="widget-foot">
+            <div class="clearfix"></div>
+        </div>
+        </div>
+        </div>
+
+    </section>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
