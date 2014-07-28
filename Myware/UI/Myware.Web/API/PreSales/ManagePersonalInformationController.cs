@@ -128,8 +128,32 @@ namespace Myware.Web.API.PreSales
 		   {
 			   if (typeVM.Id == 0)
 			   {
+                   //Check Duplicate Data
+                   #region Check Duplicate Data
+                   var chkDuplicateEmail = new PersonalInformation();
+                   if(typeVM.Email != "")
+                   {
+                       chkDuplicateEmail = db.PersonalInformations.AsNoTracking()
+                                                                  .Where(t => t.Email == typeVM.Email)
+                                                                  .FirstOrDefault();
 
-				   type.FirstName = typeVM.FirstName;
+                   }
+                   var numbers = new List<long>();
+                   foreach (var item in typeVM.ContactNumbers)
+                   {
+                       numbers.Add(item.PhoneNumber);
+                   }
+                   var chkDuplicatePhoneNumber = db.PersonalContactNumbers
+                                                   .AsNoTracking()
+                                                   .Any(t => numbers.Contains(t.PhoneNumber));
+
+                   if(chkDuplicateEmail != null || chkDuplicatePhoneNumber == true)
+                   {                       
+                       return BadRequest("Error, Duplicate Data == "+chkDuplicateEmail.Id.ToString());
+                   }
+                   #endregion
+
+                   type.FirstName = typeVM.FirstName;
 				   type.LastName = typeVM.LastName;
 				   type.Email = typeVM.Email;
 				   type.Address = typeVM.Address;

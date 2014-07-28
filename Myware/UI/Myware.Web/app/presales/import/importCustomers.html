@@ -21,8 +21,8 @@
                                     <input type="file" id="csvFileInput" ng-file-select="getFile($files)"
                                            accept=".csv">
                             </div>
-                            <div class="col-md-8" ng-show="progress > 0" ng-hide="progress > 0.99">
-                                        <progressbar class="progress-striped active" value="progress*100+'%'"></progressbar>
+                            <div class="col-md-8" ng-show="progress > 0" ng-hide="progress > 99">
+                                        <progressbar class="progress-striped active" value="progress+'%'"></progressbar>
                              </div>
 
                         </div>
@@ -34,7 +34,8 @@
                                             <tbody>
                                                 <tr ng-repeat="item in csv.invalidContent" ng-if="item.length > 1">
                                                     <td>
-                                                        Row number: {{ item[0] }}
+                                                        Row number: {{ item[0] + 1 }}<br />
+                                                        Id: {{ item[0] }}
                                                     </td>
                                                     <td>
                                                         {{  item[1] }}

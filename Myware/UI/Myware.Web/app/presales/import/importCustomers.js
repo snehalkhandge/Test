@@ -5,9 +5,9 @@
         .module('app.presales')
         .controller('ImportCustomers', ImportCustomers);
 
-    ImportCustomers.$inject = ['$scope', '$timeout', 'common', 'fileReaderFactory', 'personalFactory', 'businessFactory', 'contactEnquiryFactory', 'ngTableParams', '$sce'];
+    ImportCustomers.$inject = ['$scope', '$timeout', 'common', 'fileReaderFactory', 'personalFactory', 'businessFactory', 'contactEnquiryFactory', 'ngTableParams', '$sce', 'authService'];
 
-    function ImportCustomers($scope, $timeout, common, fileReaderFactory, personalFactory, businessFactory, contactEnquiryFactory, ngTableParams, $sce) {
+    function ImportCustomers($scope, $timeout, common, fileReaderFactory, personalFactory, businessFactory, contactEnquiryFactory, ngTableParams, $sce, authService) {
         var log = common.logger.info;
         var $q = common.$q;
         
@@ -29,65 +29,7 @@
         var data = [];
         $scope.progress = 0;
 
-        var businessInfo = {
-            Id: '',
-            PersonalInformationId: '',
-            CompanyName: '',
-            Designation: '',
-            BusinessOrIndustry: '',
-            InvestmentCapacity: '',
-            Fax: '',
-            Website: '',
-            Locality: '',
-            City: '',
-            BusinessContactNumbers: [],
-            ImageUrl: '',
-            Type: ''
-        };
-
-        var personalInfo = {
-            Id: '',
-            FirstName: '',
-            LastName: '',
-            Email: '',
-            Address: '',
-            Locality: '',
-            City: '',
-            PinCode: '',
-            DateOfBirth: '',
-            Remarks: '',
-            AnniversaryDate: '',
-            Campaign: '',
-            SubCampaign: '',
-            ContactType: '',
-            ContactNumbers: [],
-            BusinessInformation: []
-
-        };
-
-        var enquiryInfo = {
-            Id: '',
-            PersonalInformationId: '',
-            Remarks: '',
-            AssignedDate: '',
-            LeadStatus: '',
-            TransactionType: '',
-            LookingForType: '',
-            BudgetFrom: '',
-            BudgetTo: '',
-            SaleAreaFrom: '',
-            SaleAreaTo: '',
-            CarpetAreaFrom: '',
-            CarpetAreaTo: '',
-            PropertyAge: '',
-            IsFurnished: '',
-            OfferedRate: '',
-            EnquiryDate: '',
-            FacingType: '',
-            ContactStatus: '',
-            PreferredUnitTypes: [],
-            PreferredLocations: [],
-        };
+        
         
 
         activate();
@@ -134,7 +76,7 @@
         };
 
         $scope.$on("fileProgress", function (e, progress) {
-            $scope.progress = (progress.loaded / progress.total);
+            $scope.progress = (progress.loaded / progress.total)*100;
         });
 
         function processHeader(temp_headers) {
@@ -267,7 +209,14 @@
                 {
                     if ($scope.csv.header) {
                         for (var j = 0; j < headers.length; j++) {
-                            obj[headers[j].UpdateString] = currentline[j + 1].replace(/[^\w\s]/gi, '');
+                            if (headers[j].UpdateString == 'Email')
+                            {
+                                obj[headers[j].UpdateString] = currentline[j + 1];
+                            }
+                            else {
+                                obj[headers[j].UpdateString] = currentline[j + 1].replace(/[^\w\s]/gi, '');
+                            }
+                            
                         }
                     } else {
                         for (var k = 0; k < currentline.length; k++) {
@@ -275,9 +224,10 @@
                         }
                     }
 
-                    obj["cssClass"] = "";
+                    obj["hasError"] = false;
+                    obj["errorMessage"] = "";
                     obj["id"] = i;
-                    $scope.progress = i/lines.length;
+                    $scope.progress = (i/lines.length)*100;
 
                     result.push(obj);
 
@@ -299,10 +249,133 @@
             $scope.alerts.push({ type: 'success', msg: "Processing completed." });
             data = result;
             $scope.tableParams.reload();
+            //saveAllRowsToServer(result);
         };
 
+        function saveAllRowsToServer(rows)
+        {
+            $scope.alerts.splice(0, 1);
+            $scope.alerts.push({ type: 'success', msg: "Saving data to server started." });
+            $scope.progress = 0;
+            rows = data.slice(1, 10);
+            var errors = [];
+            angular.forEach(rows, function (item, key) {
+                var result = saveDataToServer(item);
+                if (!result.hasError)
+                {
+                    data.splice(key,1);
+                }
+                else
+                {
+                    //obj["errorMessage"] = "";
+                    this.push(result);
+                }
+                $scope.progress = (key/rows.length)*100;
+            }, errors);
+
+            data = errors;
+            $scope.tableParams.reload();
+            $scope.alerts.splice(0, 1);
+            $scope.alerts.push({ type: 'success', msg: "Saving data to server completed." });
+        }
 
 
+        function saveDataToServer(item) {
+
+            var deferred = $q.defer();
+            var personal = {
+                Id: '',
+                FirstName: item.FirstName,
+                LastName: item.LastName,
+                Email: item.Email,
+                Address: item.Address,
+                Locality: item.Locality,
+                City: item.City,
+                PinCode: item.PinCode,
+                DateOfBirth: item.DateOfBirth,
+                Remarks: item.Remarks,
+                AnniversaryDate: item.AnniversaryDate,
+                Campaign: item.Campaign,
+                SubCampaign: item.SubCampaign,
+                ContactType: item.ContactType,
+                ContactNumbers: [{
+                    PhoneNumber: item.ContactNumbers,
+                    Type: 'Secondary'
+                }],
+                BusinessInformation: [],
+                UserId: authService.authentication.userId
+
+            };
+
+
+
+            personalFactory.savePersonal(personal)
+                .then(function (result) {
+                    item.Id = result.Id;
+                    //Save Business
+                    //Save Enquiry
+
+
+                    return item;
+                    
+                }, function (error) {
+                    item.hasError = true;
+                    item.errorMessage = error;
+
+                    return item;
+                });
+
+            deferred.resolve(item);
+            return deferred.promise;
+        }
+
+        function saveBusinessInformation(item)
+        {
+            var businessInfo = {
+                Id: '',
+                PersonalInformationId: '',
+                CompanyName: '',
+                Designation: '',
+                BusinessOrIndustry: '',
+                InvestmentCapacity: '',
+                Fax: '',
+                Website: '',
+                Locality: '',
+                City: '',
+                BusinessContactNumbers: [],
+                ImageUrl: '',
+                Type: ''
+            };
+        }
+
+        function saveEnquiryInformation(item)
+        {
+
+
+            var enquiryInfo = {
+                Id: '',
+                PersonalInformationId: '',
+                Remarks: '',
+                AssignedDate: '',
+                LeadStatus: '',
+                TransactionType: '',
+                LookingForType: '',
+                BudgetFrom: '',
+                BudgetTo: '',
+                SaleAreaFrom: '',
+                SaleAreaTo: '',
+                CarpetAreaFrom: '',
+                CarpetAreaTo: '',
+                PropertyAge: '',
+                IsFurnished: '',
+                OfferedRate: '',
+                EnquiryDate: '',
+                FacingType: '',
+                ContactStatus: '',
+                PreferredUnitTypes: [],
+                PreferredLocations: [],
+            };
+        }
     }
 })();
 

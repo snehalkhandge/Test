@@ -691,7 +691,7 @@ namespace Myware.Data.Entity.DataContextMigrations
                 IsActive = true,
                 LastUpdated = DateTime.UtcNow,
                 Locality = locality.Name,
-                PersonalInformationId = 1,
+                PersonalInformationId = 2,
                 Type = "I dont know",
                 UpdatedByUserId = 1,
                 Website = "1 abhinav.com"
@@ -708,7 +708,7 @@ namespace Myware.Data.Entity.DataContextMigrations
                 IsActive = true,
                 LastUpdated = DateTime.UtcNow,
                 Locality = locality1.Name,
-                PersonalInformationId = 1,
+                PersonalInformationId = 3,
                 Type = "I dont know",
                 UpdatedByUserId = 1,
                 Website = "2abhinav.com"

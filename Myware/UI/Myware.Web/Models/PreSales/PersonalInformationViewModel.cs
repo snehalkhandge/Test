@@ -34,6 +34,8 @@ namespace Myware.Web.Models.PreSales
         public int UserId { get; set; }
 
         public List<BusinessInformationViewModel> BusinessInformation { get; set; }
+
+        
     }
 
     public class CheckUniquePersonalMessageViewModel

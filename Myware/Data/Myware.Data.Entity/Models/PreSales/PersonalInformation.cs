@@ -23,8 +23,7 @@ namespace Myware.Data.Entity.Models.PreSales
 
         [StringLength(200)]
         [DataMember]  
-        [DataType(DataType.EmailAddress)]
-        [Index(IsUnique = true)]
+        [DataType(DataType.EmailAddress)]        
         public string Email { get; set; }
         [DataMember]
         public ICollection<PersonalContactNumber> ContactNumbers { get; set; }

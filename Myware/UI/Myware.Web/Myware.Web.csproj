@@ -324,6 +324,7 @@
     <Compile Include="Models\PreSales\ContactEnquiryViewModel.cs" />
     <Compile Include="Models\PreSales\BusinessInformationViewModel.cs" />
     <Compile Include="Models\PreSales\CustomerLeadsViewModel.cs" />
+    <Compile Include="Models\PreSales\ImportCustomerData.cs" />
     <Compile Include="Models\PreSales\PersonalInformationViewModel.cs" />
     <Compile Include="Models\TaskManagement\TaskViewModel.cs" />
     <Compile Include="Models\UserManagement\PermissionViewModel.cs" />
