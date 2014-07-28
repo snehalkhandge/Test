@@ -64,9 +64,8 @@
                         
                         deferred.resolve(data);
                     })
-                    .error(function (data, status, headers, config) {
-                        common.logger.error(data);
-                        deferred.reject({});
+                    .error(function (data, status, headers, config) {                        
+                        deferred.reject({ data:data,status:status, headers:headers });
                     });
            return deferred.promise;
 

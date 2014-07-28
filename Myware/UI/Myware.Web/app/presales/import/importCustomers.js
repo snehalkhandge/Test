@@ -209,7 +209,7 @@
                 {
                     if ($scope.csv.header) {
                         for (var j = 0; j < headers.length; j++) {
-                            if (headers[j].UpdateString == 'Email')
+                            if (headers[j].UpdateString == 'Email' || headers[j].UpdateString.indexOf("Date") > -1)
                             {
                                 obj[headers[j].UpdateString] = currentline[j + 1];
                             }
@@ -252,34 +252,31 @@
             //saveAllRowsToServer(result);
         };
 
-        function saveAllRowsToServer(rows)
-        {
+        $scope.saveAllRowsToServer = function() {
+
             $scope.alerts.splice(0, 1);
             $scope.alerts.push({ type: 'success', msg: "Saving data to server started." });
             $scope.progress = 0;
-            rows = data.slice(1, 10);
+           var rows = data.slice(1, 20);
             var errors = [];
             angular.forEach(rows, function (item, key) {
                 var result = saveDataToServer(item);
-                if (!result.hasError)
-                {
-                    data.splice(key,1);
+                if (!result.hasError) {
+                    data.splice(key, 1);
                 }
-                else
-                {
+                else {
                     //obj["errorMessage"] = "";
                     this.push(result);
                 }
-                $scope.progress = (key/rows.length)*100;
+                $scope.progress = (key / rows.length) * 100;
             }, errors);
 
-            data = errors;
+            //data = errors;
             $scope.tableParams.reload();
             $scope.alerts.splice(0, 1);
             $scope.alerts.push({ type: 'success', msg: "Saving data to server completed." });
-        }
-
-
+        };
+        
         function saveDataToServer(item) {
 
             var deferred = $q.defer();
@@ -320,8 +317,19 @@
                     
                 }, function (error) {
                     item.hasError = true;
-                    item.errorMessage = error;
+                    item.errorMessage = error.data.Message;
+                    if(error.data.Message.indexOf("Duplicate") > -1) {
+                        var res = error.data.Message.split("==");
+                        if(res.length == 2)
+                        {
+                            item.Id = res[1];
+                            item.PersonalInformationId = res[1];
 
+                            $scope.alerts.push({ type: 'danger', msg: error.data.Message + "-- Personal Info Id--" + item.PersonalInformationId });
+                        }
+                    }
+
+                    
                     return item;
                 });
 

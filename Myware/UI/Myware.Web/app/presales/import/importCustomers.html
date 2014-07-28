@@ -20,6 +20,7 @@
                                     </label>
                                     <input type="file" id="csvFileInput" ng-file-select="getFile($files)"
                                            accept=".csv">
+                                <a class="btn btn-primary" name="saveDataToServer" ng-click="saveAllRowsToServer()">Save Data To Server</a>
                             </div>
                             <div class="col-md-8" ng-show="progress > 0" ng-hide="progress > 99">
                                         <progressbar class="progress-striped active" value="progress+'%'"></progressbar>

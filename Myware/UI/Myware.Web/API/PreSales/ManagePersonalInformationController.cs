@@ -136,21 +136,31 @@ namespace Myware.Web.API.PreSales
                        chkDuplicateEmail = db.PersonalInformations.AsNoTracking()
                                                                   .Where(t => t.Email == typeVM.Email)
                                                                   .FirstOrDefault();
-
+                       if(chkDuplicateEmail != null)
+                       {                       
+                           return BadRequest("Error, Duplicate Email Data == "+chkDuplicateEmail.Id.ToString());
+                       }
                    }
                    var numbers = new List<long>();
                    foreach (var item in typeVM.ContactNumbers)
                    {
                        numbers.Add(item.PhoneNumber);
                    }
-                   var chkDuplicatePhoneNumber = db.PersonalContactNumbers
-                                                   .AsNoTracking()
-                                                   .Any(t => numbers.Contains(t.PhoneNumber));
 
-                   if(chkDuplicateEmail != null || chkDuplicatePhoneNumber == true)
-                   {                       
-                       return BadRequest("Error, Duplicate Data == "+chkDuplicateEmail.Id.ToString());
+                   if(numbers.Count > 0)
+                   {
+                       var chkDuplicatePhoneNumber = db.PersonalContactNumbers
+                                                   .AsNoTracking()
+                                                   .Where(t => numbers.Contains(t.PhoneNumber))
+                                                   .SingleOrDefault();
+
+
+                       if (chkDuplicatePhoneNumber != null)
+                       {
+                           return BadRequest("Error, Duplicate Data Phone Number == " + chkDuplicatePhoneNumber.PersonalInformationId.ToString());
+                       }
                    }
+                   
                    #endregion
 
                    type.FirstName = typeVM.FirstName;

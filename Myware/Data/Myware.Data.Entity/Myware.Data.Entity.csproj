@@ -93,6 +93,10 @@
     <Compile Include="CustomStores\AppUserManager.cs" />
     <Compile Include="CustomStores\AppRoleStore.cs" />
     <Compile Include="CustomStores\AppUserStore.cs" />
+    <Compile Include="DataContextMigrations\201407281238108_Initial.cs" />
+    <Compile Include="DataContextMigrations\201407281238108_Initial.Designer.cs">
+      <DependentUpon>201407281238108_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\BaseEntity\BaseEntity.cs" />
     <Compile Include="ApplicationDbContext.cs" />
@@ -143,6 +147,11 @@
       <Project>{24d79cbe-fceb-4c3b-a446-066e653e89ee}</Project>
       <Name>Myware.Repository</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataContextMigrations\201407281238108_Initial.resx">
+      <DependentUpon>201407281238108_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
