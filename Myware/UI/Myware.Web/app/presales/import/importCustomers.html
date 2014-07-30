@@ -5,12 +5,13 @@
                 <div class="widget wblue">
                     <div data-cc-widget-header title="{{title}}"></div>
                     <div class="widget-content customerTypes">
-                        <h2> {{title}} </h2>
+                        <h2> {{title}} <span>Length : {{data.length}}</span> <span>Errors : {{errors.length}}</span></h2> 
 
                         <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
                             {{alert.msg}}
                             <span class='btn btn-primary' ng-show="showUpdateButton" ng-click='updateData()'>Click here to update the screen</span>
                         </alert>
+                        
                         <hr />
                         <div class="row">
                             <div class="col-md-4">
@@ -21,9 +22,17 @@
                                     <input type="file" id="csvFileInput" ng-file-select="getFile($files)"
                                            accept=".csv">
                                 <a class="btn btn-primary" name="saveDataToServer" ng-click="saveAllRowsToServer()">Save Data To Server</a>
+                                <a class="btn btn-primary" name="saveDuplicateDataToServer" ng-click="saveAllDuplicateDataToServer()">Save Duplicate Data To Server</a>
                             </div>
-                            <div class="col-md-8" ng-show="progress > 0" ng-hide="progress > 99">
-                                        <progressbar class="progress-striped active" value="progress+'%'"></progressbar>
+
+                            <div class="col-md-8">
+                                <!--ng-show="progress > 0" ng-hide="progress > 99"-->
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success"
+                                         role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%">
+                                        <span class="sr-only">{{progress}}% Complete (success)</span>
+                                    </div>
+                                </div>                                        
                              </div>
 
                         </div>
@@ -74,7 +83,11 @@
                                 <table ng-table="tableParams" class="table table-hover">
                                     <tbody>
                                         <tr ng-repeat="item in csv.result" ng-class-odd="'odd'" ng-class-even="'even'">
-
+                                            <td data-title="'Actions'" width="200">
+                                                <a ng-if="!item.$edit" href="" class="btn btn-primary active" role="button" ng-click="item.$edit = true">Edit</a>
+                                                <a ng-if="item.$edit" href="" class="btn btn-primary active" role="button" ng-click="item.$edit = false">Save</a>
+                                                <alert class="alert-danger" ng-if="item.errorMessage.length > 1">{{item.errorMessage}}</alert>
+                                            </td>                                            
                                             <td data-title="'Contact Type'">
                                                 <span ng-if="!item.$edit">{{item.ContactType}}</span>
                                                 <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.ContactType" /></div>
@@ -224,12 +237,7 @@
                                             <td data-title="'Remarks'">
                                                 <span ng-if="!item.$edit">{{item.Remarks}}</span>
                                                 <div ng-if="item.$edit"><input class="form-control" type="text" ng-model="item.Remarks" /></div>
-                                            </td>
-
-                                            <td data-title="'Actions'" width="200">
-                                                <a ng-if="!item.$edit" href="" class="btn btn-default btn-xs" ng-click="item.$edit = true">Edit</a>
-                                                <a ng-if="item.$edit" href="" class="btn btn-primary btn-xs" ng-click="item.$edit = false">Save</a>
-                                            </td>
+                                            </td>                                            
                                         </tr>
                                     </tbody>
                                 </table>

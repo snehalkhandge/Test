@@ -17,7 +17,7 @@ namespace Myware.Data.Entity.Models.PreSales
         public string Remarks { get; set; }
 
         [DataMember]
-        public DateTime AssignedDate { get; set; }
+        public Nullable<DateTime> AssignedDate { get; set; }
 
         [DataMember]
         public string LeadStatus { get; set; }

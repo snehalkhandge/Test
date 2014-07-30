@@ -90,6 +90,8 @@ namespace Myware.Data.Entity
         public DbSet<BusinessInformation> BusinessInformations { get; set; }
         public DbSet<ContactEnquiry> ContactEnquiries { get; set; }
 
+        public DbSet<DuplicateData> DuplicateData { get; set; }
+
         #endregion
 
 

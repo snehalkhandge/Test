@@ -3,15 +3,15 @@
 
     angular
         .module('app.presales')
-        .controller('ImportCustomers', ImportCustomers);
+        .controller('ImportDuplicateCustomers', ImportDuplicateCustomers);
 
-    ImportCustomers.$inject = ['$scope', '$http', '$timeout', 'common', 'fileReaderFactory', 'personalFactory', 'businessFactory', 'contactEnquiryFactory', 'ngTableParams', '$sce', 'authService'];
+    ImportDuplicateCustomers.$inject = ['$scope', '$http', '$timeout', 'common', 'fileReaderFactory', 'personalFactory', 'businessFactory', 'contactEnquiryFactory', 'ngTableParams', '$sce', 'authService'];
 
-    function ImportCustomers($scope, $http, $timeout, common, fileReaderFactory, personalFactory, businessFactory, contactEnquiryFactory, ngTableParams, $sce, authService) {
+    function ImportDuplicateCustomers($scope, $http, $timeout, common, fileReaderFactory, personalFactory, businessFactory, contactEnquiryFactory, ngTableParams, $sce, authService) {
         var log = common.logger.info;
         var $q = common.$q;
         
-        $scope.title = 'Import Customer Lead';        
+        $scope.title = 'Import Duplicate Customers';
         $scope.alerts = [];
         $scope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
@@ -79,109 +79,7 @@
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = (progress.loaded / progress.total)*100;
         });
-
-        function processHeader(temp_headers) {
-
-            var headers = [];
-            var i = 0;
-            angular.forEach(temp_headers, function (value, key) {
-                var processString = '';
                 
-                switch (value) {
-                    case 'Contact Type': processString = 'ContactType';
-                        break;
-                    case 'FirstName': processString = 'FirstName';
-                        break;
-                    case 'LastName': processString = 'LastName';
-                        break;
-                    case 'MobileNo': processString = 'ContactNumbers';
-                        break;
-                    case 'EmailID': processString = 'Email';
-                        break;
-                    case 'Address': processString = 'Address';
-                        break;
-                    case 'City': processString = 'City';
-                        break;
-                    case 'Locality': processString = 'Locality';
-                        break;                    
-                    case 'PinCode': processString = 'PinCode';
-                        break;
-                    case 'DOB': processString = 'DateOfBirth';
-                        break;
-                    case 'AnniversaryDate': processString = 'AnniversaryDate';
-                        break;
-                    case 'Source': processString = 'Campaign';
-                        break;
-                    case 'SubSource': processString = 'SubCampaign';
-                        break;
-                    case 'Company Name': processString = 'CompanyName';
-                        break;
-                    case 'Designation': processString = 'Designation';
-                        break;
-                    case 'Business Industry': processString = 'BusinessOrIndustry';
-                        break;
-                    case 'Business City': processString = 'BusinessCity';
-                        break;
-                    case 'Business Locality': processString = 'BusinessLocality';
-                        break;
-                    case 'Invest Capicity': processString = 'InvestmentCapacity';
-                        break;
-                    case 'Other Mobile': processString = 'BusinessContactNumbers';
-                        break;
-                    case 'Fax': processString = 'Fax';
-                        break;
-                    case 'Website': processString = 'Website';
-                        break;
-                    case 'Enq. Date': processString = 'EnquiryDate';
-                        break;
-                    case 'Looking For': processString = 'LookingForType';
-                        break;
-                    case 'Unit Type': processString = 'PreferredUnitTypes';
-                        break;
-                    case 'Trasaction Type': processString = 'TransactionType';
-                        break;
-                    case 'Property Age': processString = 'PropertyAge';
-                        break;
-                    case 'Budget From': processString = 'BudgetFrom';
-                        break;
-                    case 'Budget To': processString = 'BudgetTo';
-                        break;
-                    case 'Furnising': processString = 'IsFurnished';
-                        break;
-                    case 'Sale Area From': processString = 'SaleAreaFrom';
-                        break;
-                    case 'Sale Area  To': processString = 'SaleAreaTo';
-                        break;
-                    case 'Offered Rate': processString = 'OfferedRate';
-                        break;
-                    case 'Carpet Area From': processString = 'CarpetAreaFrom';
-                        break;
-                    case 'Carpet Area  To': processString = 'CarpetAreaTo';
-                        break;
-                    case 'Lead Status': processString = 'LeadStatus';
-                        break;
-                    case 'Remark': processString = 'Remarks';
-                        break;
-                }
-                
-                if (processString != '')
-                {
-                    this.push({
-                        Index: i,
-                        OrginalString: value,
-                        UpdateString: processString
-                    });
-                }
-                    
-                i++;
-
-            }, headers);
-
-            $scope.csv.headers = headers;
-            return headers;
-        };
-
-        
         function processData(content) {
 
             $scope.alerts.splice(0, 1);
@@ -195,11 +93,9 @@
             var columnCount = lines[0].split(",").length;
 
             var headers = [];
-            if ($scope.csv.header) {
-                
-                 headers = processHeader(lines[0].split(","));
+                headers = lines[0].split(",");
                 start = 1;
-            }
+            
 
             $scope.progress = 0;
             
@@ -208,23 +104,11 @@
                 var currentline = lines[i].split($scope.csv.separator);
                 if (currentline.length === columnCount)
                 {
-                    if ($scope.csv.header) {
-                        for (var j = 0; j < headers.length; j++) {
-                            if (headers[j].UpdateString == 'Email' || headers[j].UpdateString.indexOf("Date") > -1)
-                            {
-                                obj[headers[j].UpdateString] = currentline[j + 1];
-                            }
-                            else {
-                                obj[headers[j].UpdateString] = currentline[j + 1].replace(/[^\w\s]/gi, '');
-                            }
-                            
-                        }
-                    } else {
-                        for (var k = 0; k < currentline.length; k++) {
-                            obj[k] = currentline[k];
-                        }
+                    
+                    for (var j = 0; j < headers.length; j++) {
+                         obj[headers[j]] = currentline[j];                            
                     }
-
+                    
                     obj["hasError"] = false;
                     obj["errorMessage"] = "";
                     obj["id"] = i;
@@ -291,40 +175,6 @@
         };
         
 
-        $scope.saveAllDuplicateDataToServer = function () {
-
-            $scope.alerts.splice(0, 1);
-            $scope.alerts.push({ type: 'success', msg: "Saving duplicate data to server started." });
-            $scope.progress = 0;            
-            var duplicateData = [];                
-
-            angular.forEach($scope.data, function (value, key) {                
-                if(value.PersonalInformationId != '') {
-                    this.push(value);
-                }
-            }, duplicateData);
-
-            $scope.progress = 50;
-
-            if (duplicateData.length > 0)
-            {
-
-                $http.post(common.apiUrl + '/saveAllDuplicateData', duplicateData)
-                        .success(function (data) {
-                            $scope.alerts.splice(0, 1);
-                            $scope.alerts.push({ type: 'success', msg: "Saving duplicate data to server completed." });
-                            $scope.progress = 100;
-
-                        })
-                        .error(function (data, status, headers, config) {
-                            common.logger.error(data);
-                            
-                        });
-                
-            }
-            
-        };
-
         function processDeferSaveData(rows) {
             var promises = [];
             var promise;
@@ -364,7 +214,7 @@
 
             var deferred = $q.defer();
             var personal = {
-                Id: '',
+                Id: item.PersonalInformationId,
                 FirstName: item.FirstName,
                 LastName: item.LastName,
                 Email: item.Email,
@@ -405,6 +255,16 @@
                                         saveEnquiryInformation(item);
                                     }
                                     
+                                    $http.post(common.apiUrl + '/deleteDuplicateData/' + personal.Id)
+                                         .success(function (data) {
+
+                                          })
+                                         .error(function (data, status, headers, config) {
+                                                
+                                         });
+
+
+
                                     return item;
 
                                 }, function (error) {
@@ -430,7 +290,7 @@
 
 
             var business = {
-                Id: '',
+                Id: item.BusinessId,
                 PersonalInformationId: item.PersonalInformationId,
                 CompanyName: item.CompanyName,
                 Designation: item.Designation,
@@ -481,7 +341,7 @@
 
 
             var enquiry = {
-                Id: '',
+                Id: item.ContactEnquiryId,
                 PersonalInformationId: item.PersonalInformationId,
                 Remarks: item.Remarks,
                 AssignedDate: item.AssignedDate,

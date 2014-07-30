@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -23,259 +24,9 @@ using System.Web.Script.Serialization;
 
 namespace Myware.Web.API.PreSales
 {
-	public class ManageCustomerLeadsController : ApiController
+	public class ManageDuplicateDataController : ApiController
 	{
 		private ApplicationDbContext db = new ApplicationDbContext();
-
-		// GET: api/ManagePermissions
-
-		[Route("customersPreSales")]
-		[HttpPost]
-		public ListCustomerQueries SearchCustomeQueries(CustomerQueryViewModel query)
-		{
-			var sqlQuery = db.PersonalInformations
-							 .Include(t => t.ContactNumbers)
-							 .OrderByDescending(t => t.Id)
-							 .AsNoTracking();
-			#region Queries
-
-			if (query.CustomerNames != null)
-			{
-				string[] words = query.CustomerNames.Name.Split(' ');
-
-				string firstName = words[0];
-				string lastName = words[1];
-
-				sqlQuery = sqlQuery.Where(t => t.FirstName.Contains(firstName) || t.LastName.Contains(lastName));
-			}
-
-			if (query.ContactNumbers != null)
-			{
-				sqlQuery = sqlQuery.Where(t => t.ContactNumbers.Any(x => x.PhoneNumber == query.ContactNumbers.Number));
-			}
-
-			if (query.CustomerTypes != null)
-			{
-				sqlQuery = sqlQuery.Where(t => t.ContactType.Contains(query.CustomerTypes.Name));
-			}
-
-			if (query.UnitTypes != null)
-			{
-				sqlQuery = sqlQuery.Where(t =>
-								   t.ContactEnquiries.Any(x =>
-								   x.PreferredUnitTypes.Any(z =>
-								   z.Name == query.UnitTypes.Name)));
-			}
-
-			if (query.Localities != null)
-			{
-				sqlQuery = sqlQuery.Where(t =>
-								   t.ContactEnquiries.Any(x =>
-								   x.PreferredLocations.Any(z =>
-								   z.Locality == query.Localities.Name)));
-			}
-
-			if (query.BudgetFromList != null)
-			{
-				sqlQuery = sqlQuery.Where(t =>
-								   t.ContactEnquiries.Any(x =>
-								   x.BudgetFrom == query.BudgetFromList.Budget));
-			}
-
-			if (query.BudgetToList != null)
-			{
-				sqlQuery = sqlQuery.Where(t =>
-								   t.ContactEnquiries.Any(x =>
-								   x.BudgetTo == query.BudgetToList.Budget));
-			}
-
-			#endregion
-
-			var listCustomers = new ListCustomerQueries();
-			listCustomers.Total = sqlQuery.Count();
-			var results = sqlQuery.Skip(query.PageSize * (query.Page - 1))
-							   .Take(query.PageSize).ToList();
-
-			foreach (var item in results)
-			{
-
-				var customer = new CustomerLeadsViewModel();
-
-				customer.Name = item.FirstName + " " + item.LastName;
-				customer.ContactType = item.ContactType;
-				customer.CustomerId = item.Id;
-				#region Personal Contact Numbers
-				if (item.ContactNumbers != null)
-				{
-					var listNumbers = new List<PartialCustomerContactNumber>();
-
-					foreach (var cnt in item.ContactNumbers)
-					{
-						listNumbers.Add(new PartialCustomerContactNumber
-						{
-							Number = cnt.PhoneNumber,
-							PersonalInformationId = cnt.PersonalInformationId
-						});
-					}
-
-					customer.ContactNumbers = listNumbers;
-				}
-				else
-				{
-					customer.ContactNumbers = null;
-				}
-				#endregion
-
-				#region Budget Locality Unit Types
-				var enquiry = db.ContactEnquiries
-								  .Include(t => t.PreferredUnitTypes)
-								  .Include(t => t.PreferredLocations)
-								  .OrderByDescending(t => t.LastUpdated)
-								  .AsNoTracking()
-								  .FirstOrDefault();
-				if (enquiry != null && item.ContactType == "Enquiry")
-				{
-
-					foreach (var loc in enquiry.PreferredLocations)
-					{
-						customer.Localities.Add(new PartialCustomerLocality
-						{
-							Name = loc.Locality,
-							PersonalInformationId = item.Id
-						});
-					}
-
-					foreach (var unit in enquiry.PreferredUnitTypes)
-					{
-						customer.UnitTypes.Add(new PartialCustomerUnitType
-						{
-							Name = unit.Name,
-							PersonalInformationId = item.Id
-						});
-					}
-
-					if (enquiry.BudgetFrom != null && enquiry.BudgetTo != null)
-					{
-						customer.BudgetRange = enquiry.BudgetFrom.ToString() + " - " + enquiry.BudgetTo.ToString();
-					}
-					else
-					{
-						customer.BudgetRange = "";
-					}
-
-					listCustomers.Customers.Add(customer);
-				}
-				else
-				{
-					customer.Localities = null;
-					customer.BudgetRange = "";
-					customer.UnitTypes = null;
-					listCustomers.Customers.Add(customer);
-				}
-
-
-				#endregion
-
-			}
-
-			return listCustomers;
-
-
-		}
-
-
-		[Route("customersContactNumbers/all")]
-		[HttpPost]
-		public List<PartialCustomerContactNumber> PostContactNumbers(PartialSearchQuery query)
-		{
-			string Query = @"SELECT DISTINCT [PhoneNumber]
-							FROM [ApplicationDb].[dbo].[PersonalContactNumbers]							
-							WHERE  [PhoneNumber] LIKE '%" + query.Query + "%'";
-
-			var data = db.Database.SqlQuery<long>(Query).ToList();
-
-			var results = new List<PartialCustomerContactNumber>();
-
-			foreach (var item in data)
-			{
-				results.Add(new PartialCustomerContactNumber
-				{
-					PersonalInformationId = 0,
-					Number = item
-				});
-			}
-
-			return results;
-		}
-
-		[Route("customersBudgetTo/all")]
-		[HttpPost]
-		public List<PartialCustomerBudget> PostBudgetTo(PartialSearchQuery query)
-		{
-			string Query = @"SELECT DISTINCT [BudgetTo]
-							FROM [ApplicationDb].[dbo].[ContactEnquiries] 
-							WHERE  BudgetTo LIKE '%" + query.Query + "%'";
-
-			var data = db.Database.SqlQuery<decimal>(Query).ToList();
-
-			var results = new List<PartialCustomerBudget>();
-
-			foreach (var item in data)
-			{
-				results.Add(new PartialCustomerBudget
-				{
-					PersonalInformationId = 0,
-					Budget = item
-				});
-			}
-
-			return results;
-
-		}
-
-		[Route("customersBudgetFrom/all")]
-		[HttpPost]
-		public List<PartialCustomerBudget> PostBudgetFrom(PartialSearchQuery query)
-		{
-			string Query = @"SELECT DISTINCT [BudgetFrom]							  
-							FROM [ApplicationDb].[dbo].[ContactEnquiries] 
-							WHERE  BudgetFrom LIKE '%" + query.Query + "%'";
-
-
-
-			var data = db.Database.SqlQuery<decimal>(Query).ToList();
-
-			var results = new List<PartialCustomerBudget>();
-
-			foreach (var item in data)
-			{
-				results.Add(new PartialCustomerBudget
-				{
-					PersonalInformationId = 0,
-					Budget = item
-				});
-			}
-
-			return results;
-
-		}
-
-		[Route("customerNames/all")]
-		[HttpPost]
-		public List<PartialCustomerName> PostCustomerNames(PartialSearchQuery query)
-		{
-			return db.PersonalInformations
-					 .Where(t => t.FirstName.Contains(query.Query) || t.LastName.Contains(query.Query))
-					 .Select(t => new PartialCustomerName
-					 {
-						 Id = t.Id,
-						 Name = t.FirstName + " " + t.LastName
-					 }).ToList();
-
-		}
-
-
-
 
 		[Route("saveAllDuplicateData")]
 		public IHttpActionResult PostBusiness(List<DuplicateData> dataList)
@@ -294,6 +45,218 @@ namespace Myware.Web.API.PreSales
 
 			return Ok();
 		}
+
+
+		[Route("deleteDuplicateData/{personalId}")]
+		public IHttpActionResult PostDeleteDuplicateByPersonalId(int personalId)
+		{
+			
+			var entriesToRemove = db.DuplicateData.Where(x => x.PersonalInformationId == personalId).ToList();
+
+			if(entriesToRemove.Count > 0)
+			{
+				db.DuplicateData.RemoveRange(entriesToRemove);
+				db.SaveChanges();
+			}
+
+			return Ok();
+		}
+
+		[Route("exportAllDuplicateData")]
+		[HttpGet]
+		public HttpResponseMessage ExportDuplicateData()
+		{
+			var listExportData = new List<ExportDuplicateDataViewModel>();
+
+			var sqlQuery = from c in db.PersonalInformations
+						   join p in db.DuplicateData on c.Id equals p.PersonalInformationId
+						   select new GetPartialId { Id = c.Id };
+
+			var personalIds = sqlQuery.OrderByDescending(t => t.Id)
+							   .AsNoTracking()
+							   .Take(100).ToList();
+
+			foreach (var item in personalIds)
+			{
+				var duplicateData = new ExportDuplicateDataViewModel();
+				
+				
+				var result = db.PersonalInformations
+							   .Include(t => t.BusinessInformation)
+							   .Include(t => t.ContactEnquiries)
+							   .Include(t => t.ContactNumbers)
+							   .Where(r => r.Id == item.Id)
+							   .SingleOrDefault();
+
+				if (result != null)
+				{
+					if (result.ContactNumbers != null)
+					{
+						var cntNumber = new List<long>();
+
+						foreach (var cnt in result.ContactNumbers)
+						{
+							cntNumber.Add(cnt.PhoneNumber);
+						}
+
+						duplicateData.ContactNumbers = cntNumber.FirstOrDefault();
+					}
+
+					var sortBusiInfo = db.BusinessInformations
+										 .Include(t => t.BusinessContactNumbers)
+										 .Where(t => t.PersonalInformationId == result.Id)
+										 .OrderByDescending(t => t.LastUpdated)
+										 .SingleOrDefault();
+					#region Business Information
+					duplicateData.BusinessId = sortBusiInfo.Id;
+					duplicateData.CompanyName = sortBusiInfo.CompanyName;
+					duplicateData.Designation = sortBusiInfo.Designation;
+					duplicateData.BusinessOrIndustry = sortBusiInfo.BusinessOrIndustry;
+					duplicateData.InvestmentCapacity = sortBusiInfo.InvestmentCapacity;
+					duplicateData.Fax = sortBusiInfo.Fax;
+					duplicateData.Website = sortBusiInfo.Website;
+					duplicateData.BusinessLocality = sortBusiInfo.Locality;
+					duplicateData.BusinessCity = sortBusiInfo.City;
+					#endregion
+					#region Personal Information
+					duplicateData.FirstName = result.FirstName;
+					duplicateData.LastName = result.LastName;
+					duplicateData.Email = result.Email;
+					duplicateData.Address = result.Address;
+					duplicateData.PinCode = result.PinCode;
+					duplicateData.Campaign = result.Campaign;
+					duplicateData.SubCampaign = result.SubCampaign;
+					duplicateData.ContactType = result.ContactType;
+					duplicateData.Locality = result.Locality;
+					duplicateData.City = result.City;                                            
+					duplicateData.AnniversaryDate = result.AnniversaryDate;
+					duplicateData.DateOfBirth = result.DateOfBirth;
+					duplicateData.Remarks = result.Remarks;
+
+					#endregion
+
+					#region Contact Enquiries
+
+					if (duplicateData.ContactType == "Enquiry")
+					{
+
+
+						var qury = db.ContactEnquiries
+										  .Include(t => t.PreferredUnitTypes)
+										  .Include(t => t.PreferredLocations)
+										  .OrderByDescending(x => x.LastUpdated)
+										  .Where(r => r.PersonalInformationId == item.Id)
+										  .SingleOrDefault();
+
+
+						var unit = new List<string>();
+
+						foreach (var uType in qury.PreferredUnitTypes.ToList())
+						{
+							unit.Add(uType.Name);
+						}
+
+						duplicateData.PreferredUnitTypes = unit.FirstOrDefault();
+						duplicateData.ContactEnquiryId = qury.Id;
+						duplicateData.BudgetFrom = qury.BudgetFrom;
+						duplicateData.BudgetTo = qury.BudgetTo;
+						duplicateData.CarpetAreaFrom = qury.CarpetAreaFrom;
+						duplicateData.CarpetAreaTo = qury.CarpetAreaTo;
+						duplicateData.EnquiryDate = qury.EnquiryDate;
+						duplicateData.IsFurnished = qury.IsFurnished;
+						duplicateData.LeadStatus = qury.LeadStatus;
+						duplicateData.LookingForType = qury.LookingForType;
+						duplicateData.OfferedRate = qury.OfferedRate;
+						duplicateData.PersonalInformationId = qury.PersonalInformationId;
+						duplicateData.PropertyAge = qury.PropertyAge;
+						duplicateData.Remarks = qury.Remarks;
+						duplicateData.SaleAreaFrom = qury.SaleAreaFrom;
+						duplicateData.SaleAreaTo = qury.SaleAreaTo;
+						duplicateData.TransactionType = qury.TransactionType;
+
+					}
+
+					#endregion
+
+					listExportData.Add(duplicateData);
+
+					#region Duplicate Enquiries
+					var duplicateEnquiries = db.DuplicateData
+											   .Where(x => x.PersonalInformationId == result.Id)
+											   .ToList();
+
+
+					foreach (var enq in duplicateEnquiries)
+					{
+						var dupData = new ExportDuplicateDataViewModel();
+						dupData.ContactEnquiryId = duplicateData.ContactEnquiryId;
+						dupData.BusinessId = duplicateData.BusinessId;
+						dupData.PersonalInformationId = duplicateData.PersonalInformationId;
+
+						dupData.Address = enq.Address;
+						dupData.AnniversaryDate = enq.AnniversaryDate;
+						dupData.BudgetFrom = enq.BudgetFrom;
+						dupData.BudgetTo = enq.BudgetTo;
+						dupData.BusinessCity = enq.BusinessCity;
+						dupData.BusinessContactNumbers = enq.BusinessContactNumbers;
+						dupData.BusinessLocality = enq.BusinessLocality;
+						dupData.BusinessOrIndustry = enq.BusinessOrIndustry;
+						dupData.Campaign = enq.Campaign;
+						dupData.CarpetAreaFrom = enq.CarpetAreaFrom;
+						dupData.CarpetAreaTo = enq.CarpetAreaTo;
+						dupData.City = enq.City;
+						dupData.CompanyName = enq.CompanyName;
+						dupData.ContactNumbers = enq.ContactNumbers;
+						dupData.ContactType = enq.ContactType;
+						dupData.DateOfBirth = enq.DateOfBirth;
+						dupData.Designation = enq.Designation;
+						dupData.Email = enq.Email;
+						dupData.EnquiryDate = enq.EnquiryDate;
+						dupData.Fax = enq.Fax;
+						dupData.FirstName = enq.Fax;
+						dupData.InvestmentCapacity = enq.InvestmentCapacity;
+						dupData.IsFurnished = enq.IsFurnished;
+						dupData.LastName = enq.LastName;
+						dupData.LeadStatus = enq.LeadStatus;
+						dupData.Locality = enq.Locality;
+						dupData.LookingForType = enq.LookingForType;
+						dupData.OfferedRate = enq.OfferedRate;
+						dupData.PinCode = enq.PinCode;
+						dupData.PreferredUnitTypes = enq.PreferredUnitTypes;
+						dupData.PropertyAge = enq.PropertyAge;
+						dupData.Remarks = enq.Remarks;
+						dupData.SaleAreaFrom = enq.SaleAreaFrom;
+						dupData.SaleAreaTo = enq.SaleAreaTo;
+						dupData.SubCampaign = enq.SubCampaign;
+						dupData.TransactionType = enq.TransactionType;
+						dupData.Website = enq.TransactionType;
+
+
+						listExportData.Add(duplicateData);
+
+
+					}
+
+					#endregion
+
+
+				}
+
+			}
+
+			CsvExport<ExportDuplicateDataViewModel> csv = new CsvExport<ExportDuplicateDataViewModel>(listExportData);
+
+
+			var response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(csv.ExportToBytes()) };
+			response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+			response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+			{
+				FileName = "exportDuplicateData.csv"
+			};
+			return response;
+
+		}
+
 
 
 		[Route("customersDuplicateData")]

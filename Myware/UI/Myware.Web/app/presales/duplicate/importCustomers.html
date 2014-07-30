@@ -1,0 +1,250 @@
+﻿<section class="mainbar" data-ng-controller="ImportDuplicateCustomers">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2>
+                            {{title}} <span>Length : {{data.length}}</span>
+                            <span>Errors : {{errors.length}}</span>
+                            <span>Invalid content : {{csv.invalidContent.length}}</span>
+                        </h2>
+
+                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+                            {{alert.msg}}
+                            <span class='btn btn-primary' ng-show="showUpdateButton" ng-click='updateData()'>Click here to update the screen</span>
+                        </alert>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-4">
+
+                                <label for="csvFileInput">
+                                    <strong>CSV File:</strong>
+                                </label>
+                                <input type="file" id="csvFileInput" ng-file-select="getFile($files)"
+                                       accept=".csv">
+                                <a class="btn btn-primary" name="saveDataToServer" ng-click="saveAllRowsToServer()">Save Data To Server</a>
+                                
+                            </div>
+
+                            <div class="col-md-8">
+                                <!--ng-show="progress > 0" ng-hide="progress > 99"-->
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success"
+                                         role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%">
+                                        <span class="sr-only">{{progress}}% Complete (success)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="panel panel-danger" style="width:99%;overflow-x:scroll;" ng-show="csv.invalidContent">
+                                <div class="panel-heading">Please remove the extra comma in the following rows and upload the file again.</div>
+                                <div class="panel-body">
+                                    <table class="table table-hover ">
+                                        <tbody>
+                                            <tr ng-repeat="item in csv.invalidContent" ng-if="item.length > 1">
+                                                <td>
+                                                    Row number: {{ item[0] + 1 }}<br />
+                                                    Id: {{ item[0] }}
+                                                </td>
+                                                <td>
+                                                    {{  item[1] }}
+                                                </td>
+                                                <td>
+                                                    {{  item[2] }}
+                                                </td>
+                                                <td>
+                                                    {{  item[3] }}
+                                                </td>
+                                                <td>
+                                                    {{  item[4] }}
+                                                </td>
+                                                <td>
+                                                    {{  item[5] }}
+                                                </td>
+                                                <td>
+                                                    {{  item[6] }}
+                                                </td>
+                                                <td>
+                                                    {{  item[7] }}
+                                                </td>
+                                                <td>
+                                                    {{  item[8] }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="well col-md-12" style="width:99%;overflow-x:scroll;">
+
+                                <table ng-table="tableParams" class="table table-hover">
+                                    <tbody>
+                                        <tr ng-repeat="item in csv.result" ng-class-odd="'odd'" ng-class-even="'even'">
+                                           
+                                            <td data-title="'Contact Type'">
+                                                <span>{{item.ContactType}}</span>                                           
+                                            </td>
+                                            <td data-title="'First Name'">
+                                                <span>{{item.FirstName}}</span>                                                
+                                            </td>
+                                            <td data-title="'Last Name'">
+                                                <span>{{item.LastName}}</span>                                                
+                                            </td>
+                                            <td data-title="'Contact Numbers'">
+                                                <span>{{item.ContactNumbers}}</span>                                                
+                                            </td>
+                                            <td data-title="'Email'">
+                                                <span>{{item.Email}}</span>                                                
+                                            </td>
+                                            <td data-title="'Address'">
+                                                <span>{{item.Address}}</span>                                                
+                                            </td>
+                                            <td data-title="'City'">
+                                                <span>{{item.City}}</span>                                               
+                                            </td>
+                                            <td data-title="'Locality'">
+                                                <span>{{item.Locality}}</span>                                                
+                                            </td>
+                                            <td data-title="'PinCode'">
+                                                <span>{{item.PinCode}}</span>                                                
+                                            </td>
+                                            <td data-title="'DateOfBirth'">
+                                                <span>{{item.DateOfBirth}}</span>                                                
+                                            </td>
+                                            <td data-title="'AnniversaryDate'">
+                                                <span>{{item.AnniversaryDate}}</span>                                                
+                                            </td>
+                                            <td data-title="'Campaign'">
+                                                <span>{{item.Campaign}}</span>                                                
+                                            </td>
+                                            <td data-title="'SubCampaign'">
+                                                <span>{{item.SubCampaign}}</span>                                                
+                                            </td>
+                                            <td data-title="'CompanyName'">
+                                                <span>{{item.CompanyName}}</span>                                                
+                                            </td>
+                                            <td data-title="'Designation'">
+                                                <span>{{item.Designation}}</span>                                                
+                                            </td>
+                                            <td data-title="'BusinessOrIndustry'">
+                                                <span>{{item.BusinessOrIndustry}}</span>                                                
+                                            </td>
+                                            <td data-title="'BusinessCity'">
+                                                <span>{{item.BusinessCity}}</span>                                                
+                                            </td>
+                                            <td data-title="'BusinessLocality'">
+                                                <span>{{item.BusinessLocality}}</span>                                                
+                                            </td>
+                                            <td data-title="'InvestmentCapacity'">
+                                                <span>{{item.InvestmentCapacity}}</span>                                                
+                                            </td>
+                                            <td data-title="'BusinessContactNumbers'">
+                                                <span>{{item.BusinessContactNumbers}}</span>                                                
+                                            </td>
+                                            <td data-title="'Fax'">
+                                                <span>{{item.Fax}}</span>                                                
+                                            </td>
+                                            <td data-title="'Website'">
+                                                <span>{{item.Website}}</span>                                                
+                                            </td>
+                                            <td data-title="'EnquiryDate'">
+                                                <span>{{item.EnquiryDate}}</span>                                                
+                                            </td>
+                                            <td data-title="'LookingForType'">
+                                                <span>{{item.LookingForType}}</span>                                                
+                                            </td>
+                                            <td data-title="'PreferredUnitTypes'">
+                                                <span>{{item.PreferredUnitTypes}}</span>                                                
+                                            </td>
+                                            <td data-title="'TransactionType'">
+                                                <span>{{item.TransactionType}}</span>                                                
+                                            </td>
+
+                                            <td data-title="'PropertyAge'">
+                                                <span>{{item.PropertyAge}}</span>                                                
+                                            </td>
+                                            <td data-title="'BudgetFrom'">
+                                                <span>{{item.BudgetFrom}}</span>                                                
+                                            </td>
+                                            <td data-title="'BudgetTo'">
+                                                <span>{{item.BudgetTo}}</span>                                                
+                                            </td>
+                                            <td data-title="'IsFurnished'">
+                                                <span>{{item.IsFurnished}}</span>                                                
+                                            </td>
+                                            <td data-title="'SaleAreaFrom'">
+                                                <span>{{item.SaleAreaFrom}}</span>                                                
+                                            </td>
+                                            <td data-title="'SaleAreaTo'">
+                                                <span>{{item.SaleAreaTo}}</span>                                                
+                                            </td>
+                                            <td data-title="'OfferedRate'">
+                                                <span>{{item.OfferedRate}}</span>                                                
+                                            </td>
+                                            <td data-title="'CarpetAreaFrom'">
+                                                <span>{{item.CarpetAreaFrom}}</span>                                                
+                                            </td>
+
+                                            <td data-title="'CarpetAreaTo'">
+                                                <span>{{item.CarpetAreaTo}}</span>                                                
+                                            </td>
+                                            <td data-title="'LeadStatus'">
+                                                <span>{{item.LeadStatus}}</span>                                                
+                                            </td>
+                                            <td data-title="'Remarks'">
+                                                <span>{{item.Remarks}}</span>                                                
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="widget-foot">
+            <div class="clearfix"></div>
+        </div>
+        </div>
+        </div>
+
+    </section>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -11,7 +11,7 @@ namespace Myware.Web.Models.PreSales
         public int Id { get; set; }
         public string Remarks { get; set; }
 
-        public DateTime AssignedDate { get; set; }
+        public Nullable<DateTime> AssignedDate { get; set; }
                 
         public string LeadStatus { get; set; }
 

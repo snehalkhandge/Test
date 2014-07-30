@@ -16,7 +16,7 @@ namespace Myware.Web.Models.PreSales
 
         public List<PartialPersonalContactNumber> BusinessContactNumbers { get; set; }
 
-        public decimal InvestmentCapacity { get; set; }
+        public Nullable<decimal> InvestmentCapacity { get; set; }
 
         public string Fax { get; set; }
 

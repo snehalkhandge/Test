@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Myware.Data.Entity.Models.PresalesUnit;
+using System;
 
 
 namespace Myware.Data.Entity.Models.PreSales
@@ -27,7 +28,7 @@ namespace Myware.Data.Entity.Models.PreSales
         public ICollection<BusinessContactNumber> BusinessContactNumbers { get; set; }
                 
         [DataMember]  
-        public decimal InvestmentCapacity { get; set; }
+        public Nullable<decimal> InvestmentCapacity { get; set; }
 
         [StringLength(200)]
         [DataMember]  

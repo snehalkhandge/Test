@@ -128,42 +128,42 @@ namespace Myware.Web.API.PreSales
 		   {
 			   if (typeVM.Id == 0)
 			   {
-                   //Check Duplicate Data
-                   #region Check Duplicate Data
-                   var chkDuplicateEmail = new PersonalInformation();
-                   if(typeVM.Email != "")
-                   {
-                       chkDuplicateEmail = db.PersonalInformations.AsNoTracking()
-                                                                  .Where(t => t.Email == typeVM.Email)
-                                                                  .FirstOrDefault();
-                       if(chkDuplicateEmail != null)
-                       {                       
-                           return BadRequest("Error, Duplicate Email Data == "+chkDuplicateEmail.Id.ToString());
-                       }
-                   }
-                   var numbers = new List<long>();
-                   foreach (var item in typeVM.ContactNumbers)
-                   {
-                       numbers.Add(item.PhoneNumber);
-                   }
+				   //Check Duplicate Data
+				   #region Check Duplicate Data
+				   var chkDuplicateEmail = new PersonalInformation();
+				   if(typeVM.Email != "")
+				   {
+					   chkDuplicateEmail = db.PersonalInformations.AsNoTracking()
+																  .Where(t => t.Email == typeVM.Email)
+																  .FirstOrDefault();
+					   if(chkDuplicateEmail != null)
+					   {                       
+						   return BadRequest("Error, Duplicate Email Data == "+chkDuplicateEmail.Id.ToString());
+					   }
+				   }
+				   var numbers = new List<long>();
+				   foreach (var item in typeVM.ContactNumbers)
+				   {
+					   numbers.Add(item.PhoneNumber);
+				   }
 
-                   if(numbers.Count > 0)
-                   {
-                       var chkDuplicatePhoneNumber = db.PersonalContactNumbers
-                                                   .AsNoTracking()
-                                                   .Where(t => numbers.Contains(t.PhoneNumber))
-                                                   .SingleOrDefault();
+				   if(numbers.Count > 0)
+				   {
+					   var chkDuplicatePhoneNumber = db.PersonalContactNumbers
+												   .AsNoTracking()
+												   .Where(t => numbers.Contains(t.PhoneNumber))
+												   .SingleOrDefault();
 
 
-                       if (chkDuplicatePhoneNumber != null)
-                       {
-                           return BadRequest("Error, Duplicate Data Phone Number == " + chkDuplicatePhoneNumber.PersonalInformationId.ToString());
-                       }
-                   }
-                   
-                   #endregion
+					   if (chkDuplicatePhoneNumber != null)
+					   {
+						   return BadRequest("Error, Duplicate Data Phone Number == " + chkDuplicatePhoneNumber.PersonalInformationId.ToString());
+					   }
+				   }
+				   
+				   #endregion
 
-                   type.FirstName = typeVM.FirstName;
+				   type.FirstName = typeVM.FirstName;
 				   type.LastName = typeVM.LastName;
 				   type.Email = typeVM.Email;
 				   type.Address = typeVM.Address;

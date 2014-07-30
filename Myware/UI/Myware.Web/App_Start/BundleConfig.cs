@@ -58,6 +58,7 @@ namespace Myware.Web
                 .Include("~/app/presales/contactenquiry/*.js")
                 .Include("~/app/presales/customers/*.js")
                 .Include("~/app/presales/import/*.js")
+                .Include("~/app/presales/duplicate/*.js")
                 );
 
 
