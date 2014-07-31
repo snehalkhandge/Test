@@ -38,4 +38,37 @@ namespace Myware.Web.Models
 
     }
 
+    public class CheckUniqueUserViewModel
+    {
+        public string Name { get; set; }
+
+        public bool IsUnique { get; set; }
+
+        public UserManagerUserViewModel User { get; set; }
+    }
+
+    public class UserManagerUserViewModel
+    {
+        public int Id { get; set; }
+        public string RoleName { get; set; }
+        public string UserName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+    }
+
+
+    public class ListUserViewModel
+    {
+        public ListUserViewModel()
+        {
+            Users = new List<UserManagerUserViewModel>();
+        }
+        public int Total { get; set; }
+
+        public List<UserManagerUserViewModel> Users { get; set; }
+    }
+
 }

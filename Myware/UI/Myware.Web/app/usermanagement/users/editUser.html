@@ -1,0 +1,91 @@
+﻿<section class="mainbar" data-ng-controller="EditUser">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> {{title}} </h2>
+
+                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+                            {{alert.msg}}                            
+                        </alert>
+
+                        <hr />
+
+
+                        <form role="form" class="col-md-8" name="myForm" ng-submit="saveUser(user)" novalidate>
+
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">User Name</label>
+
+                                    <p ng-if="user.UserName.length > 0" type="" class="form-control-static" ng-model="user.UserName">
+                                        {{user.UserName}}
+                                    </p>
+
+                                    <input ng-if="user.UserName.length == 0" type="text" class="form-control" ng-model="user.UserName" ng-minlength="2" ng-change="isUniqueUserName(user.UserName)"
+                                           name="UserName" value="" placeholder="Enter user name">
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Role</label>
+                                    <select class="form-control" name="RoleName" ng-model="user.RoleName">
+                                        <option ng-repeat='value in roles' value='{{value.Name}}'>
+                                            {{value.Name}}
+                                        </option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">First Name</label>
+                                    <input type="text" class="form-control" ng-model="user.FirstName" ng-minlength="2"
+                                           name="FirstName" value="{{user.FirstName}}" placeholder="Enter first name">
+
+                                </div>                          
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Last Name</label>
+                                    <input type="text" class="form-control" ng-model="user.LastName" ng-minlength="2"
+                                           name="LastName" value="{{user.LastName}}" placeholder="Enter last name">
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Email</label>
+                                    <input type="text" class="form-control" ng-model="user.Email" ng-minlength="2" ng-change="isUniqueEmail(user.Email)"
+                                           name="Email" value="{{user.Email}}" placeholder="Enter email">
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for=" name">Password</label>
+                                    <input type="password" class="form-control" ng-model="user.Password" ng-minlength="2"
+                                           name="Password" value="{{user.Password}}">
+
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid">{{buttonText}}</button>
+                        </form>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

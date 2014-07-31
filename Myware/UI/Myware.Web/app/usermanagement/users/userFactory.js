@@ -28,34 +28,38 @@
        var dataCache = DSCacheFactory.get('userCache');
 
        var getUsers = function (page, pageSize, searchQuery) {
-            var deferred = $q.defer(),
-                start = new Date().getTime(),
-                cacheId = "Users" + page + pageSize + searchQuery;
+            var deferred = $q.defer();
 
-            
+            $http.get(common.apiUrl + '/getUsers/' + page + '/size/' + pageSize + '/search/' + searchQuery)
+                 .success(function (data) {
+                         deferred.resolve(data);
+                  })
+                 .error(function (data, status, headers, config) {                            
+                       deferred.reject(new Error(angular.toJson(data)));
+                 });
 
-                if (dataCache.get(cacheId)) {
-                    deferred.resolve(dataCache.get(cacheId));
-                } else {
-                    $http.get(common.apiUrl + '/users/' + page + '/size/' + pageSize + '/search/' + searchQuery)
-                        .success(function (data) {
-                            data = data || {};
-                            if (data.Messages == null) {
-                                dataCache.put(cacheId, data);
-                            }
+            return deferred.promise;
+           
+       };
 
-                            deferred.resolve(data);
-                        })
-                        .error(function (data, status, headers, config) {                            
-                            deferred.reject(new Error(angular.toJson(data)));
-                        });
-
-                }
-
-
-                return deferred.promise;
+       var getUserById = function (id) {
+           var deferred = $q.defer();
+           
+           $http.get(common.apiUrl + '/getUserById/' + id)
+                   .success(function (data) {
+                       
+                       deferred.resolve(data);
+                   })
+                   .error(function (data, status, headers, config) {
+                       deferred.reject(new Error(angular.toJson(data)));
+                   });
 
            
+
+
+           return deferred.promise;
+
+
        };
 
        var saveUser = function (user) {
@@ -83,21 +87,35 @@
 
        };
 
-       var uniqueUser = function (name) {
+       var uniqueUserByUserName = function (name) {
 
            var deferred = $q.defer();
-           $http.get(common.apiUrl + '/userIsUnique/' +name)
+           $http.get(common.apiUrl + '/userIsUniqueByUserName', { email: name })
                     .success(function (data) {
                         deferred.resolve(data);
                     })
                     .error(function (data, status, headers, config) {
                         common.logger.error(data);
-                        deferred.reject({});
+                        deferred.reject(data);
                     });
 
            return deferred.promise;
        };
  
+       var uniqueUserByEmail = function (email) {
+
+           var deferred = $q.defer();
+           $http.get(common.apiUrl + '/userIsUniqueByEmail', { email: email })
+                    .success(function (data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function (data, status, headers, config) {
+                        common.logger.error(data);
+                        deferred.reject(data);
+                    });
+
+           return deferred.promise;
+       };
 
        var getAllUsers = function () {
            var deferred = $q.defer(),
@@ -132,8 +150,10 @@
         return {
             getUsers: getUsers,
             saveUser: saveUser,
-            uniqueUser: uniqueUser,
-            getAllUsers:getAllUsers
+            uniqueUserByUserName: uniqueUserByUserName,
+            uniqueUserByEmail: uniqueUserByEmail,
+            getAllUsers: getAllUsers,            
+            getUserById : getUserById 
         };
 
     }

@@ -19,6 +19,13 @@
                         content: '<i class="fa fa-dashboard"></i> Users'
                     }
                 }
+            },
+            {
+                url: '/usermanagement/user/edit/:userId',
+                config: {
+                    templateUrl: '/app/usermanagement/users/editUser.html',
+                    title: 'Edit User'
+                }
             }
         ];
     }

@@ -5,26 +5,50 @@
         .module('app.usermanagement')
         .controller('Users', Users);
 
-    Users.$inject = ['common'];
+    Users.$inject = ['$scope', 'common', 'userFactory'];
 
-    function Users(common) {
+    function Users($scope, common, userFactory) {
         var log = common.logger.info;
 
         /*jshint validthis: true */
-        var vm = this;
-
-        vm.news = {
-            title: 'Marvel Avengers',
-            description: 'Marvel Avengers 2 is now in production!'
+        
+        $scope.title = "Manage Users";
+        $scope.results = {};
+        $scope.totalItems = 0;
+        $scope.itemsPerPage = 2;
+        $scope.page = 1;
+        $scope.searchQuery = "all";
+        $scope.setPage = function (pageNo) {
+            $scope.page = pageNo;
         };
-        vm.avengerCount = 0;
-        vm.avengers = [];
-        vm.title = 'Users';
+        $scope.pageChanged = function () {
+            activate();
+        };
+        $scope.hidePagination = false;
+
+        $scope.alerts = [];
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
+
 
         activate();
 
         function activate() {
-            log('Activated Dashboard View');
+            
+            userFactory.getUsers($scope.page, $scope.itemsPerPage, $scope.searchQuery)
+                       .then(function (result) {
+                           $scope.results = result.Users;
+                           $scope.totalItems = result.Total;
+                           if ($scope.totalItems <= $scope.itemsPerPage) {
+                               $scope.hidePagination = true;
+                           }
+
+                       }, function (reason) {
+                           common.logger.error(reason);
+
+                       }); 
+
             
         }
 
