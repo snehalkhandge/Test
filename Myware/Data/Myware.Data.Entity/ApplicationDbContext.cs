@@ -13,6 +13,9 @@ using Myware.Repository.DataContext;
 using System;
 using System.Threading;
 using Myware.Repository.Infrastructure;
+using Myware.Data.Entity.Models.PostSalesUnit;
+using Myware.Data.Entity.Models.PostSales.Booking;
+using Myware.Data.Entity.Models.PaymentSchedule;
 
 namespace Myware.Data.Entity
 {
@@ -79,6 +82,7 @@ namespace Myware.Data.Entity
         public DbSet<TasksRelatedFile> TasksRelatedFiles { get; set; }
         public DbSet<AssignedTask> AssignedTasks { get; set; }
         #endregion
+
         #region PreSales
         public DbSet<ContactEnquiryLocality> ContactEnquiryLocalities { get; set; }
         public DbSet<ContactEnquiryUnitType> ContactEnquiryUnitTypes { get; set; }
@@ -93,11 +97,31 @@ namespace Myware.Data.Entity
         public DbSet<DuplicateData> DuplicateData { get; set; }
 
         #endregion
-
-
-        public DbSet<PersonalInformationBookingMeta> PersonalInformationBookingMetas { get; set; }
-
         
+        #region PostSalesUnit
+
+        public DbSet<HotProperty> HotProperties { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectBankDetails> ProjectBankDetails { get; set; }
+        public DbSet<ProjectParkingType> ProjectParkingTypes { get; set; }
+        public DbSet<ProjectPropertyCharges> ProjectPropertyCharges { get; set; }
+        public DbSet<ProjectType> ProjectTypes { get; set; }
+        public DbSet<Tower> Towers { get; set; }
+        public DbSet<Unit> Units { get; set; }
+        public DbSet<Wing> Wings { get; set; }
+        #endregion
+
+        #region Post Sales
+        public DbSet<AllotedParking> AllotedParkings { get; set; }
+        public DbSet<BookingCustomer> BookingCustomers { get; set; }
+        public DbSet<BookingDetail> BookingDetails { get; set; }
+        public DbSet<PaymentDetail> PaymentDetails { get; set; }
+        public DbSet<Installment> Installments { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Agreement> Agreements { get; set; }
+        public DbSet<DocumentManagement> DocumentMangements { get; set; }
+        #endregion
+
         
     }
 

@@ -71,9 +71,7 @@ namespace Myware.Data.Entity.Models.PreSales
         [DataType(DataType.ImageUrl)]
         public string ImageUrl { get; set; }
 
-        [DataMember]
-        public virtual ICollection<PersonalInformationBookingMeta> PersonalInformationBookingMeta { get; set; }
-
+        
         [DataMember]
         public virtual ICollection<BusinessInformation> BusinessInformation { get; set; }
 

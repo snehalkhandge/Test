@@ -59,6 +59,7 @@ namespace Myware.Data.Entity
         public DbSet<TasksRelatedFile> TasksRelatedFiles { get; set; }
         public DbSet<AssignedTask> AssignedTasks { get; set; }
         #endregion
+
         #region PreSales
         public DbSet<ContactEnquiryUnitType> ContactEnquiryUnitTypes { get; set; }
         public DbSet<PersonalInformation> PersonalInformations { get; set; }
@@ -68,7 +69,7 @@ namespace Myware.Data.Entity
         #endregion
 
 
-        public DbSet<PersonalInformationBookingMeta> PersonalInformationBookingMetas { get; set; }
+        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

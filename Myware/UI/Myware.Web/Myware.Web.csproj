@@ -184,6 +184,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\PostSalesUnit\ManageProjectsController.cs" />
     <Compile Include="API\PreSalesUnit\ManageCampaignController.cs" />
     <Compile Include="API\PreSalesUnit\ManageBrokersController.cs" />
     <Compile Include="API\PreSalesUnit\ManageLocationsController.cs" />
@@ -245,6 +246,15 @@
     </Compile>
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\PartialGetId.cs" />
+    <Compile Include="Models\PostSalesUnit\HotPropertyViewModel.cs" />
+    <Compile Include="Models\PostSalesUnit\ProjectViewModel.cs" />
+    <Compile Include="Models\PostSalesUnit\TowerViewModel.cs" />
+    <Compile Include="Models\PostSalesUnit\UnitViewModel.cs" />
+    <Compile Include="Models\PostSalesUnit\WingViewModel.cs" />
+    <Compile Include="Models\PostSales\AgreementViewModel.cs" />
+    <Compile Include="Models\PostSales\Booking\BookingDetail.cs" />
+    <Compile Include="Models\PostSales\DocumentManagementViewModel.cs" />
+    <Compile Include="Models\PostSales\ScheduleDetail.cs" />
     <Compile Include="Models\PreSalesUnit\CompanyViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CreateLocationViewModel.cs" />
     <Compile Include="Models\PreSalesUnit\CreateTypeViewModel.cs" />
@@ -520,6 +530,16 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="API\PostSales\" />
+    <Folder Include="app\postsalesunit\hotproperty\" />
+    <Folder Include="app\postsalesunit\project\" />
+    <Folder Include="app\postsalesunit\tower\" />
+    <Folder Include="app\postsalesunit\unit\" />
+    <Folder Include="app\postsalesunit\wing\" />
+    <Folder Include="app\postsales\agreement\" />
+    <Folder Include="app\postsales\booking\" />
+    <Folder Include="app\postsales\documentmanagement\" />
+    <Folder Include="app\postsales\schedule\" />
     <Folder Include="App_Data\" />
     <Folder Include="Images\Brokers\Temp\" />
     <Folder Include="Images\Customers\Temp\" />
