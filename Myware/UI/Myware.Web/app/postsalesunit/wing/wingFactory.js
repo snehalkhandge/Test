@@ -1,7 +1,7 @@
 ﻿(function() {
     'use strict';
 
-    var serviceId = 'towerFactory';
+    var serviceId = 'wingFactory';
 
     angular.module('app.postsalesunit')
         .factory(serviceId, dataservice);
@@ -15,7 +15,7 @@
 
         
 
-        var personalCache = DSCacheFactory('towerCache', {
+        var personalCache = DSCacheFactory('wingCache', {
             maxAge: 3600000,
             capacity: 100,
             deleteOnExpire: 'aggressive',
@@ -25,14 +25,14 @@
             }
         });
 
-        var dataCache = DSCacheFactory.get('towerCache');
+        var dataCache = DSCacheFactory.get('wingCache');
 
         
-        var getTowers = function(searchData) {
+        var getWings = function(searchData) {
             var deferred = $q.defer(),
                 start = new Date().getTime();
                 
-            $http.post(common.apiUrl + '/listTowers', searchData)
+            $http.post(common.apiUrl + '/listWings', searchData)
                     .success(function (data) {
                         data = data || {};                        
                         deferred.resolve(data);
@@ -45,14 +45,14 @@
 
         };
                 
-        var saveTower = function(tower) {
+        var saveWing = function(wing) {
 
            var deferred = $q.defer();
-           if (tower.Id == '') {
-               tower.Id = 0;
+           if (wing.Id == '') {
+               wing.Id = 0;
            }
                        
-            $http.post(common.apiUrl + '/saveProjectTower/' + tower.Id, tower)
+            $http.post(common.apiUrl + '/saveProjectWing/' + wing.Id, wing)
                     .success(function (data) {
 
                         if (dataCache.info()) {
@@ -68,11 +68,11 @@
 
        };
                 
-        var getTowerById = function (id) {
+        var getWingById = function (id) {
             var deferred = $q.defer(),
                 start = new Date().getTime();
 
-            $http.get(common.apiUrl + '/getTowerById/' + id)
+            $http.get(common.apiUrl + '/getWingById/' + id)
                     .success(function (data) {
                         data = data || {};
                         deferred.resolve(data);
@@ -85,11 +85,11 @@
 
         };
 
-        var getWingNumbersFromBuildingById = function (id) {
+        var getAllWingsByBuildingId = function (id) {
             var deferred = $q.defer(),
                 start = new Date().getTime();
 
-            $http.get(common.apiUrl + '/projects/getWingNumbersFromBuildingById/' + id)
+            $http.get(common.apiUrl + '/projects/getAllWingsByBuildingId/' + id)
                     .success(function (data) {
                         data = data || {};
                         deferred.resolve(data);
@@ -102,48 +102,12 @@
 
         };
 
-        var getAllTowers = function() {
-            var deferred = $q.defer(),
-                start = new Date().getTime();
-
-            $http.get(common.apiUrl + '/projects/getAllTowers')
-                    .success(function (data) {
-                        data = data || {};
-                        deferred.resolve(data);
-                    })
-                    .error(function (data, status, headers, config) {
-                        deferred.reject(data);
-                    });
-
-            return deferred.promise;
-
-        };
-
-        var getBuildingNamesByProjectId = function (id) {
-            var deferred = $q.defer(),
-                start = new Date().getTime();
-
-            $http.get(common.apiUrl + '/projects/getBuildingNamesByProjectId/' + id)
-                    .success(function (data) {
-                        data = data || {};
-                        deferred.resolve(data);
-                    })
-                    .error(function (data, status, headers, config) {
-                        deferred.reject(data);
-                    });
-
-            return deferred.promise;
-
-        };
         
-
         return {
-            getTowers: getTowers,
-            getTowerById: getTowerById,
-            saveTower: saveTower,
-            getAllTowers: getAllTowers,
-            getWingNumbersFromBuildingById: getWingNumbersFromBuildingById,
-            getBuildingNamesByProjectId: getBuildingNamesByProjectId
+            getWings: getWings,
+            getWingById: getWingById,
+            saveWing: saveWing,            
+            getAllWingsByBuildingId: getAllWingsByBuildingId
                         
         };
 

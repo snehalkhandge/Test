@@ -49,7 +49,7 @@ namespace Myware.Web.Models.PostSales.Booking
         public int TowerId { get; set; }        
         public TowerDetailViewModel Tower { get; set; }
         public int WingId { get; set; }        
-        public WingViewModel Wing { get; set; }
+        public WingDetailViewModel Wing { get; set; }
         public int UnitId { get; set; }        
         public UnitViewModel Unit { get; set; }
         public List<BookingCustomerViewModel> Customers { get; set; }

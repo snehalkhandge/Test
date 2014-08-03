@@ -1,0 +1,77 @@
+﻿<section class="mainbar" data-ng-controller="EditWing">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> Tower </h2>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label for=" name">Project Name</label>
+                                <select class="form-control" name="ProjectId" ng-model="Wing.ProjectId" ng-change="getBuildingNames()">
+                                    <option ng-repeat='value in Projects' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label for=" name">Building Name</label>
+                                <select class="form-control" name="TowerId" ng-model="Wing.TowerId" ng-change="getWingNumbers()">
+                                    <option ng-repeat='value in Towers' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label for=" name">Wing Numbers</label>
+                                <select class="form-control" name="WingNumber" ng-model="Wing.WingNumber">
+                                    <option ng-repeat='value in WingNumbers' value='{{value}}'>
+                                        {{value}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label for=" name">Wing Name</label>
+                                <input type="text" class="form-control" ng-model="Wing.WingName"
+                                       name="BuildingName"
+                                       value="{{Wing.WingName}}" placeholder="Enter Wing Name">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label for=" name">Number Of Floors</label>
+                                <input type="text" class="form-control" ng-model="Wing.NumberOfFloors"
+                                       name="NumberOfFloors"
+                                       value="{{Wing.NumberOfFloors}}" placeholder="Enter Number Of Floors ">
+                            </div>
+                        </div>
+
+                        <a class="btn btm-primary" ng-click="saveWing()"> Save Wing</a>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

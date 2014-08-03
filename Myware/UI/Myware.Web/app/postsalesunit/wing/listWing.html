@@ -1,0 +1,93 @@
+﻿<section class="mainbar" data-ng-controller="ListWing">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> List Customers </h2>
+                        <span>Page : {{page}}</span> <span>Items per page : {{itemsPerPage}}</span>
+                        <span>Total items : {{totalItems}}</span>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Project</label>
+                                <select class="form-control" name="ProjectId" ng-model="selectedProjectedId">
+                                    <option ng-repeat='value in Projects' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Tower</label>
+                                <select class="form-control" name="ProjectId" ng-model="selectedTowerId">
+                                    <option ng-repeat='value in Towers' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" role="button" ng-click="SearchWings()">Search Wings</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" role="button" href="#/postsalesunit/wing/edit/0">Add new wing</a>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <table class="table table-bordered table-hover table-condensed">
+                            <tr style="font-weight: bold">
+                                <td style="width:16.5%">Project Name</td>
+                                <td style="width:16.5%">Tower Name</td>
+                                <td style="width:16.5%">Wing Number</td>
+                                <td style="width:16.5%">Wing Name</td>
+                                <td style="width:16.5%">Number Of Floors</td>
+                                <td style="width:16.5%">Action</td>
+                            </tr>                            
+                            <tr ng-repeat="item in results">
+                                <td>
+                                    {{item.Project.ProjectName}}
+                                </td>
+                                <td>
+                                    {{item.Tower.BuildingName}}
+                                </td>
+                                <td>
+                                    {{item.WingNumber}}
+                                </td>
+                                <td>
+                                    {{item.WingName}}
+                                </td>
+                                <td>
+                                    {{item.NumberOfFloors}}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-justified">
+                                        <a class="btn btn-primary" role="button" href="#/postsalesunit/tower/detail/{{item.Id}}">Detail</a>
+                                        <a class="btn btn-primary" role="button" href="#/postsalesunit/tower/edit/{{item.Id}}">Edit</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="page" ng-change="pageChanged()" ng-hide="hidePagination"></pagination>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

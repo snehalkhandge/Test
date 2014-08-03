@@ -13,7 +13,7 @@
         var towerId = ($routeParams.towerId) ? parseInt($routeParams.towerId) : 0;
 
         $scope.towerId = towerId;
-
+        $scope.title = 'Tower';
         
         $scope.Tower = {
             Id : towerId,

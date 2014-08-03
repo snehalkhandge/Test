@@ -20,7 +20,7 @@ namespace Myware.Web.Models.PostSalesUnit
         public string CarpetAreaUnit { get; set; }
         public string Status { get; set; }
         public int WingId { get; set; }
-        public WingViewModel Wing { get; set; }
+        public WingDetailViewModel Wing { get; set; }
         public int TowerId { get; set; }
         public TowerDetailViewModel Tower { get; set; }
         public int ProjectId { get; set; }
