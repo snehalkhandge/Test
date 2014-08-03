@@ -54,6 +54,21 @@ namespace Myware.Web.API
             return listResult;
         }
 
+
+
+        [Route("developersByCompanyId/{companyId}")]
+        public List<CreateDeveloperViewModel> GetDevelopers(int companyId)
+        {
+            return db.DeveloperCompanies.Include(t => t.Developer)
+                          .Where(x => x.CompanyId == companyId)
+                          .Select(t => new CreateDeveloperViewModel { 
+                                    Id = t.DeveloperId,
+                                    Name = t.Developer.Name
+                                }).ToList();
+               
+        }
+
+
         [Route("saveDeveloper/{id}")]
         [ResponseType(typeof(CreateDeveloperViewModel))]
         public IHttpActionResult PostDeveloper(int id, CreateDeveloperViewModel typeVM)

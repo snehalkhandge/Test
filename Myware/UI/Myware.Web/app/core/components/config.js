@@ -4,14 +4,14 @@
     var core = angular.module('app.core');
 
     // Configure Toastr
-    toastr.options.timeOut = 4000;
+    toastr.options.timeOut = 6000;
     toastr.options.positionClass = 'toast-bottom-right';
 
     //var events = { };
 
     var config = {
-        appErrorPrefix: '[NG-Modular Error] ', //Configure the exceptionHandler decorator
-        appTitle: 'Angular Modular Demo',
+        appErrorPrefix: '[HP Reality Error] ', //Configure the exceptionHandler decorator
+        appTitle: 'HP Reality',
         apiUrl: 'http://localhost:10138',
         //        events: events,
         version: '1.0.0'
@@ -33,7 +33,7 @@
     core.config(['$routeProvider', 'routehelperConfigProvider',
         function ($routeProvider, cfg) {
             cfg.config.$routeProvider = $routeProvider;
-            cfg.config.docTitle = 'NG-Modular: ';
+            cfg.config.docTitle = 'HP Reality: ';
         }]);
 
     // Configure the common exception handler

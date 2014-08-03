@@ -59,6 +59,12 @@ namespace Myware.Web
                 .Include("~/app/presales/customers/*.js")
                 .Include("~/app/presales/import/*.js")
                 .Include("~/app/presales/duplicate/*.js")
+                .Include("~/app/postsalesunit/*.js")
+                .Include("~/app/postsalesunit/hotproperty/*.js")
+                .Include("~/app/postsalesunit/project/*.js")
+                .Include("~/app/postsalesunit/tower/*.js")
+                .Include("~/app/postsalesunit/unit/*.js")
+                .Include("~/app/postsalesunit/wing/*.js")
                 );
 
 

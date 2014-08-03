@@ -356,49 +356,6 @@ namespace Myware.Web.API.UserManagement
 		  
 		}
 
-		/*
-		public async Task<HttpResponseMessage> PostBrokerImage(int id, HttpPostedFileBase file)
-		{
-			if (!Request.Content.IsMimeMultipartContent())
-			{
-				throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-			}
-
-			
-
-			var filename = Path.GetFileName(file.FileName);
-			var path = Path.Combine(Server.MapPath("~/Images/Brokers"), filename);
-			file.SaveAs(path);
-
-			return new ContentResult
-			{
-				ContentType = "text/plain",
-				Content = filename,
-				ContentEncoding = Encoding.UTF8
-			};
-			try
-			{
-				await Request.Content.ReadAsMultipartAsync(provider);
-
-				// Show all the key-value pairs.
-				foreach (var key in provider.FormData.AllKeys)
-				{
-					foreach (var val in provider.FormData.GetValues(key))
-					{
-						Trace.WriteLine(string.Format("{0}: {1}", key, val));
-					}
-				}
-
-				return Request.CreateResponse(HttpStatusCode.OK);
-			}
-			catch (System.Exception e)
-			{
-				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
-			}
-		}
-		*/
-
-
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)

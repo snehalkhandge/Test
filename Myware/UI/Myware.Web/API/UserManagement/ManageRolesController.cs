@@ -59,8 +59,7 @@ namespace Myware.Web.API.UserManagement
 
             
         }
-
-
+        
         [Route("roleIsUnique/{searchQuery}")]
         public bool GetRoles(string searchQuery = "")
         {

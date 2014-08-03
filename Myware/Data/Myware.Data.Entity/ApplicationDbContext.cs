@@ -102,6 +102,8 @@ namespace Myware.Data.Entity
 
         public DbSet<HotProperty> HotProperties { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectOtherInformation> ProjectInformation { get; set; }
+        public DbSet<ProjectDevelopers> ProjectDevelopers { get; set; }
         public DbSet<ProjectBankDetails> ProjectBankDetails { get; set; }
         public DbSet<ProjectParkingType> ProjectParkingTypes { get; set; }
         public DbSet<ProjectPropertyCharges> ProjectPropertyCharges { get; set; }

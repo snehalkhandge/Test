@@ -5,9 +5,9 @@
         .module('app.layout')
         .controller('Topbar', Topbar);
 
-    Topbar.$inject = ['$route', 'routehelper', 'authService'];
+    Topbar.$inject = ['$route', 'routehelper', 'authService', 'permissionService'];
 
-    function Topbar($route, routehelper, authService) {
+    function Topbar($route, routehelper, authService, permissionService) {
         /*jshint validthis: true */
         var vm = this;
         var routes = routehelper.getRoutes();

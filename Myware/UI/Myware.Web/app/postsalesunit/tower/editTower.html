@@ -1,0 +1,66 @@
+﻿<section class="mainbar" data-ng-controller="EditTower">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> Tower </h2>                        
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label for=" name">Project Name</label>
+                                <select class="form-control" name="ProjectId" ng-model="Tower.ProjectId" ng-change="getBuildingNumbers()">
+                                    <option ng-repeat='value in Projects' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label for=" name">Building Numbers</label>
+                                <select class="form-control" name="BuildingNumber" ng-model="Tower.BuildingNumber">
+                                    <option ng-repeat='value in BuildingNumbers' value='{{value}}'>
+                                        {{value}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label for=" name">Building Name</label>
+                                <input type="text" class="form-control" ng-model="Tower.BuildingName"
+                                       name="BuildingName"
+                                       value="{{Tower.BuildingName}}" placeholder="Enter building name">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8 form-group">
+                                <label for=" name">Building Name</label>
+                                <input type="text" class="form-control" ng-model="Tower.NumberOfWings"
+                                       name="NumberOfWings"
+                                       value="{{Tower.NumberOfWings}}" placeholder="Enter Number Of Wings ">
+                            </div>
+                        </div>
+
+                        <a class="btn btm-primary" ng-click="saveTower()"> Save tower</a>
+                           
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

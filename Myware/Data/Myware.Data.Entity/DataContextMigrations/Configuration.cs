@@ -13,6 +13,7 @@ namespace Myware.Data.Entity.DataContextMigrations
     using System.Security;
     using Myware.Data.Entity.Models.UserTasks;
     using Myware.Data.Entity.Models.PreSales;
+using Myware.Data.Entity.Models.PostSalesUnit;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Myware.Data.Entity.ApplicationDbContext>
     {
@@ -458,13 +459,20 @@ namespace Myware.Data.Entity.DataContextMigrations
             var developer1 = new Developer
             {
                 Name = "Developer Bhai 1",
-                UpdatedByUserId = 1
+                UpdatedByUserId = 1               
                 
-
             };
 
             context.Developers.Add(developer1);
             context.SaveChanges();
+
+            context.DeveloperCompanies.Add(new DeveloperCompanies
+            {
+                CompanyId = 1,
+                DeveloperId = 1
+
+            });
+
             #endregion
 
 
@@ -868,6 +876,31 @@ namespace Myware.Data.Entity.DataContextMigrations
             context.SaveChanges();
 
             #endregion
+            #endregion
+
+
+            #region Project Type
+
+            var projectType = new ProjectType{
+                Name ="Residential",
+                UpdatedByUserId = 1
+            };
+
+            var projectType1 = new ProjectType{
+                Name ="Commercial",
+                UpdatedByUserId = 1
+            };
+
+            var projectType2 = new ProjectType{
+                Name ="Residential cum Commercial",
+                UpdatedByUserId = 1
+            };
+
+            context.ProjectTypes.Add(projectType);
+            context.ProjectTypes.Add(projectType1);
+            context.ProjectTypes.Add(projectType2);
+            context.SaveChanges();
+
             #endregion
 
         }

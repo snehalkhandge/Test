@@ -38,6 +38,7 @@
         'app.usermanagement',
         'app.presalesunit',
         'app.presales',
+        'app.postsalesunit',
         'app.taskmanager',
         'app.layout'
     ]);
@@ -51,7 +52,7 @@
 
 
     angular.module(appId).run(['authService', function (authService) {
-        authService.fillAuthData();
+        authService.fillAuthData();        
     }]);
 
 
@@ -60,6 +61,7 @@
     });
 
 
+    
 })();
 
 

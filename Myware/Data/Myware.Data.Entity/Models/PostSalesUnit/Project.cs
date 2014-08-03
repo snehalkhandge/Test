@@ -31,73 +31,12 @@ namespace Myware.Data.Entity.Models.PostSalesUnit
         [ForeignKey(name: "ProjectTypeId")]
         public ProjectType ProjectType { get; set; }
 
-        #region Other Information
-
-        [StringLength(200)]
-        [DataMember]
-        public string PlotNumber { get; set; }
-
-        [StringLength(200)]
-        [DataMember]
-        public string SurveyOrSectorNumber { get; set; }
-
-        [StringLength(200)]
-        [DataMember]
-        public string Locality { get; set; }
-
-        [StringLength(200)]
-        [DataMember]
-        public string City { get; set; }
-
-        [StringLength(200)]
-        [DataMember]
-        public string PlotArea { get; set; }
-
-        [StringLength(200)]
-        [DataMember]
-        public string PlotAreaUnit { get; set; }
-
-        [StringLength(500)]
-        [DataMember]
-        public string Address { get; set; }
-
         
-        [DataMember]
-        public int FSI { get; set; }
-
-        [DataMember]
-        public int NumberOfBuilding { get; set; }
-
-        [DataMember]
-        public int NumberOfShops { get; set; }
-
-        [DataMember]
-        public int NumberOfFlats { get; set; }
-
-        [DataMember]
-        public int NumberOfOffices { get; set; }
-
-        [StringLength(800)]
-        [DataMember]
-        public string Amneties { get; set; }
-
         
-        [DataMember]
-        public string FloorPlan { get; set; }
-
-        public int DeveloperId { get; set; }
-
-        [ForeignKey(name: "DeveloperId")]
-        public Developer Developer { get; set; }
-        public int CompanyId { get; set; }
-
-        [ForeignKey(name: "CompanyId")]
-        public Company Company { get; set; }
-        #endregion
-
         public ICollection<ProjectBankDetails> BankDetails { get; set; }        
         public ICollection<ProjectPropertyCharges> PropertyCharges { get; set; }        
         public ICollection<ProjectParkingType> Parkings { get; set; }
+        public ICollection<ProjectOtherInformation> ProjectInformation { get; set; }
 
     }
 }

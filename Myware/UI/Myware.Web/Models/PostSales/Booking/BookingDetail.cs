@@ -47,7 +47,7 @@ namespace Myware.Web.Models.PostSales.Booking
         public int ProjectId { get; set; }
         public ProjectBaseViewModel Project { get; set; }
         public int TowerId { get; set; }        
-        public TowerViewModel Tower { get; set; }
+        public TowerDetailViewModel Tower { get; set; }
         public int WingId { get; set; }        
         public WingViewModel Wing { get; set; }
         public int UnitId { get; set; }        

@@ -98,13 +98,28 @@
            return deferred.promise;
        };
  
+       var getDeveloperByCompanyId = function (companyId) {
+
+           var deferred = $q.defer();
+           $http.get(common.apiUrl + '/developersByCompanyId/' + companyId)
+                    .success(function (data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function (data, status, headers, config) {
+                        common.logger.error(data);
+                        deferred.reject({});
+                    });
+
+           return deferred.promise;
+       };
 
 
 
         return {
             getDevelopers: getDevelopers,
             saveDeveloper: saveDeveloper,
-            uniqueDeveloper: uniqueDeveloper
+            uniqueDeveloper: uniqueDeveloper,
+            getDeveloperByCompanyId: getDeveloperByCompanyId
             
         };
 

@@ -184,6 +184,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\PostSalesUnit\ManageBuildingsController.cs" />
     <Compile Include="API\PostSalesUnit\ManageProjectsController.cs" />
     <Compile Include="API\PreSalesUnit\ManageCampaignController.cs" />
     <Compile Include="API\PreSalesUnit\ManageBrokersController.cs" />
@@ -296,6 +297,7 @@
     <Content Include="app\core\components\authService.js" />
     <Content Include="app\core\components\common.js" />
     <Content Include="app\core\components\config.js" />
+    <Content Include="app\core\components\permissions.js" />
     <Content Include="app\core\core.module.js" />
     <Content Include="app\dashboard\components\config.route.js" />
     <Content Include="app\dashboard\components\dashboard.html" />
@@ -309,6 +311,20 @@
     <Content Include="app\layout\components\topnav.html" />
     <Content Include="app\layout\components\widgetheader.html" />
     <Content Include="app\layout\layout.module.js" />
+    <Content Include="app\postsalesunit\postsalesunit.module.js" />
+    <Content Include="app\postsalesunit\project\config.route.js" />
+    <Content Include="app\postsalesunit\project\detailProject.html" />
+    <Content Include="app\postsalesunit\project\editProject.html" />
+    <Content Include="app\postsalesunit\project\editProject.js" />
+    <Content Include="app\postsalesunit\project\listProject.html" />
+    <Content Include="app\postsalesunit\project\listProject.js" />
+    <Content Include="app\postsalesunit\project\projectFactory.js" />
+    <Content Include="app\postsalesunit\tower\config.route.js" />
+    <Content Include="app\postsalesunit\tower\editTower.html" />
+    <Content Include="app\postsalesunit\tower\editTower.js" />
+    <Content Include="app\postsalesunit\tower\listTower.html" />
+    <Content Include="app\postsalesunit\tower\listTower.js" />
+    <Content Include="app\postsalesunit\tower\towerFactory.js" />
     <Content Include="app\presalesunit\brokers\brokers.html" />
     <Content Include="app\presalesunit\brokers\broker.js" />
     <Content Include="app\presalesunit\brokers\brokerFactory.js" />
@@ -532,8 +548,6 @@
   <ItemGroup>
     <Folder Include="API\PostSales\" />
     <Folder Include="app\postsalesunit\hotproperty\" />
-    <Folder Include="app\postsalesunit\project\" />
-    <Folder Include="app\postsalesunit\tower\" />
     <Folder Include="app\postsalesunit\unit\" />
     <Folder Include="app\postsalesunit\wing\" />
     <Folder Include="app\postsales\agreement\" />
@@ -543,6 +557,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Images\Brokers\Temp\" />
     <Folder Include="Images\Customers\Temp\" />
+    <Folder Include="Images\Projects\FloorPlans\Temp\" />
     <Folder Include="Images\Tasks\Temp\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Base\" />

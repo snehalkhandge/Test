@@ -13,7 +13,7 @@ namespace Myware.Web.Models.PostSalesUnit
         public int NumberOfFloors { get; set; }
         public int TowerId { get; set; }
 
-        public TowerViewModel Tower { get; set; }
+        public TowerDetailViewModel Tower { get; set; }
         public int ProjectId { get; set; }
         public ProjectBaseViewModel Project { get; set; }
 

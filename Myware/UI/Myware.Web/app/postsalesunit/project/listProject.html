@@ -1,0 +1,105 @@
+﻿<section class="mainbar" data-ng-controller="ListProject">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> List Customers </h2>
+                        <span>Page : {{page}}</span> <span>Items per page : {{itemsPerPage}}</span>
+                        <span>Total items : {{totalItems}}</span>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Company Name</label>
+                                <select class="form-control" name="CompanyName" ng-model="selectedCompanyName">
+                                    <option ng-repeat='value in CompanyNames' value='{{value}}'>
+                                        {{value}}
+                                    </option>
+                                </select>
+
+
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Locality</label>
+                                <select class="form-control" name="Locality" ng-model="selectedLocality">
+                                    <option ng-repeat='value in Localities' value='{{value}}'>
+                                        {{value}}
+                                    </option>
+                                </select>
+
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">City</label>
+                                <select class="form-control" name="City" ng-model="selectedCity">
+                                    <option ng-repeat='value in Cities' value='{{value}}'>
+                                        {{value}}
+                                    </option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" role="button" ng-click="SearchProjects()">Edit</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" role="button" href="#/postsalesunit/project/edit/0">Add new project</a>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <table class="table table-bordered table-hover table-condensed">
+                            <tr style="font-weight: bold">
+                                <td style="width:16.5%">Project Name</td>
+                                <td style="width:16.5%">Company Name</td>
+                                <td style="width:16.5%">Number of Building</td>
+                                <td style="width:16.5%">Locality </td>
+                                <td style="width:16.5%">PlotArea </td>
+                                <td style="width:16.5%">Action</td>
+                            </tr>
+                            <tr ng-repeat="item in results">
+                                <td>
+                                    {{item.ProjectName}}
+                                </td>
+                                <td>
+                                    {{item.CompanyName}}
+                                </td>
+                                <td>
+                                    {{item.NumberOfBuilding}}
+                                </td>
+                                <td>
+                                    {{item.Locality}}
+                                </td>
+                                <td>
+                                    {{item.PlotArea}}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-justified">
+                                        <a class="btn btn-primary" role="button" href="#/postsalesunit/project/detail/{{item.Id}}">Detail</a>
+                                        <a class="btn btn-primary" role="button" href="#/postsalesunit/project/edit/{{item.Id}}">Search Projects</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="page" ng-change="pageChanged()" ng-hide="hidePagination"></pagination>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

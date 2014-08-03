@@ -10,7 +10,7 @@
     <div class="navbar-collapse collapse" data-ng-controller="Topbar as vm">
         
         <ul class="nav navbar-nav">
-            <li  dropdown>
+            <li has-permission='Permission 1' dropdown>
                 <a class="dropdown-toggle" ng-disabled="disabled">All Routes <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li class="nlightblue fade-selection-animation"
@@ -21,7 +21,7 @@
                 </ul>
             </li>
             <li  dropdown>
-                <a class="dropdown-toggle"  ng-disabled="disabled">User Management <span class="caret"></span></a>
+                <a class="dropdown-toggle" ng-disabled="disabled">User Management <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#/usermanagement/users">Users</a></li>
                     <li><a href="#/usermanagement/roles">Roles</a></li>
@@ -59,8 +59,16 @@
                     <li><a href="#/presales/import/customers">Import Customers</a></li>   
                     <li><a href="#/presales/duplicate/importCustomers">Import Duplicate Customers</a></li>   
                     <li><a target="_blank" href="exportAllDuplicateData">Export Duplicate Customers</a></li>   
-
-
+                </ul>
+            </li>
+            <li dropdown>
+                <a class="dropdown-toggle" ng-disabled="disabled">Project <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/postsalesunit/projects">Project</a></li>
+                    <li><a href="#/postsalesunit/towers">Tower</a></li>
+                    <li><a href="#/taskmanager/task/edit/0/0">Wing</a></li>
+                    <li><a href="#/taskmanager/task/edit/0/0">Unit</a></li>
+                    <li><a href="#/taskmanager/task/edit/0/0">Pricing</a></li>
                 </ul>
             </li>
         </ul>

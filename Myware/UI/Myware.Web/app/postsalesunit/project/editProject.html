@@ -1,0 +1,420 @@
+﻿<section class="mainbar" data-ng-controller="EditProject">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> {{title}} </h2>
+
+                        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+                            {{alert.msg}}
+                        </alert>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                
+                                <tabset>
+                                    <tab active="projectView.ProjectInformation.active" disabled="projectView.ProjectInformation.disabled">
+                                        <tab-heading>
+                                            Project Information
+                                        </tab-heading>
+
+                                        <form role="form" class="col-md-8" name="myForm" ng-submit="saveBaseProjectInformation(projectView.ProjectInformation)" novalidate>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-10">
+                                                    <label for=" name">Project Id</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.ProjectInformation.ProjectId"
+                                                           name="projectView.ProjectInformation.ProjectId"
+                                                           value="{{projectView.ProjectInformation.ProjectId}}" placeholder="Enter project id">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-10">
+                                                    <label for=" name">Project Name</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.ProjectInformation.ProjectName"
+                                                           name="ProjectName" value="{{projectView.ProjectInformation.ProjectName}}"
+                                                           placeholder="Enter project name">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-10 form-group">
+                                                    <label for=" name">Project Types</label>
+                                                    <select class="form-control" name="ProjectTypeId" ng-model="projectView.ProjectInformation.ProjectTypeId">
+                                                        <option ng-repeat='value in projectTypes' value='{{value.Id}}'>
+                                                            {{value.Name}}
+                                                        </option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+
+                                            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid">Save Project Information</button>
+                                        </form>
+                                    </tab>
+
+                                    <tab active="projectView.OtherInformation.active" disabled="projectView.OtherInformation.disabled">
+                                        <tab-heading>
+                                            Other Information 
+                                        </tab-heading>
+                                        
+
+
+                                        <form role="form" class="col-md-8" name="OtherInformationForm"  ng-submit="saveOtherProjectInformation(projectView.OtherInformation)" novalidate>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Project Id</label>
+                                                    <select class="form-control" name="CompanyId" ng-change="getDevelopers(projectView.OtherInformation.CompanyId)" ng-model="projectView.OtherInformation.CompanyId">
+                                                        <option ng-repeat='value in Companies' value='{{value.Id}}'>
+                                                            {{value.Name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Developers</label>
+
+                                                    <ul>
+                                                        <li ng-repeat="item in projectView.OtherInformation.Developers">
+                                                            {{item.DeveloperId}} - {{item.DeveloperName}} 
+                                                        </li>
+                                                    </ul>                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">PlotNumber</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.PlotNumber"
+                                                           name="PlotNumber" value="{{projectView.OtherInformation.PlotNumber}}"
+                                                           placeholder="Enter Plot Number">
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">SurveyOrSectorNumber</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.SurveyOrSectorNumber"
+                                                           name="PlotNumber" value="{{projectView.OtherInformation.SurveyOrSectorNumber}}"
+                                                           placeholder="Enter Survey or SectorNumber">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Locality</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.Locality"
+                                                           name="Locality" value="{{projectView.OtherInformation.Locality}}"
+                                                           placeholder="Enter Locality">
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">City</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.City"
+                                                           name="PlotNumber" value="{{projectView.OtherInformation.City}}"
+                                                           placeholder="Enter City">
+
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">PlotArea</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.PlotArea"
+                                                           name="PlotArea" value="{{projectView.OtherInformation.PlotArea}}"
+                                                           placeholder="Enter PlotArea">
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Plot Area Unit</label>
+                                                    <select class="form-control" name="PlotAreaUnit" ng-model="projectView.OtherInformation.PlotAreaUnit">
+                                                        <option ng-repeat='value in PlotAreaUnits' value='{{value.Name}}'>
+                                                            {{value.Name}}
+                                                        </option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Address</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.Address"
+                                                           name="Address" value="{{projectView.OtherInformation.Address}}"
+                                                           placeholder="Enter Address">
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">FSI</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.FSI"
+                                                           name="FSI" value="{{projectView.OtherInformation.FSI}}"
+                                                           placeholder="Enter FSI">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">NumberOfBuilding</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.NumberOfBuilding"
+                                                           name="NumberOfBuilding" value="{{projectView.OtherInformation.NumberOfBuilding}}"
+                                                           placeholder="Enter NumberOfBuilding">
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">NumberOfShops</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.NumberOfShops"
+                                                           name="NumberOfShops" value="{{projectView.OtherInformation.NumberOfShops}}"
+                                                           placeholder="Enter NumberOfShops">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">NumberOfFlats</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.NumberOfFlats"
+                                                           name="NumberOfFlats" value="{{projectView.OtherInformation.NumberOfFlats}}"
+                                                           placeholder="Enter NumberOfFlats">
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">NumberOfOffices</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.NumberOfOffices"
+                                                           name="NumberOfOffices" value="{{projectView.OtherInformation.NumberOfOffices}}"
+                                                           placeholder="Enter NumberOfOffices">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">Amneties</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.OtherInformation.Amneties"
+                                                           name="Amneties" value="{{projectView.OtherInformation.Amneties}}"
+                                                           placeholder="Enter Amneties">
+
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <label for=" name"> Floor Plan</label>
+                                                                <a class="btn btn-default" ng-show="projectView.OtherInformation.FloorPlan.length>0" 
+                                                                                href="{{projectView.OtherInformation.FloorPlan}}"> Download File</a>
+                                                               
+</td>
+                                                            <td>
+                                                                <div class="progress">
+                                                                    <div class="progress-bar  progress-bar-success" role="progressbar" ng-style="{ 'width': progress + '%' }"></div>
+                                                                </div>
+                                                                <input type="file" ng-file-select="onFileSelect($files)">
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </div>                                              
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary" ng-disabled="OtherInformationForm.$invalid">Save Project Information</button>
+                                        </form>
+                                    </tab>
+
+                                    <tab active="projectView.PropertyCharges.active" disabled="projectView.PropertyCharges.disabled">
+                                        <tab-heading>
+                                            Property Charges 
+                                        </tab-heading>
+                                        
+                                        <form role="form" class="col-md-8" name="PropertyChargesForm" ng-submit="savePropertyCharges(projectView.PropertyCharges)" novalidate>
+                                            
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">DevelopmentCharge</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.PropertyCharges.DevelopmentCharge"
+                                                           name="DevelopmentCharge" value="{{projectView.PropertyCharges.DevelopmentCharge}}"
+                                                           placeholder="Enter DevelopmentCharge">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">OtherCharge</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.PropertyCharges.OtherCharge"
+                                                           name="OtherCharge" value="{{projectView.PropertyCharges.OtherCharge}}"
+                                                           placeholder="Enter OtherCharge">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">LumpSum</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.PropertyCharges.LumpSum"
+                                                           name="LumpSum" value="{{projectView.PropertyCharges.LumpSum}}"
+                                                           placeholder="Enter LumpSum">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">BasicQuateRate</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.PropertyCharges.BasicQuateRate"
+                                                           name="BasicQuateRate" value="{{projectView.PropertyCharges.BasicQuateRate}}"
+                                                           placeholder="Enter BasicQuateRate">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">FloorRiseRate</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.PropertyCharges.FloorRiseRate"
+                                                           name="FloorRiseRate" value="{{projectView.PropertyCharges.FloorRiseRate}}"
+                                                           placeholder="Enter FloorRiseRate">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">FloorNumberOnWord</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.PropertyCharges.FloorNumberOnWord"
+                                                           name="FloorNumberOnWord" value="{{projectView.PropertyCharges.FloorNumberOnWord}}"
+                                                           placeholder="Enter FloorNumberOnWord">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">PenaltyDefaulter</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.PropertyCharges.PenaltyDefaulter"
+                                                           name="PenaltyDefaulter" value="{{projectView.PropertyCharges.PenaltyDefaulter}}"
+                                                           placeholder="Enter PenaltyDefaulter">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for=" name">GracePeriod</label>
+                                                    <input type="text" class="form-control" ng-model="projectView.PropertyCharges.GracePeriod"
+                                                           name="GracePeriod" value="{{projectView.PropertyCharges.GracePeriod}}"
+                                                           placeholder="Enter GracePeriod">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="Parkings">Parkings</label>
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th class="col-md-3">
+                                                                Type
+                                                            </th>
+                                                            <th class="col-md-3">
+                                                                Count
+                                                            </th>
+                                                           
+                                                            <th class="col-md-3">
+                                                                Action
+                                                            </th>
+                                                        </tr>
+                                                        <tr ng-repeat="item in projectView.PropertyCharges.Parkings">
+                                                            <td>
+                                                                <select class="form-control" name="ParkingType" ng-model="item.Type">
+                                                                    <option ng-repeat='value in ParkingTypes' value='{{value.Name}}'>
+                                                                        {{value.Name}}
+                                                                    </option>
+                                                                </select>
+
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" ng-model="item.Count" name="Count" placeholder="Enter Count">
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="btn-group btn-group-justified">
+                                                                    <span class="btn btn-primary" role="button" ng-click="addParkingType()">Add Parking</span>
+                                                                    <span class="btn btn-danger" role="button" ng-click="removeParkingType($index)">Remove Parking</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary" ng-disabled="PropertyChargesForm.$invalid">Save Project Information</button>
+                                        </form>
+
+                                    </tab>
+
+                                    <tab active="projectView.BankDetails.active" disabled="projectView.BankDetails.disabled">
+                                        <tab-heading>
+                                            Bank Details 
+                                        </tab-heading>
+                                        <form role="form" class="col-md-8" name="BankDetailsForm" ng-submit="saveProjectBankDetail(projectView.BankDetails.Accounts)" novalidate>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="Parkings">Accounts</label>
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th class="col-md-3">
+                                                                AccountNumber
+                                                            </th>
+                                                            <th class="col-md-3">
+                                                                BankName
+                                                            </th>
+                                                            <th class="col-md-3">
+                                                                BranchName
+                                                            </th>
+                                                            <th class="col-md-3">
+                                                                Action
+                                                            </th>
+                                                        </tr>
+                                                        <tr ng-repeat="item in projectView.BankDetails.Accounts">
+                                                            <td>
+                                                                <input type="text" class="form-control" ng-model="item.AccountNumber" name="AccountNumber" placeholder="Enter AccountNumber">
+
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" ng-model="item.BankName" name="BankName" placeholder="Enter BankName">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" ng-model="item.BranchName" name="BranchName" placeholder="Enter BranchName">
+                                                            </td>
+                                                            <td>
+                                                                <div class="btn-group btn-group-justified">
+                                                                    <span class="btn btn-primary" role="button" ng-click="addAccount()">Add Account</span>
+                                                                    <span class="btn btn-danger" role="button" ng-click="removeAccount($index)">Remove Account</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary" ng-disabled="BankDetailsForm.$invalid">Save Project Information</button>
+                                        </form>
+
+                                    </tab>
+
+                                </tabset>
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

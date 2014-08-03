@@ -14,6 +14,8 @@ using Myware.Data.Entity.Models.UserManagement;
 using Myware.Web.Models;
 using Myware.Web.Models.PreSales;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Myware.Web.API.UserManagement
 {
@@ -66,6 +68,39 @@ namespace Myware.Web.API.UserManagement
 
         }
 
+             
+        [Route("getRolesByUserId/{id}")]
+        [HttpPost]
+        public async Task<IHttpActionResult> GetRolesByUserId(int id)
+        {
+            var roles = await _userManager.GetRolesAsync(id);
+            return Ok(roles.SingleOrDefault());
+        }
+
+        [Route("getRoleByName/{name}")]
+        [HttpPost]
+        public RoleViewModel GetRoleByName(string name)
+        {
+            var _roleManager = new RoleManager<Role, int>(new RoleStore<Role, int, AppUserRole>(db));
+
+            return _roleManager.Roles.Include(b => b.RolePermissions.Select(p => p.Permission))
+                               .Where(t => t.Name == name)
+                                  .Select(t => new RoleViewModel
+                                  {
+                                      Id = t.Id,
+                                      Name = t.Name,
+                                      RolePermissions = t.RolePermissions.Select(b => new RolePermissionViewModel
+                                      {
+                                          Id = b.Id,
+                                          RoleId = b.RoleId,
+                                          PermissionId = b.PermissionId,
+                                          Permission = b.Permission
+                                      }).ToList()
+                                  })
+                                  .SingleOrDefault();
+
+
+        }
 
 
         [Route("userIsUniqueByEmail")]
