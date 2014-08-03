@@ -18,6 +18,7 @@ using System.IO;
 
 namespace Myware.Web.API.PostSalesUnit
 {
+    [Authorize]
 	public class ManageProjectsController : ApiController
 	{
 		private ApplicationDbContext db = new ApplicationDbContext();

@@ -11,6 +11,9 @@ using Myware.Data.Entity;
 using Myware.Data.Entity.CustomStores;
 using Myware.Data.Entity.Models.UserManagement;
 using Myware.Web.Models;
+using System.Net.Http;
+using System.Net;
+
 
 namespace Myware.Web.Controllers
 {
@@ -27,7 +30,16 @@ namespace Myware.Web.Controllers
         }
 
         private AppUserManager _userManager { get; set; }
-        
+
+
+        public ActionResult Invalid()
+        {
+            Response.SuppressFormsAuthenticationRedirect = true;
+            Response.StatusCode = 401;
+            return new EmptyResult();
+        }
+
+
         [HttpGet]
         public ActionResult LogIn(string returnUrl)
         {

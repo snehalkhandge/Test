@@ -98,5 +98,22 @@
                 }
             );
         }
+
+        function routeChange()
+        {
+            $rootScope.$on('$locationChangeStart', function (event) {
+                var next = parseRoute().$$route;
+                var permission = next.$$route.permission;
+                if (angular.isString(permission) && !permissions.hasPermission(permission))
+                {
+                    $location.path('/unauthorized');
+                }
+                    
+            });
+
+        }
+
+
+
     }
 })();

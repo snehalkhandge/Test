@@ -21,11 +21,13 @@ function authService($http, common, $q, localStorageService, permissionService) 
         name: "",
         userId: "",
         permissions:[],
-        roles:[],
+        roles: [],
+        expires:''
     };
 
     var _login = function (loginData) {
 
+        _logOut();
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
 
         var deferred = $q.defer();
@@ -37,28 +39,27 @@ function authService($http, common, $q, localStorageService, permissionService) 
 
                      $http.post(common.apiUrl + '/getRoleByName/' + result.replace(/[^\w\s]/gi, ''))
                              .success(function (res) {
-
+                                                                  
+                                 var currenttime = new Date().getTime();
+                                 var newdateTime = currenttime + 43099000;
                                  _authentication.isAuth = true;
                                  _authentication.userName = loginData.userName;
                                  _authentication.name = response.Name;
                                  _authentication.userId = response.userId;
+                                 _authentication.expires = newdateTime;                                 
                                  _authentication.roles.push(res.Name);
-
                                  angular.forEach(res.RolePermissions, function (value, key) {
                                      this.push(value.Permission.Name);
-                                 }, _authentication.permissions);
-                                  
-
+                                 }, _authentication.permissions);                                 
                                  permissionService.setPermissions(_authentication.permissions);
-
                                  localStorageService.set(cookieName, {
                                      token: response.access_token,
                                      userName: loginData.userName,
                                      name: response.Name,
                                      userId: response.userId,
                                      permissions: _authentication.permissions,
-                                     roles: _authentication.roles
-
+                                     roles: _authentication.roles,
+                                     expires: _authentication.expires
                                  });
 
                                  deferred.resolve(res);

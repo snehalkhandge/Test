@@ -15,6 +15,8 @@ using Myware.Data.Entity.Models.UserManagement;
 using Owin;
 using System.Security.Claims;
 using Newtonsoft.Json.Serialization;
+using System.Net;
+using System.Net.Http;
 
 [assembly: OwinStartup(typeof(Myware.Web.Startup))]
 namespace Myware.Web
@@ -30,8 +32,8 @@ namespace Myware.Web
         {
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/account/login")
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie                
+                
             });
 
             
@@ -57,13 +59,13 @@ namespace Myware.Web
 
                 return usermanager;
             };
-
+                        
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId, UserManagerFactory),
                 AuthorizeEndpointPath = new PathString("/account/login"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(2),
                 AllowInsecureHttp = true
             };
         }
@@ -101,14 +103,15 @@ namespace Myware.Web
                 if (user == null)
                 {
                     context.SetError("invalid_grant", "The user name or password is incorrect.");
-                    return;
+
+                    return; 
                 }
 
                 ClaimsIdentity oAuthIdentity = await userManager.CreateIdentityAsync(user,
                     context.Options.AuthenticationType);
                 ClaimsIdentity cookiesIdentity = await userManager.CreateIdentityAsync(user,
                     CookieAuthenticationDefaults.AuthenticationType);
-                AuthenticationProperties properties = CreateProperties(user.UserName, user.Id, user.FirstName, user.LastName);
+                AuthenticationProperties properties = CreateProperties(user.UserName, user.Id, user.FirstName, user.LastName,user.Roles.ToList());
                 AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
                 context.Validated(ticket);
                 context.Request.Context.Authentication.SignIn(cookiesIdentity);
@@ -151,13 +154,14 @@ namespace Myware.Web
             return Task.FromResult<object>(null);
         }
 
-        public static AuthenticationProperties CreateProperties(string userName, int userId, string firstName, string lastName)
+        public static AuthenticationProperties CreateProperties(string userName, int userId, string firstName, string lastName, List<AppUserRole> roles)
         {
             IDictionary<string, string> data = new Dictionary<string, string>
             {
                 { "userName", userName },
                 { "userId", userId.ToString() },
-                {"Name", firstName+" "+lastName}
+                {"Name", firstName+" "+lastName},
+                {"Roles", roles.SingleOrDefault().ToString()}
 
             };
             return new AuthenticationProperties(data);

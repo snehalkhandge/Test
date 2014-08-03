@@ -21,6 +21,17 @@
                 }
             },
             {
+                url: '/unauthorized',
+                config: {
+                    templateUrl: 'app/account/components/unauthorized.html',
+                    title: 'Login',
+                    settings: {
+                        nav: 2,
+                        content: '<i class="fa fa-lock"></i> Unauthorized'
+                    }
+                }
+            },
+            {
                 url: '/account/logout',
                 config: {
                     title: 'Logout',

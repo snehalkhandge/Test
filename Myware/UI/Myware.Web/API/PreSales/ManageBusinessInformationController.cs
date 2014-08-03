@@ -20,6 +20,7 @@ using System.Web.Script.Serialization;
 
 namespace Myware.Web.API.PreSales
 {
+    [Authorize]
 	public class ManageBusinessInformationController : ApiController
 	{
 	   private ApplicationDbContext db = new ApplicationDbContext();

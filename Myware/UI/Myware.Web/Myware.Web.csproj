@@ -282,6 +282,7 @@
     <Content Include="app\account\components\logout.js" />
     <Content Include="app\account\components\config.route.js" />
     <Content Include="app\account\account.module.js" />
+    <Content Include="app\account\components\unauthorized.html" />
     <Content Include="app\app.module.js" />
     <Content Include="app\avengers\avenger.module.js" />
     <Content Include="app\avengers\avengers.html" />
