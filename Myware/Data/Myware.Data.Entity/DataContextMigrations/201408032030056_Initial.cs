@@ -498,6 +498,7 @@ namespace Myware.Data.Entity.DataContextMigrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        UnitName = c.String(),
                         BasicRate = c.Decimal(nullable: false, precision: 18, scale: 2),
                         DevelopmentCharge = c.Decimal(nullable: false, precision: 18, scale: 2),
                         FloorRiseRate = c.Decimal(nullable: false, precision: 18, scale: 2),
@@ -509,6 +510,8 @@ namespace Myware.Data.Entity.DataContextMigrations
                         CarpetArea = c.Decimal(nullable: false, precision: 18, scale: 2),
                         CarpetAreaUnit = c.String(),
                         Status = c.String(),
+                        UnitNumber = c.Int(nullable: false),
+                        FloorNumber = c.Int(nullable: false),
                         WingId = c.Int(nullable: false),
                         TowerId = c.Int(nullable: false),
                         ProjectId = c.Int(nullable: false),

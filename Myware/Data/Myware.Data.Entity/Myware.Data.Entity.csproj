@@ -65,11 +65,12 @@
     <Compile Include="CustomStores\AppUserManager.cs" />
     <Compile Include="CustomStores\AppRoleStore.cs" />
     <Compile Include="CustomStores\AppUserStore.cs" />
-    <Compile Include="DataContextMigrations\201408011720432_Initial.cs" />
-    <Compile Include="DataContextMigrations\201408011720432_Initial.Designer.cs">
-      <DependentUpon>201408011720432_Initial.cs</DependentUpon>
+    <Compile Include="DataContextMigrations\201408032030056_Initial.cs" />
+    <Compile Include="DataContextMigrations\201408032030056_Initial.Designer.cs">
+      <DependentUpon>201408032030056_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
+    <Compile Include="DataContextMigrations\PostSalesSeedData.cs" />
     <Compile Include="Models\BaseEntity\BaseEntity.cs" />
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Models\PostSalesUnit\ProjectDevelopers.cs" />
@@ -141,8 +142,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataContextMigrations\201408011720432_Initial.resx">
-      <DependentUpon>201408011720432_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="DataContextMigrations\201408032030056_Initial.resx">
+      <DependentUpon>201408032030056_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

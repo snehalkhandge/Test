@@ -1,0 +1,173 @@
+﻿<section class="mainbar" data-ng-controller="EditUnit">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> Unit </h2>
+                        <hr />
+
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Project</label>
+                                <select class="form-control" name="ProjectId" ng-model="Unit.ProjectId" ng-change="getAllTowers()">
+                                    <option ng-repeat='value in Projects' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Tower</label>
+                                <select class="form-control" name="TowerId" ng-model="Unit.TowerId" ng-change="getAllWings()">
+                                    <option ng-repeat='value in Towers' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Wing</label>
+                                <select class="form-control" name="WingId" ng-model="Unit.WingId">
+                                    <option ng-repeat='value in Wings' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Basic Rate</label>
+                                <input type="text" class="form-control" ng-model="Unit.BasicRate"
+                                       name="BasicRate"
+                                       value="{{Unit.BasicRate}}" placeholder="Enter Basic rate ">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">DevelopmentCharge</label>
+                                <input type="text" class="form-control" ng-model="Unit.DevelopmentCharge"
+                                       name="DevelopmentCharge"
+                                       value="{{Unit.DevelopmentCharge}}" placeholder="Enter Development Charge ">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">FloorNumber</label>
+                                <input type="text" class="form-control" ng-model="Unit.FloorNumber"
+                                       name="FloorNumber"
+                                       value="{{Unit.FloorNumber}}" placeholder="Enter Floor Number ">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Floor Rise Rate</label>
+                                <input type="text" class="form-control" ng-model="Unit.FloorRiseRate"
+                                       name="FloorRiseRate"
+                                       value="{{Unit.FloorRiseRate}}" placeholder="Enter Floor Rise Rate">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">OtherCharge</label>
+                                <input type="text" class="form-control" ng-model="Unit.OtherCharge"
+                                       name="OtherCharge"
+                                       value="{{Unit.OtherCharge}}" placeholder="Enter Other Charge ">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">FloorNumber</label>
+                                <input type="text" class="form-control" ng-model="Unit.FloorNumber"
+                                       name="FloorNumber"
+                                       value="{{Unit.FloorNumber}}" placeholder="Enter Floor Number ">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Building Type</label>
+                                <select class="form-control" name="BuildingType" ng-model="Unit.BuildingType">
+                                    <option ng-repeat='value in BuildingTypes' value='{{value.Name}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>                            
+                            <div class="col-md-4 form-group">
+                                <label for=" name">UnitNumber</label>
+                                <input type="text" class="form-control" ng-model="Unit.UnitNumber"
+                                       name="UnitNumber"
+                                       value="{{Unit.UnitNumber}}" placeholder="Enter Unit Number ">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Unit Type</label>
+                                <select class="form-control" name="UnitType" ng-model="Unit.UnitType">
+                                    <option ng-repeat='value in UnitTypes' value='{{value.Name}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label for=" name">Saleable Area</label>
+                                <input type="text" class="form-control" ng-model="Unit.SaleableArea"
+                                       name="SaleableArea"
+                                       value="{{Unit.SaleableArea}}" placeholder="Enter Saleable Area">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label for=" name">Saleable Area Unit</label>
+                                <select class="form-control" name="SaleableAreaUnit" ng-model="Unit.SaleableAreaUnit">
+                                    <option ng-repeat='value in SaleableAreaUnits' value='{{value.Name}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label for=" name">Carpet Area</label>
+                                <input type="text" class="form-control" ng-model="Unit.CarpetArea"
+                                       name="CarpetArea"
+                                       value="{{Unit.CarpetArea}}" placeholder="Enter Carpet Area">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label for=" name">Carpet Area Unit</label>
+                                <select class="form-control" name="CarpetAreaUnit" ng-model="Unit.CarpetAreaUnit">
+                                    <option ng-repeat='value in CarpetAreaUnits' value='{{value.Name}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label for=" name">Status</label>
+                                <select class="form-control" name="Status" ng-model="Unit.Status">
+                                    <option ng-repeat='value in Statuses' value='{{value.Name}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-9 form-group">
+                                <label for=" name">Unit Name</label>
+                                <p>
+                                    {{Unit.UnitName}}
+                                </p>
+                                
+                            </div>
+
+                        </div>
+
+                        <a class="btn btm-primary" ng-click="saveUnit()"> Save Unit</a>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

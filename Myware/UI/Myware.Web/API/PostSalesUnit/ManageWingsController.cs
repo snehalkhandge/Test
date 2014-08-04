@@ -212,12 +212,19 @@ namespace Myware.Web.API.PostSalesUnit
 
 		[Route("projects/getAllWingsByBuildingId/{id}")]
 		[ResponseType(typeof(List<ProjectNameViewModel>))]
-		public IHttpActionResult GetAllTowers(int id)
+		public IHttpActionResult GetAllWingsById(int id)
 		{
 			return Ok(db.Wings.Where(t => t.TowerId == id).Select(x => new ProjectNameViewModel { Id = x.Id, Name = x.WingName }).ToList());
 		}
-		
 
+
+		[Route("projects/getAllWings")]
+		[ResponseType(typeof(List<ProjectNameViewModel>))]
+		public IHttpActionResult GetAllWings()
+		{
+			return Ok(db.Wings.Select(x => new ProjectNameViewModel { Id = x.Id, Name = x.WingName }).ToList());
+		}
+		
 
 		#endregion
 

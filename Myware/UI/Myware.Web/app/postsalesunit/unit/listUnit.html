@@ -1,0 +1,117 @@
+﻿<section class="mainbar" data-ng-controller="ListUnit">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="widget wblue">
+                    <div data-cc-widget-header title="{{title}}"></div>
+                    <div class="widget-content customerTypes">
+                        <h2> List Customers </h2>
+                        <span>Page : {{page}}</span> <span>Items per page : {{itemsPerPage}}</span>
+                        <span>Total items : {{totalItems}}</span>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Project</label>
+                                <select class="form-control" name="ProjectId" ng-model="selectedProjectId" ng-change="getAllTowers()">
+                                    <option ng-repeat='value in Projects' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Tower</label>
+                                <select class="form-control" name="TowerId" ng-model="selectedTowerId" ng-change="getAllWings()">
+                                    <option ng-repeat='value in Towers' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for=" name">Wing</label>
+                                <select class="form-control" name="WingId" ng-model="selectedWingId">
+                                    <option ng-repeat='value in Wings' value='{{value.Id}}'>
+                                        {{value.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" role="button" ng-click="SearchUnits()">Search Wings</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" role="button" href="#/postsalesunit/unit/edit/0">Add new unit</a>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <table class="table table-bordered table-hover table-condensed">
+                            <tr style="font-weight: bold">
+                                <td style="width:10%">Project Name</td>
+                                <td style="width:10%">Unit Name (Project Name-Tower-Wing-Unit Number)</td>
+                                <td style="width:10%">Floor Number</td>
+                                <td style="width:10%">Unit Number</td>
+                                <td style="width:10%">Unit Type</td>
+                                <td style="width:10%">Property Type</td>
+                                <td style="width:10%">Saleable Area</td>
+                                <td style="width:10%">Carpet Area</td>
+                                <td style="width:10%">Status</td>
+                                <td style="width:10%">Action</td>
+                            </tr>
+                            <tr ng-repeat="item in results">
+                                <td>
+                                    {{item.Project.ProjectName}}
+                                </td>
+                                <td>
+                                    {{item.UnitName}}
+                                </td>
+                                <td>
+                                    {{item.FloorNumber}}
+                                </td>
+                                <td>
+                                    {{item.UnitNumber}}
+                                </td>
+                                <td>
+                                    {{item.UnitType}}
+                                </td>
+                                <td>
+                                    {{item.BuildingType}}
+                                </td>
+                                <td>
+                                    {{item.SaleableArea}} {{item.SaleableAreaUnit}}
+                                </td>
+                                <td>
+                                    {{item.CarpetArea}} {{item.CarpetAreaUnit}}
+                                </td>
+                                <td>
+                                    {{item.Status}}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-justified">
+                                        <a class="btn btn-primary" role="button" href="#/postsalesunit/unit/detail/{{item.Id}}">Detail</a>
+                                        <a class="btn btn-primary" role="button" href="#/postsalesunit/unit/edit/{{item.Id}}">Edit</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="page" ng-change="pageChanged()" ng-hide="hidePagination"></pagination>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+

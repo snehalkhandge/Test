@@ -184,6 +184,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\PostSalesUnit\ManageUnitsController.cs" />
     <Compile Include="API\PostSalesUnit\ManageWingsController.cs" />
     <Compile Include="API\PostSalesUnit\ManageBuildingsController.cs" />
     <Compile Include="API\PostSalesUnit\ManageProjectsController.cs" />
@@ -327,6 +328,12 @@
     <Content Include="app\postsalesunit\tower\listTower.html" />
     <Content Include="app\postsalesunit\tower\listTower.js" />
     <Content Include="app\postsalesunit\tower\towerFactory.js" />
+    <Content Include="app\postsalesunit\unit\config.route.js" />
+    <Content Include="app\postsalesunit\unit\editUnit.html" />
+    <Content Include="app\postsalesunit\unit\editUnit.js" />
+    <Content Include="app\postsalesunit\unit\listUnit.html" />
+    <Content Include="app\postsalesunit\unit\listUnit.js" />
+    <Content Include="app\postsalesunit\unit\unitFactory.js" />
     <Content Include="app\postsalesunit\wing\config.route.js" />
     <Content Include="app\postsalesunit\wing\editWing.html" />
     <Content Include="app\postsalesunit\wing\editWing.js" />
@@ -556,7 +563,6 @@
   <ItemGroup>
     <Folder Include="API\PostSales\" />
     <Folder Include="app\postsalesunit\hotproperty\" />
-    <Folder Include="app\postsalesunit\unit\" />
     <Folder Include="app\postsales\agreement\" />
     <Folder Include="app\postsales\booking\" />
     <Folder Include="app\postsales\documentmanagement\" />

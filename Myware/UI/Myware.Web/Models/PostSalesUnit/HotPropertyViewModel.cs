@@ -9,7 +9,7 @@ namespace Myware.Web.Models.PostSalesUnit
     {
         public int Id { get; set; }
         public int UnitId { get; set; }
-        public UnitViewModel Unit { get; set; }
+        public UnitDetailViewModel Unit { get; set; }
 
     }
 }

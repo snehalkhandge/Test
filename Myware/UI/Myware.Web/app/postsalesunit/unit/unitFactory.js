@@ -1,7 +1,7 @@
 ﻿(function() {
     'use strict';
 
-    var serviceId = 'wingFactory';
+    var serviceId = 'unitFactory';
 
     angular.module('app.postsalesunit')
         .factory(serviceId, dataservice);
@@ -15,7 +15,7 @@
 
         
 
-        var personalCache = DSCacheFactory('wingCache', {
+        var personalCache = DSCacheFactory('unitCache', {
             maxAge: 3600000,
             capacity: 100,
             deleteOnExpire: 'aggressive',
@@ -25,14 +25,14 @@
             }
         });
 
-        var dataCache = DSCacheFactory.get('wingCache');
+        var dataCache = DSCacheFactory.get('unitCache');
 
         
-        var getWings = function(searchData) {
+        var getUnits = function (searchData) {
             var deferred = $q.defer(),
                 start = new Date().getTime();
                 
-            $http.post(common.apiUrl + '/listWings', searchData)
+            $http.post(common.apiUrl + '/listUnits', searchData)
                     .success(function (data) {
                         data = data || {};                        
                         deferred.resolve(data);
@@ -45,14 +45,14 @@
 
         };
                 
-        var saveWing = function(wing) {
+        var saveUnit = function (unit) {
 
            var deferred = $q.defer();
-           if (wing.Id == '') {
-               wing.Id = 0;
+           if (unit.Id == '') {
+               unit.Id = 0;
            }
                        
-            $http.post(common.apiUrl + '/saveProjectWing/' + wing.Id, wing)
+            $http.post(common.apiUrl + '/saveProjectUnit/' + unit.Id, unit)
                     .success(function (data) {
 
                         if (dataCache.info()) {
@@ -68,11 +68,11 @@
 
        };
                 
-        var getWingById = function (id) {
+        var getUnitById = function (id) {
             var deferred = $q.defer(),
                 start = new Date().getTime();
 
-            $http.get(common.apiUrl + '/getWingById/' + id)
+            $http.get(common.apiUrl + '/getUnitById/' + id)
                     .success(function (data) {
                         data = data || {};
                         deferred.resolve(data);
@@ -85,47 +85,11 @@
 
         };
 
-        var getAllWingsByBuildingId = function (id) {
-            var deferred = $q.defer(),
-                start = new Date().getTime();
-
-            $http.get(common.apiUrl + '/projects/getAllWingsByBuildingId/' + id)
-                    .success(function (data) {
-                        data = data || {};
-                        deferred.resolve(data);
-                    })
-                    .error(function (data, status, headers, config) {
-                        deferred.reject(data);
-                    });
-
-            return deferred.promise;
-
-        };
-
-        var getAllWings = function() {
-            var deferred = $q.defer(),
-                start = new Date().getTime();
-
-            $http.get(common.apiUrl + '/projects/getAllWings')
-                    .success(function (data) {
-                        data = data || {};
-                        deferred.resolve(data);
-                    })
-                    .error(function (data, status, headers, config) {
-                        deferred.reject(data);
-                    });
-
-            return deferred.promise;
-
-        };
         
         return {
-            getWings: getWings,
-            getWingById: getWingById,
-            saveWing: saveWing,            
-            getAllWingsByBuildingId: getAllWingsByBuildingId,
-            getAllWings: getAllWings
-                        
+            getUnits: getUnits,
+            getUnitById: getUnitById,
+            saveUnit: saveUnit                                       
         };
 
     }

@@ -446,6 +446,21 @@ using Myware.Data.Entity.Models.PostSalesUnit;
             context.SaveChanges();
 
 
+            var company2 = new Company
+            {
+                Name = "Develoeprs company 2",
+                UpdatedByUserId = 1,
+                Address = "Develoeper address 2",
+                Pin = "erdfdfsdsffd",
+                LocalityId = 1,
+                FaxNumber = "55665685665",
+                ReceiptFormat = "I dont know"
+
+            };
+
+            context.Companies.Add(company2);
+            context.SaveChanges();
+
             var developer = new Developer
             {
                 Name = "Developer Bhai",
@@ -466,6 +481,16 @@ using Myware.Data.Entity.Models.PostSalesUnit;
             context.Developers.Add(developer1);
             context.SaveChanges();
 
+            var developer2 = new Developer
+            {
+                Name = "Developer Bhai 2",
+                UpdatedByUserId = 1
+
+            };
+
+            context.Developers.Add(developer2);
+            context.SaveChanges();
+
             context.DeveloperCompanies.Add(new DeveloperCompanies
             {
                 CompanyId = 1,
@@ -473,6 +498,13 @@ using Myware.Data.Entity.Models.PostSalesUnit;
 
             });
 
+
+            context.DeveloperCompanies.Add(new DeveloperCompanies
+            {
+                CompanyId = 2,
+                DeveloperId = 2
+
+            });
             #endregion
 
 
@@ -902,6 +934,8 @@ using Myware.Data.Entity.Models.PostSalesUnit;
             context.SaveChanges();
 
             #endregion
+
+            PostSalesSeedData.SeedData(context);
 
         }
     }
